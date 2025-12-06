@@ -49,6 +49,8 @@
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
+        const editorContainer = document.getElementById('monaco-editor');
+        const defaultFilePath = 'README.md';
         const setiExtensionMap = {
             md: 'seti-markdown',
             mdx: 'seti-markdown',
@@ -60,6 +62,54 @@
             yaml: 'seti-yml',
             txt: 'seti-default',
         };
+        const languageExtensionMap = {
+            css: 'css',
+            htm: 'html',
+            html: 'html',
+            js: 'javascript',
+            json: 'json',
+            md: 'markdown',
+            mdx: 'markdown',
+            mdwn: 'markdown',
+            mdtext: 'markdown',
+            markdown: 'markdown',
+            mdown: 'markdown',
+            scss: 'scss',
+            ts: 'typescript',
+            txt: 'plaintext',
+            yml: 'yaml',
+            yaml: 'yaml',
+        };
+        let selectedFileElement = null;
+        let monacoEditor = null;
+        let activeFilePath = null;
+        let fileNodesByPath = new Map();
+
+        const monacoReady = new Promise((resolve) => {
+            require.config({
+                paths: {
+                    'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs'
+                }
+            });
+
+            require(['vs/editor/editor.main'], function () {
+                monacoEditor = monaco.editor.create(editorContainer, {
+                    value: [
+                        '# Welcome',
+                        '',
+                        'Select a file from the Explorer to preview its contents here.',
+                        '',
+                        'Files are loaded in read-only mode.'
+                    ].join('\n'),
+                    language: 'markdown',
+                    theme: 'vs-dark',
+                    readOnly: true,
+                    automaticLayout: true
+                });
+
+                resolve();
+            });
+        });
 
         const buildFileTree = async () => {
             try {
@@ -72,9 +122,11 @@
                 const text = await response.text();
                 const paths = text.split('\n').map((line) => line.trim()).filter(Boolean);
                 const tree = createTreeFromPaths(paths);
+                fileNodesByPath = new Map();
 
                 fileTreeContainer.innerHTML = '';
                 renderTreeChildren(tree, fileTreeContainer);
+                selectDefaultFile();
             } catch (error) {
                 console.error('Failed to build file tree:', error);
             }
@@ -84,7 +136,8 @@
             const root = {
                 type: 'folder',
                 name: '',
-                children: new Map(),
+                path: '',
+                children: new Map()
             };
 
             paths.forEach((path) => {
@@ -93,11 +146,13 @@
 
                 parts.forEach((part, index) => {
                     const isFile = index === parts.length - 1;
+                    const nextPath = current.path ? `${current.path}/${part}` : part;
 
                     if (!current.children.has(part)) {
                         current.children.set(part, {
                             type: isFile ? 'file' : 'folder',
                             name: part,
+                            path: nextPath,
                             children: isFile ? null : new Map(),
                         });
                     }
@@ -107,6 +162,94 @@
             });
 
             return root;
+        };
+
+        const findFileElementByPath = (path) => {
+            return Array.from(fileTreeContainer.querySelectorAll('.sidebar-file[data-path]')).find((el) => el.dataset.path === path) || null;
+        };
+
+        const setSelectedFileElement = (fileElement) => {
+            if (selectedFileElement) {
+                selectedFileElement.classList.remove('selected');
+            }
+
+            selectedFileElement = fileElement;
+            selectedFileElement.classList.add('selected');
+        };
+
+        const getFileLanguage = (fileName) => {
+            const lowerName = fileName.toLowerCase();
+            const lastDot = lowerName.lastIndexOf('.');
+            const extension = lastDot > 0 ? lowerName.slice(lastDot + 1) : '';
+
+            return languageExtensionMap[extension] || 'plaintext';
+        };
+
+        const selectDefaultFile = () => {
+            const defaultNode = fileNodesByPath.get(defaultFilePath);
+            const defaultElement = findFileElementByPath(defaultFilePath);
+
+            if (defaultNode && defaultElement) {
+                openFileInEditor(defaultNode, defaultElement);
+            }
+        };
+
+        // Try a few possible locations so this works both locally and on GitHub Pages.
+        const buildCandidateUrls = (path) => {
+            const urls = [];
+            const trimmedDocsPath = path.startsWith('docs/') ? path.slice(5) : path;
+            const servedFromDocsFolder = window.location.pathname.includes('/docs/');
+
+            urls.push(trimmedDocsPath);
+            urls.push(servedFromDocsFolder ? `../${path}` : path);
+
+            const encodedPath = path.split('/').map((part) => encodeURIComponent(part)).join('/');
+            urls.push(`https://raw.githubusercontent.com/EmilioAK/cv/main/${encodedPath}`);
+
+            return [...new Set(urls)];
+        };
+
+        const loadFileContent = async (path) => {
+            const candidates = buildCandidateUrls(path);
+
+            for (const url of candidates) {
+                try {
+                    const response = await fetch(url);
+
+                    if (response.ok) {
+                        return await response.text();
+                    }
+                } catch (error) {
+                    console.error(`Failed to fetch ${url}:`, error);
+                }
+            }
+
+            throw new Error('Unable to load file content.');
+        };
+
+        const openFileInEditor = async (node, fileElement) => {
+            setSelectedFileElement(fileElement);
+            activeFilePath = node.path;
+            await monacoReady;
+
+            monacoEditor.setValue(`Loading ${node.path}...`);
+            monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
+
+            try {
+                const content = await loadFileContent(node.path);
+                if (activeFilePath !== node.path) return;
+
+                const language = getFileLanguage(node.name);
+
+                monacoEditor.setValue(content);
+                monaco.editor.setModelLanguage(monacoEditor.getModel(), language);
+            } catch (error) {
+                if (activeFilePath !== node.path) return;
+
+                monacoEditor.setValue(`Unable to load ${node.path}\n\n${error.message}`);
+                monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
+                console.error(`Failed to load file ${node.path}:`, error);
+            }
         };
 
         const renderTreeChildren = (node, container) => {
@@ -134,6 +277,11 @@
 
             setIconForFile(node.name, iconElement);
             fileElement.querySelector('.sidebar-file-name').textContent = node.name;
+            fileElement.dataset.path = node.path;
+            fileElement.title = node.path;
+            fileNodesByPath.set(node.path, node);
+
+            fileElement.addEventListener('click', () => openFileInEditor(node, fileElement));
 
             return fileElement;
         };
@@ -194,30 +342,6 @@
         };
 
         buildFileTree();
-
-        const editorContainer = document.getElementById('monaco-editor');
-
-        require.config({
-            paths: {
-                'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs'
-            }
-        });
-
-        require(['vs/editor/editor.main'], function () {
-            monaco.editor.create(editorContainer, {
-                value: [
-                    '# Info about me',
-                    '',
-                    'This Monaco editor is read-only so you can browse without making edits.',
-                    '',
-                    '- Update this text by changing docs/index.html when ready.'
-                ].join('\n'),
-                language: 'markdown',
-                theme: 'vs-dark',
-                readOnly: true,
-                automaticLayout: true
-            });
-        });
     </script>
 </body>
 
