@@ -1,3 +1,5 @@
 .github/workflows/update-file-list.yml
-CV/README.md
-src/file-list.txt
+CV/about.md
+README.md
+docs/data/file-list.txt
+docs/index.html
