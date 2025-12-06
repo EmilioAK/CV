@@ -59,6 +59,8 @@ body {
 .sidebar {
     grid-area: sidebar;
     border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-file {
@@ -80,6 +82,19 @@ body {
 .sidebar-file.selected {
     background-color: #2E2E2E;
     color: white;
+}
+
+.sidebar-folder {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-folder-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    padding-left: 10px;
+    border-left: 1px solid var(--border-color);
 }
 
 .editor {
