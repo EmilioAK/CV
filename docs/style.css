@@ -61,6 +61,57 @@ body {
     border-right: 1px solid var(--border-color);
 }
 
+.sidebar-file {
+    display: flex;
+    color: var(--font-color);
+    height: 20px;
+    padding-left: 12px;
+    font-size: 13px;
+    gap: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-file:hover {
+    background-color: #212121;
+    color: white;
+}
+
+.sidebar-file.selected {
+    background-color: #2E2E2E;
+    color: white;
+}
+
 .editor {
     grid-area: editor;
+}
+
+@font-face {
+    font-family: 'Seti';
+    src: url('https://cdn.jsdelivr.net/npm/seti-ui@1.11.0/styles/_fonts/seti/seti.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/npm/seti-ui@1.11.0/styles/_fonts/seti/seti.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/npm/seti-ui@1.11.0/styles/_fonts/seti/seti.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.seti-icon {
+    font-family: 'Seti';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    font-size: 20px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.seti-icon::before {
+    display: block;
+}
+
+.seti-markdown::before {
+    content: "\E061";
+    color: #519aba;
 }
