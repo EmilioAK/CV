@@ -18,11 +18,12 @@ jobs:
 
       - name: Generate file list
         run: |
-          git ls-files | sort > file-list.txt
+          mkdir -p src
+          git ls-files | sort > src/file-list.txt
 
       - name: Commit and push if changed
         run: |
-          if git diff --quiet -- src/file-list.txt; then
+          if git diff --quiet --exit-code -- src/file-list.txt; then
             echo "No changes to src/file-list.txt"
             exit 0
           fi
@@ -33,4 +34,3 @@ jobs:
           git add src/file-list.txt
           git commit -m "chore: update file list"
           git push
-
