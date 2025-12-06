@@ -1,5 +1,6 @@
 .github/workflows/update-file-list.yml
 CV/about.md
 README.md
+docs/CNAME
 docs/data/file-list.txt
 docs/index.html
