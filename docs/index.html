@@ -50,6 +50,7 @@
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
         const editorContainer = document.getElementById('monaco-editor');
+        const tabBar = document.querySelector('.tab-bar');
         const defaultFilePath = 'README.md';
         const setiExtensionMap = {
             md: 'seti-markdown',
@@ -84,6 +85,14 @@
         let monacoEditor = null;
         let activeFilePath = null;
         let fileNodesByPath = new Map();
+        const openTabs = new Map();
+        const initialEditorMessage = [
+            '# Welcome',
+            '',
+            'Select a file from the Explorer to preview its contents here.',
+            '',
+            'Files are loaded in read-only mode.'
+        ].join('\n');
 
         const monacoReady = new Promise((resolve) => {
             require.config({
@@ -94,13 +103,7 @@
 
             require(['vs/editor/editor.main'], function () {
                 monacoEditor = monaco.editor.create(editorContainer, {
-                    value: [
-                        '# Welcome',
-                        '',
-                        'Select a file from the Explorer to preview its contents here.',
-                        '',
-                        'Files are loaded in read-only mode.'
-                    ].join('\n'),
+                    value: initialEditorMessage,
                     language: 'markdown',
                     theme: 'vs-dark',
                     readOnly: true,
@@ -122,14 +125,20 @@
                 const text = await response.text();
                 const paths = text.split('\n').map((line) => line.trim()).filter(Boolean);
                 const tree = createTreeFromPaths(paths);
-                fileNodesByPath = new Map();
+            fileNodesByPath = new Map();
 
-                fileTreeContainer.innerHTML = '';
-                renderTreeChildren(tree, fileTreeContainer);
-                selectDefaultFile();
-            } catch (error) {
-                console.error('Failed to build file tree:', error);
-            }
+            fileTreeContainer.innerHTML = '';
+            renderTreeChildren(tree, fileTreeContainer);
+            selectDefaultFile();
+        } catch (error) {
+            console.error('Failed to build file tree:', error);
+        }
+        };
+
+        const showWelcomeMessage = async () => {
+            await monacoReady;
+            monacoEditor.setValue(initialEditorMessage);
+            monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
         };
 
         const createTreeFromPaths = (paths) => {
@@ -174,7 +183,10 @@
             }
 
             selectedFileElement = fileElement;
-            selectedFileElement.classList.add('selected');
+
+            if (selectedFileElement) {
+                selectedFileElement.classList.add('selected');
+            }
         };
 
         const getFileLanguage = (fileName) => {
@@ -191,6 +203,21 @@
 
             if (defaultNode && defaultElement) {
                 openFileInEditor(defaultNode, defaultElement);
+            }
+        };
+
+        const setActiveTab = (path) => {
+            Array.from(tabBar.children).forEach((tab) => {
+                tab.classList.toggle('active', tab.dataset.path === path);
+            });
+        };
+
+        const openFileByPath = (path) => {
+            const node = fileNodesByPath.get(path);
+            const fileElement = findFileElementByPath(path);
+
+            if (node && fileElement) {
+                openFileInEditor(node, fileElement);
             }
         };
 
@@ -227,8 +254,66 @@
             throw new Error('Unable to load file content.');
         };
 
+        const ensureTabForFile = (node) => {
+            if (openTabs.has(node.path)) {
+                return openTabs.get(node.path);
+            }
+
+            const tabElement = document.createElement('div');
+            const tabLabel = document.createElement('span');
+            const closeButton = document.createElement('i');
+
+            tabElement.className = 'tab';
+            tabElement.dataset.path = node.path;
+            tabLabel.className = 'tab-label';
+            tabLabel.textContent = node.name;
+            closeButton.className = 'codicon codicon-close tab-close';
+            closeButton.title = 'Close';
+
+            tabElement.appendChild(tabLabel);
+            tabElement.appendChild(closeButton);
+            tabBar.appendChild(tabElement);
+            openTabs.set(node.path, tabElement);
+
+            tabElement.addEventListener('click', () => openFileByPath(node.path));
+            closeButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                closeTab(node.path);
+            });
+
+            return tabElement;
+        };
+
+        const closeTab = (path) => {
+            const tabElement = openTabs.get(path);
+
+            if (!tabElement) return;
+
+            const tabs = Array.from(tabBar.children);
+            const tabIndex = tabs.indexOf(tabElement);
+
+            tabElement.remove();
+            openTabs.delete(path);
+
+            if (activeFilePath === path) {
+                const remainingTabs = Array.from(tabBar.children);
+                const fallbackTab = remainingTabs[tabIndex] || remainingTabs[tabIndex - 1];
+
+                if (fallbackTab) {
+                    openFileByPath(fallbackTab.dataset.path);
+                } else {
+                    activeFilePath = null;
+                    setActiveTab(null);
+                    setSelectedFileElement(null);
+                    showWelcomeMessage();
+                }
+            }
+        };
+
         const openFileInEditor = async (node, fileElement) => {
             setSelectedFileElement(fileElement);
+            ensureTabForFile(node);
+            setActiveTab(node.path);
             activeFilePath = node.path;
             await monacoReady;
 

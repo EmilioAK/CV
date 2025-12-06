@@ -52,10 +52,6 @@ body {
     border-right: 1px solid var(--border-color);
 }
 
-.tab-bar {
-    grid-area: tab-bar;
-}
-
 .sidebar {
     grid-area: sidebar;
     border-right: 1px solid var(--border-color);
@@ -174,4 +170,50 @@ body {
 
 .sidebar-file > .codicon {
     font-size: 16px !important;
+}
+
+.tab-bar {
+    grid-area: tab-bar;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    font-size: 12px;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    padding: 0 12px;
+    border-right: 1px solid var(--border-color);
+    color: var(--font-color);
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.tab:hover {
+    background-color: #333333;
+    color: white;
+}
+
+.tab.active {
+    background-color: #1e1e1e;
+    color: white;
+    box-shadow: inset 0 1px 0 #0078d4;
+}
+
+.tab-label {
+    white-space: nowrap;
+}
+
+.tab-close {
+    font-size: 14px !important;
+    color: #a0a0a0;
+}
+
+.tab-close:hover {
+    color: white;
 }
