@@ -1,0 +1,59 @@
+:root {
+    --background-color: #181818;
+    --border-color: #2a2a2a;
+    --font-color: #d7d7d7;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    box-sizing: border-box;
+    grid-template-areas:
+        "activity-bar sidebar-header tab-bar"
+        "activity-bar sidebar editor";
+    grid-template-rows: 30px 1fr;
+    grid-template-columns: 50px 285px 1fr;
+    background-color: var(--background-color);
+    color: #505050;
+    font-family: sans-serif;
+}
+
+.activity-bar {
+    grid-area: activity-bar;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-top: 15px;
+    border-right: 1px solid var(--border-color);
+}
+
+.codicon {
+    font-size: 24px !important;
+    cursor: pointer;
+}
+
+.codicon:hover {
+    color: var(--font-color);
+}
+
+.codicon.selected {
+    color: var(--font-color);
+    box-shadow: inset 4px 0 0 #0078d4;
+}
+
+.sidebar-header {
+    grid-area: sidebar-header;
+}
+
+.tab-bar {
+    grid-area: tab-bar;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.editor {
+    grid-area: editor;
+}
