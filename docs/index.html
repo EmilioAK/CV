@@ -37,11 +37,11 @@
                 <div class="sidebar-file">
                     <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">about.md</span>
                 </div>
-                <div class="sidebar-folder">
-                    <div class="sidebar-file sidebar-folder-header">
-                        <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i> <span class="sidebar-folder-name">work</span>
-                    </div>
-                    <div class="sidebar-folder-content">
+        <div class="sidebar-folder">
+            <div class="sidebar-file sidebar-folder-header">
+                <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i> <span class="sidebar-folder-name">work</span>
+            </div>
+            <div class="sidebar-folder-content">
                         <div class="sidebar-file">
                             <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">job1.md</span>
                         </div>
@@ -53,7 +53,33 @@
             </div>
         </div>
     </div>
-    <div class="editor"></div>
+    <div id="monaco-editor" class="editor"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs/loader.min.js" crossorigin="anonymous"></script>
+    <script>
+        const editorContainer = document.getElementById('monaco-editor');
+
+        require.config({
+            paths: {
+                'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs'
+            }
+        });
+
+        require(['vs/editor/editor.main'], function () {
+            monaco.editor.create(editorContainer, {
+                value: [
+                    '# Info about me',
+                    '',
+                    'This Monaco editor is read-only so you can browse without making edits.',
+                    '',
+                    '- Update this text by changing docs/index.html when ready.'
+                ].join('\n'),
+                language: 'markdown',
+                theme: 'vs-dark',
+                readOnly: true,
+                automaticLayout: true
+            });
+        });
+    </script>
 </body>
 
 </html>
