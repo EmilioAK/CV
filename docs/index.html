@@ -26,36 +26,149 @@
     </div>
     <div class="tab-bar"></div>
     <div class="sidebar">
-        <div class="sidebar-file">
-            <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">README.md</span>
-        </div>
-        <div class="sidebar-folder">
-            <div class="sidebar-file sidebar-folder-header">
-                <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i> <span class="sidebar-folder-name">CV</span>
+        <template id="file-template">
+            <div class="sidebar-file">
+                <span class="icon file-icon" aria-hidden="true"></span>
+                <span class="sidebar-file-name"></span>
             </div>
-            <div class="sidebar-folder-content">
-                <div class="sidebar-file">
-                    <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">about.md</span>
+        </template>
+        <template id="folder-template">
+            <div class="sidebar-folder">
+                <div class="sidebar-file sidebar-folder-header">
+                    <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i>
+                    <span class="sidebar-folder-name"></span>
                 </div>
-        <div class="sidebar-folder">
-            <div class="sidebar-file sidebar-folder-header">
-                <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i> <span class="sidebar-folder-name">work</span>
+                <div class="sidebar-folder-content"></div>
             </div>
-            <div class="sidebar-folder-content">
-                        <div class="sidebar-file">
-                            <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">job1.md</span>
-                        </div>
-                        <div class="sidebar-file">
-                            <span class="icon seti-icon seti-markdown" aria-hidden="true"></span> <span class="sidebar-file-name">job2.md</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </template>
+        <div id="file-tree"></div>
     </div>
     <div id="monaco-editor" class="editor"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs/loader.min.js" crossorigin="anonymous"></script>
     <script>
+        const fileTreeContainer = document.getElementById('file-tree');
+        const fileTemplate = document.getElementById('file-template');
+        const folderTemplate = document.getElementById('folder-template');
+
+        const buildFileTree = async () => {
+            try {
+                const response = await fetch('data/file-list.txt');
+
+                if (!response.ok) {
+                    throw new Error(`Unable to load file list (${response.status})`);
+                }
+
+                const text = await response.text();
+                const paths = text.split('\n').map((line) => line.trim()).filter(Boolean);
+                const tree = createTreeFromPaths(paths);
+
+                fileTreeContainer.innerHTML = '';
+                renderTreeChildren(tree, fileTreeContainer);
+            } catch (error) {
+                console.error('Failed to build file tree:', error);
+            }
+        };
+
+        const createTreeFromPaths = (paths) => {
+            const root = {
+                type: 'folder',
+                name: '',
+                children: new Map(),
+            };
+
+            paths.forEach((path) => {
+                const parts = path.split('/');
+                let current = root;
+
+                parts.forEach((part, index) => {
+                    const isFile = index === parts.length - 1;
+
+                    if (!current.children.has(part)) {
+                        current.children.set(part, {
+                            type: isFile ? 'file' : 'folder',
+                            name: part,
+                            children: isFile ? null : new Map(),
+                        });
+                    }
+
+                    current = current.children.get(part);
+                });
+            });
+
+            return root;
+        };
+
+        const renderTreeChildren = (node, container) => {
+            const children = Array.from(node.children.values()).sort((a, b) => {
+                if (a.type === b.type) {
+                    return a.name.localeCompare(b.name);
+                }
+
+                return a.type === 'folder' ? -1 : 1;
+            });
+
+            children.forEach((child) => {
+                if (child.type === 'file') {
+                    container.appendChild(createFileElement(child));
+                } else {
+                    const folderElement = createFolderElement(child);
+                    container.appendChild(folderElement);
+                }
+            });
+        };
+
+        const createFileElement = (node) => {
+            const fileElement = fileTemplate.content.firstElementChild.cloneNode(true);
+            const iconElement = fileElement.querySelector('.file-icon');
+
+            setIconForFile(node.name, iconElement);
+            fileElement.querySelector('.sidebar-file-name').textContent = node.name;
+
+            return fileElement;
+        };
+
+        const createFolderElement = (node) => {
+            const folderElement = folderTemplate.content.firstElementChild.cloneNode(true);
+            const folderName = folderElement.querySelector('.sidebar-folder-name');
+            const folderContent = folderElement.querySelector('.sidebar-folder-content');
+            const chevron = folderElement.querySelector('.codicon');
+            const header = folderElement.querySelector('.sidebar-folder-header');
+            let isOpen = true;
+
+            folderName.textContent = node.name;
+            renderTreeChildren(node, folderContent);
+
+            const updateChevron = () => {
+                chevron.classList.toggle('codicon-chevron-down', isOpen);
+                chevron.classList.toggle('codicon-chevron-right', !isOpen);
+                folderContent.style.display = isOpen ? '' : 'none';
+            };
+
+            header.addEventListener('click', () => {
+                isOpen = !isOpen;
+                updateChevron();
+            });
+
+            updateChevron();
+
+            return folderElement;
+        };
+
+        const setIconForFile = (fileName, iconElement) => {
+            const parts = fileName.split('.');
+            const extension = parts.length > 1 ? parts.pop().toLowerCase() : '';
+
+            iconElement.className = 'icon file-icon';
+
+            if (extension === 'md') {
+                iconElement.classList.add('seti-icon', 'seti-markdown');
+            } else {
+                iconElement.classList.add('codicon', 'codicon-file');
+            }
+        };
+
+        buildFileTree();
+
         const editorContainer = document.getElementById('monaco-editor');
 
         require.config({

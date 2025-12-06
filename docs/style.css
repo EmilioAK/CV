@@ -63,6 +63,12 @@ body {
     flex-direction: column;
 }
 
+.file-icon {
+    width: 20px;
+    display: inline-flex;
+    justify-content: center;
+}
+
 .sidebar-file {
     display: flex;
     color: var(--font-color);
