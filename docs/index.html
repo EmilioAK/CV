@@ -49,6 +49,17 @@
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
+        const setiExtensionMap = {
+            md: 'seti-markdown',
+            mdx: 'seti-markdown',
+            markdown: 'seti-markdown',
+            html: 'seti-html',
+            htm: 'seti-html',
+            json: 'seti-json',
+            yml: 'seti-yml',
+            yaml: 'seti-yml',
+            txt: 'seti-default',
+        };
 
         const buildFileTree = async () => {
             try {
@@ -155,16 +166,31 @@
         };
 
         const setIconForFile = (fileName, iconElement) => {
-            const parts = fileName.split('.');
-            const extension = parts.length > 1 ? parts.pop().toLowerCase() : '';
+            const setiClass = getSetiIconClass(fileName);
 
             iconElement.className = 'icon file-icon';
 
-            if (extension === 'md') {
-                iconElement.classList.add('seti-icon', 'seti-markdown');
+            if (setiClass) {
+                iconElement.classList.add('seti-icon', setiClass);
             } else {
                 iconElement.classList.add('codicon', 'codicon-file');
             }
+        };
+
+        const getSetiIconClass = (fileName) => {
+            const lowerName = fileName.toLowerCase();
+
+            const lastDot = lowerName.lastIndexOf('.');
+            const extension = lastDot > 0 ? lowerName.slice(lastDot + 1) : '';
+
+            if (extension && setiExtensionMap[extension]) {
+                return setiExtensionMap[extension];
+            }
+
+            if (lowerName === 'license') return 'seti-license';
+            if (lowerName === 'cname' || lowerName === '.gitignore') return 'seti-config';
+
+            return 'seti-default';
         };
 
         buildFileTree();

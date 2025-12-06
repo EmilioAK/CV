@@ -140,6 +140,37 @@ body {
     color: #519aba;
 }
 
+.seti-html::before {
+    content: "\E049";
+    color: #e37933;
+}
+
+.seti-json::before {
+    content: "\E056";
+    color: #cbcb41;
+}
+
+.seti-yml::before,
+.seti-yaml::before {
+    content: "\E0A7";
+    color: #a074c4;
+}
+
+.seti-config::before {
+    content: "\E019";
+    color: #6d8086;
+}
+
+.seti-default::before {
+    content: "\E023";
+    color: #d4d7d6;
+}
+
+.seti-license::before {
+    content: "\E05B";
+    color: #cbcb41;
+}
+
 
 .sidebar-file > .codicon {
     font-size: 16px !important;
