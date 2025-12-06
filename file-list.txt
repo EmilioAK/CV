@@ -1,3 +1,0 @@
-.github/workflows/update-file-list.yml
-README.md
-file-list.txt
