@@ -115,3 +115,8 @@ body {
     content: "\E061";
     color: #519aba;
 }
+
+
+.sidebar-file > .codicon {
+    font-size: 16px !important;
+}
