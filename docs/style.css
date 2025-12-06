@@ -93,8 +93,11 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 12px;
-    padding-left: 10px;
+}
+
+.sidebar-folder-content .sidebar-file {
     border-left: 1px solid var(--border-color);
+    padding-left: 10px;
 }
 
 .editor {
