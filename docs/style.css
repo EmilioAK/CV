@@ -44,6 +44,12 @@ body {
 
 .sidebar-header {
     grid-area: sidebar-header;
+    font-size: 11px;
+    padding: 5px 10px;
+    color: var(--font-color);
+    padding-left: 20px;
+    padding-top: 10px;
+    border-right: 1px solid var(--border-color);
 }
 
 .tab-bar {
@@ -52,6 +58,7 @@ body {
 
 .sidebar {
     grid-area: sidebar;
+    border-right: 1px solid var(--border-color);
 }
 
 .editor {
