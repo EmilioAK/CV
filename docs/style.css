@@ -12,11 +12,12 @@ body {
     grid-template-areas:
         "activity-bar sidebar-header tab-bar"
         "activity-bar sidebar editor";
-    grid-template-rows: 30px 1fr;
+    grid-template-rows: 35px 1fr;
     grid-template-columns: 50px 285px 1fr;
     background-color: var(--background-color);
     color: #505050;
     font-family: sans-serif;
+    border-top: 1px solid var(--border-color);
 }
 
 .activity-bar {
@@ -178,7 +179,7 @@ body {
     align-items: flex-end;
     border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .tab {
@@ -186,7 +187,7 @@ body {
     align-items: center;
     gap: 8px;
     height: 100%;
-    padding: 0 12px;
+    padding: 0 8px;
     border-right: 1px solid var(--border-color);
     color: var(--font-color);
     cursor: pointer;
@@ -195,12 +196,12 @@ body {
 }
 
 .tab:hover {
-    background-color: #333333;
+    background-color: #1f1f1f;
     color: white;
 }
 
 .tab.active {
-    background-color: #1e1e1e;
+    background-color: #1f1f1f;
     color: white;
     box-shadow: inset 0 1px 0 #0078d4;
 }
@@ -212,8 +213,21 @@ body {
 .tab-close {
     font-size: 14px !important;
     color: #a0a0a0;
+    padding: 2px;
+    border-radius: 3px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.tab.active .tab-close {
+    color: white;
+}
+
+.tab:hover .tab-close {
+    opacity: 1;
+    visibility: visible;
 }
 
 .tab-close:hover {
-    color: white;
+    background-color: #313232;
 }

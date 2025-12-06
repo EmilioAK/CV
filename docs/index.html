@@ -25,6 +25,13 @@
         EXPLORER
     </div>
     <div class="tab-bar"></div>
+    <template id="tab-template">
+        <div class="tab">
+            <span class="icon file-icon tab-icon" aria-hidden="true"></span>
+            <span class="tab-label"></span>
+            <i class="codicon codicon-close tab-close" title="Close" aria-label="Close tab"></i>
+        </div>
+    </template>
     <div class="sidebar">
         <template id="file-template">
             <div class="sidebar-file">
@@ -49,6 +56,7 @@
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
+        const tabTemplate = document.getElementById('tab-template');
         const editorContainer = document.getElementById('monaco-editor');
         const tabBar = document.querySelector('.tab-bar');
         const defaultFilePath = 'README.md';
@@ -254,32 +262,33 @@
             throw new Error('Unable to load file content.');
         };
 
-        const ensureTabForFile = (node) => {
-            if (openTabs.has(node.path)) {
-                return openTabs.get(node.path);
-            }
+        const createTabElement = (node) => {
+            const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
+            const tabIcon = tabElement.querySelector('.tab-icon');
+            const tabLabel = tabElement.querySelector('.tab-label');
+            const closeButton = tabElement.querySelector('.tab-close');
 
-            const tabElement = document.createElement('div');
-            const tabLabel = document.createElement('span');
-            const closeButton = document.createElement('i');
-
-            tabElement.className = 'tab';
             tabElement.dataset.path = node.path;
-            tabLabel.className = 'tab-label';
+            setIconForFile(node.name, tabIcon);
             tabLabel.textContent = node.name;
-            closeButton.className = 'codicon codicon-close tab-close';
-            closeButton.title = 'Close';
-
-            tabElement.appendChild(tabLabel);
-            tabElement.appendChild(closeButton);
-            tabBar.appendChild(tabElement);
-            openTabs.set(node.path, tabElement);
 
             tabElement.addEventListener('click', () => openFileByPath(node.path));
             closeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 closeTab(node.path);
             });
+
+            return tabElement;
+        };
+
+        const ensureTabForFile = (node) => {
+            if (openTabs.has(node.path)) {
+                return openTabs.get(node.path);
+            }
+
+            const tabElement = createTabElement(node);
+            tabBar.appendChild(tabElement);
+            openTabs.set(node.path, tabElement);
 
             return tabElement;
         };
@@ -401,8 +410,14 @@
 
         const setIconForFile = (fileName, iconElement) => {
             const setiClass = getSetiIconClass(fileName);
+            const preservedClasses = Array.from(iconElement.classList).filter((className) => {
+                return className !== 'seti-icon' &&
+                    !className.startsWith('seti-') &&
+                    className !== 'codicon' &&
+                    !className.startsWith('codicon-');
+            });
 
-            iconElement.className = 'icon file-icon';
+            iconElement.className = preservedClasses.join(' ');
 
             if (setiClass) {
                 iconElement.classList.add('seti-icon', setiClass);
