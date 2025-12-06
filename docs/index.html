@@ -292,7 +292,8 @@
             const folderContent = folderElement.querySelector('.sidebar-folder-content');
             const chevron = folderElement.querySelector('.codicon');
             const header = folderElement.querySelector('.sidebar-folder-header');
-            let isOpen = true;
+            const collapsedByDefault = node.path !== 'CV';
+            let isOpen = !collapsedByDefault;
 
             folderName.textContent = node.name;
             renderTreeChildren(node, folderContent);
