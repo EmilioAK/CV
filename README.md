@@ -1,10 +1,11 @@
-# Welcome to Emilio's Workspace
+# Welcome to my VSCode-style Portfolio
 
 Hi, I'm **Emilio Alvarez**, a Computer Science student at VU Amsterdam and a Cloud Solution Architect Intern at Microsoft.
 
-I built this site as an interactive portfolio that's meant to feel like VSCode (looks pretty close, right?). And yes, this site actually shows itself! What you see on the left is the full file structure of the entire project.
+This repository contains the source for my interactive portfolio site, designed to feel like VSCode.  
+On the website, the file explorer you see is generated from this project's real structure! So if you're reading this on GitHub, you're literally looking at the same workspace the site is built around.
 
-The site's still under development, but soon the other activity bar buttons will be functional — with my own twist on what I think should be there :)
+The site is still under development, but more activity bar buttons will become functional soon, with my own twist on what I think should be there :)
 
 You'll find more about me in the `CV/` folder. If you're curious about how everything is wired, the site data lives in the `page-data/` folder. But if you're short on time:
 
