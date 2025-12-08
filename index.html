@@ -62,7 +62,7 @@
 
     <div id="monaco-editor" class="editor"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs/loader.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"
         crossorigin="anonymous"></script>
 
     <script>
@@ -123,7 +123,7 @@
         const monacoReady = new Promise((resolve) => {
             require.config({
                 paths: {
-                    'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs'
+                    'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs'
                 }
             });
 
