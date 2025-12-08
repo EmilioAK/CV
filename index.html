@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>EmilioAK</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <!-- moved into page-data -->
+    <link rel="stylesheet" href="page-data/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons/dist/codicon.css" />
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="img/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="img/android-chrome-512x512.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+
+    <!-- icons moved into page-data/img -->
+    <link rel="icon" type="image/png" sizes="32x32" href="page-data/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="page-data/img/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="page-data/img/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="page-data/img/android-chrome-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="page-data/img/apple-touch-icon.png" />
 </head>
 
 <body>
@@ -24,7 +28,9 @@
     <div class="sidebar-header">
         EXPLORER
     </div>
+
     <div class="tab-bar"></div>
+
     <template id="tab-template">
         <div class="tab">
             <span class="icon file-icon tab-icon" aria-hidden="true"></span>
@@ -32,6 +38,7 @@
             <i class="codicon codicon-close tab-close" title="Close" aria-label="Close tab"></i>
         </div>
     </template>
+
     <div class="sidebar">
         <template id="file-template">
             <div class="sidebar-file">
@@ -39,6 +46,7 @@
                 <span class="sidebar-file-name"></span>
             </div>
         </template>
+
         <template id="folder-template">
             <div class="sidebar-folder">
                 <div class="sidebar-file sidebar-folder-header">
@@ -48,10 +56,15 @@
                 <div class="sidebar-folder-content"></div>
             </div>
         </template>
+
         <div id="file-tree"></div>
     </div>
+
     <div id="monaco-editor" class="editor"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs/loader.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.53.0/min/vs/loader.min.js"
+        crossorigin="anonymous"></script>
+
     <script>
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
@@ -59,7 +72,9 @@
         const tabTemplate = document.getElementById('tab-template');
         const editorContainer = document.getElementById('monaco-editor');
         const tabBar = document.querySelector('.tab-bar');
+
         const defaultFilePath = 'README.md';
+
         const setiExtensionMap = {
             md: 'seti-markdown',
             mdx: 'seti-markdown',
@@ -71,6 +86,7 @@
             yaml: 'seti-yml',
             txt: 'seti-default',
         };
+
         const languageExtensionMap = {
             css: 'css',
             htm: 'html',
@@ -89,11 +105,13 @@
             yml: 'yaml',
             yaml: 'yaml',
         };
+
         let selectedFileElement = null;
         let monacoEditor = null;
         let activeFilePath = null;
         let fileNodesByPath = new Map();
         const openTabs = new Map();
+
         const initialEditorMessage = [
             '# Welcome',
             '',
@@ -124,7 +142,8 @@
 
         const buildFileTree = async () => {
             try {
-                const response = await fetch('data/file-list.txt');
+                // file list moved into page-data
+                const response = await fetch('page-data/file-list.txt');
 
                 if (!response.ok) {
                     throw new Error(`Unable to load file list (${response.status})`);
@@ -133,14 +152,15 @@
                 const text = await response.text();
                 const paths = text.split('\n').map((line) => line.trim()).filter(Boolean);
                 const tree = createTreeFromPaths(paths);
-            fileNodesByPath = new Map();
 
-            fileTreeContainer.innerHTML = '';
-            renderTreeChildren(tree, fileTreeContainer);
-            selectDefaultFile();
-        } catch (error) {
-            console.error('Failed to build file tree:', error);
-        }
+                fileNodesByPath = new Map();
+                fileTreeContainer.innerHTML = '';
+
+                renderTreeChildren(tree, fileTreeContainer);
+                selectDefaultFile();
+            } catch (error) {
+                console.error('Failed to build file tree:', error);
+            }
         };
 
         const showWelcomeMessage = async () => {
@@ -182,7 +202,8 @@
         };
 
         const findFileElementByPath = (path) => {
-            return Array.from(fileTreeContainer.querySelectorAll('.sidebar-file[data-path]')).find((el) => el.dataset.path === path) || null;
+            return Array.from(fileTreeContainer.querySelectorAll('.sidebar-file[data-path]'))
+                .find((el) => el.dataset.path === path) || null;
         };
 
         const setSelectedFileElement = (fileElement) => {
@@ -229,37 +250,26 @@
             }
         };
 
-        // Try a few possible locations so this works both locally and on GitHub Pages.
-        const buildCandidateUrls = (path) => {
-            const urls = [];
-            const trimmedDocsPath = path.startsWith('docs/') ? path.slice(5) : path;
-            const servedFromDocsFolder = window.location.pathname.includes('/docs/');
-
-            urls.push(trimmedDocsPath);
-            urls.push(servedFromDocsFolder ? `../${path}` : path);
-
-            const encodedPath = path.split('/').map((part) => encodeURIComponent(part)).join('/');
-            urls.push(`https://raw.githubusercontent.com/EmilioAK/cv/main/${encodedPath}`);
-
-            return [...new Set(urls)];
+        // Files are served from the published root; no external fallbacks are needed.
+        const buildFileUrl = (path) => {
+            return path.split('/').map((part) => encodeURIComponent(part)).join('/');
         };
 
         const loadFileContent = async (path) => {
-            const candidates = buildCandidateUrls(path);
+            const url = buildFileUrl(path);
 
-            for (const url of candidates) {
-                try {
-                    const response = await fetch(url);
+            try {
+                const response = await fetch(url);
 
-                    if (response.ok) {
-                        return await response.text();
-                    }
-                } catch (error) {
-                    console.error(`Failed to fetch ${url}:`, error);
+                if (response.ok) {
+                    return await response.text();
                 }
-            }
 
-            throw new Error('Unable to load file content.');
+                throw new Error(`Request failed with status ${response.status}`);
+            } catch (error) {
+                console.error(`Failed to fetch ${url}:`, error);
+                throw new Error('Unable to load file content.');
+            }
         };
 
         const createTabElement = (node) => {
@@ -295,7 +305,6 @@
 
         const closeTab = (path) => {
             const tabElement = openTabs.get(path);
-
             if (!tabElement) return;
 
             const tabs = Array.from(tabBar.children);
@@ -324,6 +333,7 @@
             ensureTabForFile(node);
             setActiveTab(node.path);
             activeFilePath = node.path;
+
             await monacoReady;
 
             monacoEditor.setValue(`Loading ${node.path}...`);
@@ -351,7 +361,6 @@
                 if (a.type === b.type) {
                     return a.name.localeCompare(b.name);
                 }
-
                 return a.type === 'folder' ? -1 : 1;
             });
 
@@ -359,8 +368,7 @@
                 if (child.type === 'file') {
                     container.appendChild(createFileElement(child));
                 } else {
-                    const folderElement = createFolderElement(child);
-                    container.appendChild(folderElement);
+                    container.appendChild(createFolderElement(child));
                 }
             });
         };
@@ -373,6 +381,7 @@
             fileElement.querySelector('.sidebar-file-name').textContent = node.name;
             fileElement.dataset.path = node.path;
             fileElement.title = node.path;
+
             fileNodesByPath.set(node.path, node);
 
             fileElement.addEventListener('click', () => openFileInEditor(node, fileElement));
@@ -386,6 +395,7 @@
             const folderContent = folderElement.querySelector('.sidebar-folder-content');
             const chevron = folderElement.querySelector('.codicon');
             const header = folderElement.querySelector('.sidebar-folder-header');
+
             const collapsedByDefault = node.path !== 'CV';
             let isOpen = !collapsedByDefault;
 
@@ -428,7 +438,6 @@
 
         const getSetiIconClass = (fileName) => {
             const lowerName = fileName.toLowerCase();
-
             const lastDot = lowerName.lastIndexOf('.');
             const extension = lastDot > 0 ? lowerName.slice(lastDot + 1) : '';
 
