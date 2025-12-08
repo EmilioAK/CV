@@ -1,4 +1,4 @@
-# Welcome to my VSCode-style Portfolio
+# README
 
 Hi, I'm **Emilio Alvarez**, a Computer Science student at VU Amsterdam and a Cloud Solution Architect Intern at Microsoft.
 
