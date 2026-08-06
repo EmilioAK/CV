@@ -15,6 +15,9 @@ You'll find more about me in the `CV/` folder. If you're curious about how every
 - Teaching Assistant: Web Technology, Operating Systems, Systems Programming Project & Introduction to Programming.
 - Interests: systems, cloud architecture, developer tooling, security-minded engineering. 
 
+## Resume
+- [Download my resume](CV/Emilio_Alvarez_Resume.pdf)
+
 ## Contact
 - Email: me@emilioak.dev
 - LinkedIn: linkedin.com/in/EmilioAK

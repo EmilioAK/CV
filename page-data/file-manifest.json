@@ -24,14 +24,24 @@
       "sha256": "015b5f5e861ae36f2270f9a6481da501d7ad06316c8b676ef5fbff376d931f1a"
     },
     {
+      "path": "CV/Emilio_Alvarez_Resume.pdf",
+      "sourceUrl": "CV/Emilio_Alvarez_Resume.pdf",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/Emilio_Alvarez_Resume.pdf",
+      "kind": "binary",
+      "mediaType": "application/pdf",
+      "language": "plaintext",
+      "size": 100402,
+      "sha256": "9070bbd3ba3b7b6f252d31a70344470b121d307c42997654b503efb7db0e06cd"
+    },
+    {
       "path": "index.html",
       "sourceUrl": "index.html",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/index.html",
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 35123,
-      "sha256": "4827bb749d8e0f7c50113a07477602d613b7bd326f41366341113c4484712bde"
+      "size": 36481,
+      "sha256": "6b101675b38c8a77ef28d551ca7908b374dc09d1cfddf47f21d3e8a8889c6628"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -109,8 +119,8 @@
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 13354,
-      "sha256": "695e1ceceb0fe461493a716700309dba00e0b724712eb50c970f1004da82d4f1"
+      "size": 13730,
+      "sha256": "6468cfc17e621b2ae48823c8746e2844c523c4e995456b64b1bc4da1befd47fb"
     },
     {
       "path": "README.md",
@@ -119,8 +129,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1183,
-      "sha256": "efa953fa69d30361d6adc30fc95f4392f2df509d1c67f703dc58665ceaf13082"
+      "size": 1248,
+      "sha256": "9a4031db718c365a2dea46eec7f31f25d5189ac1098d6d198aeaa49c633e4d46"
     },
     {
       "path": "scripts/generate-manifest.mjs",
@@ -129,8 +139,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 5574,
-      "sha256": "3193aa9475ddc3fa7baf02d5f921afd6c751c875343f9020e2b7c862d7c882b8"
+      "size": 5607,
+      "sha256": "5ee7a83d51e26bd24abf5aa796794b4454db247f7e46ee0631f62d221ef875b9"
     },
     {
       "path": "scripts/test-site.mjs",
@@ -139,8 +149,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 5075,
-      "sha256": "2b2204830de2909d9b09ac5bc406b704324a721dac80568ea88f02e11f2ec2e2"
+      "size": 6966,
+      "sha256": "4db63250f278d202bc68bf9d7dbf8a93f001a2023b596e8351e13c89d65793cd"
     }
   ]
 }

@@ -55,6 +55,7 @@ if (JSON.stringify(manifestPaths) !== JSON.stringify(sourceFiles)) {
 
 for (const requiredPath of [
     '.github/workflows/validate-site.yml',
+    'CV/Emilio_Alvarez_Resume.pdf',
     'README.md',
     'index.html',
     'page-data/file-manifest.json',
@@ -117,6 +118,7 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 }
 
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
+const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
 const styleCss = await readFile(path.join(repositoryRoot, 'page-data', 'style.css'), 'utf8');
 
 for (const requiredText of [
@@ -125,11 +127,60 @@ for (const requiredText of [
     'role="tree"',
     'role="tablist"',
     'id="media-viewer"',
+    'id="pdf-viewer"',
+    'renderPdfFile',
+    "node.mediaType === 'application/pdf'",
     'node.rawUrl',
 ]) {
     if (!indexHtml.includes(requiredText)) {
         fail(`index.html is missing ${requiredText}.`);
     }
+}
+
+if (indexHtml.includes('id="resume-download"')) {
+    fail('The activity bar must not contain a separate resume shortcut.');
+}
+
+if (!readme.includes('[Download my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
+    fail('README.md must keep the direct resume download link.');
+}
+
+const resumeEntry = manifest.files.find((entry) => {
+    return entry.path === 'CV/Emilio_Alvarez_Resume.pdf';
+});
+
+if (!resumeEntry || resumeEntry.kind !== 'binary') {
+    fail('The resume must be available as a binary download.');
+}
+
+if (resumeEntry.mediaType !== 'application/pdf') {
+    fail('The resume must use the application/pdf media type.');
+}
+
+const cssRuleBody = (selector) => {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return styleCss.match(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+};
+
+const pdfModeStyles = cssRuleBody('.media-viewer.pdf-mode');
+const pdfPreviewStyles = cssRuleBody('.media-viewer.pdf-mode .media-preview');
+const pdfDetailsStyles = cssRuleBody('.media-viewer.pdf-mode .media-details');
+const pdfViewerStyles = cssRuleBody('.pdf-viewer');
+
+if (!pdfModeStyles.includes('padding: 0;') || !pdfModeStyles.includes('overflow: hidden;')) {
+    fail('PDF mode must fill the editor without outer spacing.');
+}
+
+if (!pdfPreviewStyles.includes('height: 100%;')) {
+    fail('The PDF preview container must fill the editor height.');
+}
+
+if (!pdfDetailsStyles.includes('display: none;')) {
+    fail('The PDF metadata panel must be hidden in the full-tab viewer.');
+}
+
+if (!pdfViewerStyles.includes('height: 100%;') || !pdfViewerStyles.includes('border: 0;')) {
+    fail('The PDF frame must fill its container without a border.');
 }
 
 const codiconsStylesheetIndex = indexHtml.indexOf('@vscode/codicons');

@@ -104,6 +104,7 @@
             <section id="media-viewer" class="media-viewer" aria-label="File preview" hidden>
                 <div class="media-preview">
                     <img id="media-image" alt="" hidden />
+                    <iframe id="pdf-viewer" class="pdf-viewer" title="PDF preview" hidden></iframe>
                     <i id="binary-icon" class="codicon codicon-file-binary binary-icon"
                         aria-hidden="true" hidden></i>
                 </div>
@@ -142,6 +143,7 @@
         const stateDetail = document.getElementById('state-detail');
         const mediaViewer = document.getElementById('media-viewer');
         const mediaImage = document.getElementById('media-image');
+        const pdfViewer = document.getElementById('pdf-viewer');
         const binaryIcon = document.getElementById('binary-icon');
         const mediaTitle = document.getElementById('media-title');
         const mediaDescription = document.getElementById('media-description');
@@ -211,6 +213,10 @@
         monacoReady.catch(() => {});
 
         const clearObjectUrl = () => {
+            pdfViewer.hidden = true;
+            pdfViewer.removeAttribute('src');
+            mediaViewer.classList.remove('pdf-mode');
+
             if (activeObjectUrl) {
                 URL.revokeObjectURL(activeObjectUrl);
                 activeObjectUrl = null;
@@ -645,6 +651,28 @@
             showMedia();
         };
 
+        const renderPdfFile = async (node) => {
+            showState('loading', `Loading ${node.name}`, 'Preparing the PDF preview.');
+            const response = await loadResponse(node);
+            const blob = await response.blob();
+
+            if (activeFilePath !== node.path) return;
+
+            activeObjectUrl = URL.createObjectURL(blob);
+            mediaImage.hidden = true;
+            mediaImage.removeAttribute('src');
+            binaryIcon.hidden = true;
+            pdfViewer.src = activeObjectUrl;
+            pdfViewer.title = `Preview of ${node.path}`;
+            pdfViewer.hidden = false;
+            mediaViewer.classList.add('pdf-mode');
+            mediaTitle.textContent = node.path;
+            mediaDescription.textContent = `${node.mediaType} - ${formatBytes(node.size)}`;
+            mediaDownload.href = activeObjectUrl;
+            mediaDownload.download = node.name;
+            showMedia();
+        };
+
         const renderBinaryFile = async (node) => {
             showState('loading', `Loading ${node.name}`, 'Preparing the file details.');
             const response = await loadResponse(node);
@@ -678,7 +706,9 @@
             }
 
             try {
-                if (node.kind === 'image') {
+                if (node.mediaType === 'application/pdf') {
+                    await renderPdfFile(node);
+                } else if (node.kind === 'image') {
                     await renderImageFile(node);
                 } else if (node.kind === 'binary') {
                     await renderBinaryFile(node);
