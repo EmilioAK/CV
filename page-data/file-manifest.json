@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "repository": "EmilioAK/CV",
+  "branch": "main",
+  "files": [
+    {
+      "path": ".github/workflows/validate-site.yml",
+      "sourceUrl": ".github/workflows/validate-site.yml",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/.github/workflows/validate-site.yml",
+      "kind": "text",
+      "mediaType": "text/yaml",
+      "language": "yaml",
+      "size": 758,
+      "sha256": "adda55188d85a0f894bc6991e34828d14213dbe7f3128a1723a68d5343721c25"
+    },
+    {
+      "path": "CNAME",
+      "sourceUrl": "CNAME",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CNAME",
+      "kind": "text",
+      "mediaType": "text/plain",
+      "language": "plaintext",
+      "size": 12,
+      "sha256": "b30914f03f50b62e09f1cc776b0fada69d7c4db270c51a6afdb9d3ebd2af276b"
+    },
+    {
+      "path": "CV/about.md",
+      "sourceUrl": "CV/about.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/about.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 11,
+      "sha256": "015b5f5e861ae36f2270f9a6481da501d7ad06316c8b676ef5fbff376d931f1a"
+    },
+    {
+      "path": "index.html",
+      "sourceUrl": "index.html",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/index.html",
+      "kind": "text",
+      "mediaType": "text/html",
+      "language": "html",
+      "size": 35123,
+      "sha256": "4827bb749d8e0f7c50113a07477602d613b7bd326f41366341113c4484712bde"
+    },
+    {
+      "path": "page-data/file-manifest.json",
+      "sourceUrl": "page-data/file-manifest.json",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/file-manifest.json",
+      "kind": "text",
+      "mediaType": "application/json",
+      "language": "json",
+      "generated": true
+    },
+    {
+      "path": "page-data/img/android-chrome-192x192.png",
+      "sourceUrl": "page-data/img/android-chrome-192x192.png",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/android-chrome-192x192.png",
+      "kind": "image",
+      "mediaType": "image/png",
+      "language": "plaintext",
+      "size": 70056,
+      "sha256": "d15b426137e4ef34738d16aa33dad0d79d7f4c1826aec05313bb8c622e8713ae"
+    },
+    {
+      "path": "page-data/img/android-chrome-512x512.png",
+      "sourceUrl": "page-data/img/android-chrome-512x512.png",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/android-chrome-512x512.png",
+      "kind": "image",
+      "mediaType": "image/png",
+      "language": "plaintext",
+      "size": 456466,
+      "sha256": "cefc9c88e0977573c93404aee0f7627fb20389a983a52f13beff74ff34b1e5a3"
+    },
+    {
+      "path": "page-data/img/apple-touch-icon.png",
+      "sourceUrl": "page-data/img/apple-touch-icon.png",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/apple-touch-icon.png",
+      "kind": "image",
+      "mediaType": "image/png",
+      "language": "plaintext",
+      "size": 62611,
+      "sha256": "a4591cf89c1d23347a0015cd3ee0a33662ede4b1337124c6422316ac382b27b9"
+    },
+    {
+      "path": "page-data/img/favicon-16x16.png",
+      "sourceUrl": "page-data/img/favicon-16x16.png",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/favicon-16x16.png",
+      "kind": "image",
+      "mediaType": "image/png",
+      "language": "plaintext",
+      "size": 905,
+      "sha256": "d98fc0f6db83f06728ca44c622baa1e86d621ce1c845cf75a89e423c2a2a8e8e"
+    },
+    {
+      "path": "page-data/img/favicon-32x32.png",
+      "sourceUrl": "page-data/img/favicon-32x32.png",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/favicon-32x32.png",
+      "kind": "image",
+      "mediaType": "image/png",
+      "language": "plaintext",
+      "size": 2725,
+      "sha256": "b91aa8ca21d5b092e637a29e6afff23c2000bca068b3c87aa90402d1831ae813"
+    },
+    {
+      "path": "page-data/img/favicon.ico",
+      "sourceUrl": "page-data/img/favicon.ico",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/img/favicon.ico",
+      "kind": "image",
+      "mediaType": "image/x-icon",
+      "language": "plaintext",
+      "size": 15406,
+      "sha256": "bf58a2ab0ea0b48010ce979958ac4dbdfd917dd0cf28008d840f6708e8a20b01"
+    },
+    {
+      "path": "page-data/style.css",
+      "sourceUrl": "page-data/style.css",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/style.css",
+      "kind": "text",
+      "mediaType": "text/css",
+      "language": "css",
+      "size": 13354,
+      "sha256": "695e1ceceb0fe461493a716700309dba00e0b724712eb50c970f1004da82d4f1"
+    },
+    {
+      "path": "README.md",
+      "sourceUrl": "README.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/README.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1183,
+      "sha256": "efa953fa69d30361d6adc30fc95f4392f2df509d1c67f703dc58665ceaf13082"
+    },
+    {
+      "path": "scripts/generate-manifest.mjs",
+      "sourceUrl": "scripts/generate-manifest.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/generate-manifest.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 5574,
+      "sha256": "3193aa9475ddc3fa7baf02d5f921afd6c751c875343f9020e2b7c862d7c882b8"
+    },
+    {
+      "path": "scripts/test-site.mjs",
+      "sourceUrl": "scripts/test-site.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/test-site.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 5088,
+      "sha256": "935e9c96442d3949c1b68417cfd3d3e41577f66da258501d83f3c843cb76dea0"
+    }
+  ]
+}

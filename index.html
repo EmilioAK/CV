@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EmilioAK</title>
 
-    <link rel="stylesheet" href="page-data/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons/dist/codicon.css" />
+    <link rel="stylesheet" href="page-data/style.css" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="page-data/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="page-data/img/favicon-16x16.png" />
@@ -16,62 +17,135 @@
 </head>
 
 <body>
-    <div class="activity-bar">
-        <i class="codicon codicon-files selected" title="Explorer" aria-label="Explorer"></i>
-        <i class="codicon codicon-search" title="Search" aria-label="Search"></i>
-        <i class="codicon codicon-source-control" title="Source Control" aria-label="Source Control"></i>
-        <i class="codicon codicon-extensions" title="Extensions" aria-label="Extensions"></i>
-    </div>
+    <nav class="activity-bar" aria-label="Workspace views">
+        <button id="explorer-toggle" class="activity-button selected" type="button"
+            title="Explorer" aria-label="Toggle Explorer" aria-controls="explorer-sidebar"
+            aria-expanded="true">
+            <i class="codicon codicon-files" aria-hidden="true"></i>
+        </button>
+    </nav>
 
-    <div class="sidebar-header">
-        EXPLORER
-    </div>
-
-    <div class="tab-bar"></div>
-
-    <template id="tab-template">
-        <div class="tab">
-            <span class="icon file-icon tab-icon" aria-hidden="true"></span>
-            <span class="tab-label"></span>
-            <i class="codicon codicon-close tab-close" title="Close" aria-label="Close tab"></i>
+    <aside id="explorer-sidebar" class="sidebar" aria-label="Explorer">
+        <div class="sidebar-header">
+            <span>EXPLORER</span>
+            <button id="sidebar-close" class="sidebar-close" type="button"
+                title="Close Explorer" aria-label="Close Explorer">
+                <i class="codicon codicon-close" aria-hidden="true"></i>
+            </button>
         </div>
-    </template>
 
-    <div class="sidebar">
-        <template id="file-template">
-            <div class="sidebar-file">
-                <span class="icon file-icon" aria-hidden="true"></span>
-                <span class="sidebar-file-name"></span>
-            </div>
-        </template>
+        <div class="sidebar-content">
+            <template id="file-template">
+                <button class="sidebar-file" type="button" role="treeitem"
+                    aria-selected="false" tabindex="-1">
+                    <span class="icon file-icon" aria-hidden="true"></span>
+                    <span class="sidebar-file-name"></span>
+                </button>
+            </template>
 
-        <template id="folder-template">
-            <div class="sidebar-folder">
-                <div class="sidebar-file sidebar-folder-header">
-                    <i class="codicon codicon-chevron-down" title="Folder" aria-label="Folder"></i>
-                    <span class="sidebar-folder-name"></span>
+            <template id="folder-template">
+                <div class="sidebar-folder" role="none">
+                    <button class="sidebar-file sidebar-folder-header" type="button"
+                        role="treeitem" aria-expanded="false" tabindex="-1">
+                        <i class="codicon codicon-chevron-right" aria-hidden="true"></i>
+                        <span class="sidebar-folder-name"></span>
+                    </button>
+                    <div class="sidebar-folder-content" role="group" hidden></div>
                 </div>
-                <div class="sidebar-folder-content"></div>
+            </template>
+
+            <div id="file-tree" role="tree" aria-label="Repository files" aria-busy="true">
+                <div class="tree-loading" role="status">
+                    <span class="sr-only">Loading repository files.</span>
+                    <span class="tree-skeleton tree-skeleton-wide"></span>
+                    <span class="tree-skeleton"></span>
+                    <span class="tree-skeleton tree-skeleton-short"></span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <button id="sidebar-scrim" class="sidebar-scrim" type="button"
+        aria-label="Close Explorer" tabindex="-1"></button>
+
+    <main class="workspace" aria-label="Source browser">
+        <div class="tab-bar" role="tablist" aria-label="Open files"></div>
+
+        <template id="tab-template">
+            <div class="tab" role="presentation">
+                <button class="tab-select" type="button" role="tab"
+                    aria-selected="false" tabindex="-1">
+                    <span class="icon file-icon tab-icon" aria-hidden="true"></span>
+                    <span class="tab-label"></span>
+                </button>
+                <button class="tab-close" type="button" title="Close file">
+                    <i class="codicon codicon-close" aria-hidden="true"></i>
+                    <span class="sr-only tab-close-label">Close file</span>
+                </button>
             </div>
         </template>
 
-        <div id="file-tree"></div>
-    </div>
+        <div id="source-panel" class="editor-stage" role="tabpanel">
+            <div id="editor-state" class="editor-state" role="status" aria-live="polite">
+                <div class="state-copy">
+                    <strong id="state-title">Loading site</strong>
+                    <span id="state-detail">Preparing the repository browser.</span>
+                </div>
+                <div id="editor-skeleton" class="editor-skeleton" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
 
-    <div id="monaco-editor" class="editor"></div>
+            <div id="monaco-editor" class="editor" hidden></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"
+            <section id="media-viewer" class="media-viewer" aria-label="File preview" hidden>
+                <div class="media-preview">
+                    <img id="media-image" alt="" hidden />
+                    <i id="binary-icon" class="codicon codicon-file-binary binary-icon"
+                        aria-hidden="true" hidden></i>
+                </div>
+                <div class="media-details">
+                    <strong id="media-title"></strong>
+                    <span id="media-description"></span>
+                    <a id="media-download" class="media-download" download>Download file</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script id="monaco-loader"
+        src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"
         crossorigin="anonymous"></script>
 
     <script>
+        const manifestPath = 'page-data/file-manifest.json';
+        const defaultFilePath = 'README.md';
+        const mobileQuery = window.matchMedia('(max-width: 767px)');
+
+        const body = document.body;
+        const explorerToggle = document.getElementById('explorer-toggle');
+        const sidebar = document.getElementById('explorer-sidebar');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebarScrim = document.getElementById('sidebar-scrim');
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
         const tabTemplate = document.getElementById('tab-template');
-        const editorContainer = document.getElementById('monaco-editor');
         const tabBar = document.querySelector('.tab-bar');
-
-        const defaultFilePath = 'README.md';
+        const editorContainer = document.getElementById('monaco-editor');
+        const editorState = document.getElementById('editor-state');
+        const editorSkeleton = document.getElementById('editor-skeleton');
+        const stateTitle = document.getElementById('state-title');
+        const stateDetail = document.getElementById('state-detail');
+        const mediaViewer = document.getElementById('media-viewer');
+        const mediaImage = document.getElementById('media-image');
+        const binaryIcon = document.getElementById('binary-icon');
+        const mediaTitle = document.getElementById('media-title');
+        const mediaDescription = document.getElementById('media-description');
+        const mediaDownload = document.getElementById('media-download');
 
         const setiExtensionMap = {
             md: 'seti-markdown',
@@ -85,93 +159,193 @@
             txt: 'seti-default',
         };
 
-        const languageExtensionMap = {
-            css: 'css',
-            htm: 'html',
-            html: 'html',
-            js: 'javascript',
-            json: 'json',
-            md: 'markdown',
-            mdx: 'markdown',
-            mdwn: 'markdown',
-            mdtext: 'markdown',
-            markdown: 'markdown',
-            mdown: 'markdown',
-            scss: 'scss',
-            ts: 'typescript',
-            txt: 'plaintext',
-            yml: 'yaml',
-            yaml: 'yaml',
-        };
-
         let selectedFileElement = null;
         let monacoEditor = null;
         let activeFilePath = null;
+        let activeObjectUrl = null;
+        let desktopSidebarOpen = true;
+        let mobileSidebarOpen = false;
         let fileNodesByPath = new Map();
+        let fileElementsByPath = new Map();
+        let folderControllers = new Map();
         const openTabs = new Map();
 
-        const initialEditorMessage = [
-            '# Welcome',
-            '',
-            'Select a file from the Explorer to preview its contents here.',
-            '',
-            'Files are loaded in read-only mode.'
-        ].join('\n');
+        const monacoReady = new Promise((resolve, reject) => {
+            if (typeof window.require !== 'function') {
+                reject(new Error('The source editor did not load.'));
+                return;
+            }
 
-        const monacoReady = new Promise((resolve) => {
-            require.config({
+            window.require.config({
                 paths: {
-                    'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs'
+                    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs'
                 }
             });
 
-            require(['vs/editor/editor.main'], function () {
-                monacoEditor = monaco.editor.create(editorContainer, {
-                    value: initialEditorMessage,
-                    language: 'markdown',
-                    theme: 'vs-dark',
-                    readOnly: true,
-                    automaticLayout: true,
-                    wordWrap: 'on',
-                    wrappingStrategy: 'advanced',
-                    wrappingIndent: 'same',
-                    fontSize: 16,
-                });
+            window.require(
+                ['vs/editor/editor.main'],
+                () => {
+                    monacoEditor = monaco.editor.create(editorContainer, {
+                        value: '',
+                        language: 'plaintext',
+                        theme: 'vs-dark',
+                        readOnly: true,
+                        automaticLayout: true,
+                        wordWrap: 'on',
+                        wrappingStrategy: 'advanced',
+                        wrappingIndent: 'same',
+                        fontSize: 16,
+                        scrollBeyondLastLine: false,
+                        minimap: {
+                            enabled: !mobileQuery.matches
+                        },
+                        accessibilitySupport: 'auto',
+                    });
 
-                resolve();
-            });
+                    resolve(monacoEditor);
+                },
+                () => reject(new Error('The source editor did not load.'))
+            );
         });
 
-        const buildFileTree = async () => {
-            try {
-                // file list moved into page-data
-                const response = await fetch('page-data/file-list.txt');
+        monacoReady.catch(() => {});
 
-                if (!response.ok) {
-                    throw new Error(`Unable to load file list (${response.status})`);
-                }
-
-                const text = await response.text();
-                const paths = text.split('\n').map((line) => line.trim()).filter(Boolean);
-                const tree = createTreeFromPaths(paths);
-
-                fileNodesByPath = new Map();
-                fileTreeContainer.innerHTML = '';
-
-                renderTreeChildren(tree, fileTreeContainer);
-                selectDefaultFile();
-            } catch (error) {
-                console.error('Failed to build file tree:', error);
+        const clearObjectUrl = () => {
+            if (activeObjectUrl) {
+                URL.revokeObjectURL(activeObjectUrl);
+                activeObjectUrl = null;
             }
         };
 
-        const showWelcomeMessage = async () => {
-            await monacoReady;
-            monacoEditor.setValue(initialEditorMessage);
-            monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
+        const showState = (type, title, detail) => {
+            clearObjectUrl();
+            editorContainer.hidden = true;
+            mediaViewer.hidden = true;
+            editorState.hidden = false;
+            editorState.dataset.type = type;
+            editorState.setAttribute('role', type === 'error' ? 'alert' : 'status');
+            editorSkeleton.hidden = type !== 'loading';
+            stateTitle.textContent = title;
+            stateDetail.textContent = detail;
         };
 
-        const createTreeFromPaths = (paths) => {
+        const showEditor = () => {
+            clearObjectUrl();
+            editorState.hidden = true;
+            mediaViewer.hidden = true;
+            editorContainer.hidden = false;
+            requestAnimationFrame(() => monacoEditor?.layout());
+        };
+
+        const showMedia = () => {
+            editorState.hidden = true;
+            editorContainer.hidden = true;
+            mediaViewer.hidden = false;
+        };
+
+        const formatBytes = (size) => {
+            if (!Number.isFinite(size)) return 'Generated file';
+            if (size < 1024) return `${size} bytes`;
+            if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+            return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+        };
+
+        const encodeRoutePath = (filePath) => filePath
+            .split('/')
+            .map((part) => encodeURIComponent(part))
+            .join('/');
+
+        const getRoutePath = () => {
+            if (!window.location.hash.startsWith('#/')) return null;
+
+            try {
+                return window.location.hash
+                    .slice(2)
+                    .split('/')
+                    .map((part) => decodeURIComponent(part))
+                    .join('/');
+            } catch {
+                return null;
+            }
+        };
+
+        const updateRoute = (filePath, mode) => {
+            if (!mode) return;
+
+            const hash = `#/${encodeRoutePath(filePath)}`;
+            const url = `${window.location.pathname}${window.location.search}${hash}`;
+
+            if (mode === 'replace') {
+                window.history.replaceState({ filePath }, '', url);
+            } else if (window.location.hash !== hash) {
+                window.history.pushState({ filePath }, '', url);
+            }
+        };
+
+        const clearRoute = (mode = 'push') => {
+            if (!mode) return;
+
+            const url = `${window.location.pathname}${window.location.search}`;
+            if (mode === 'replace') {
+                window.history.replaceState({}, '', url);
+            } else if (window.location.hash) {
+                window.history.pushState({}, '', url);
+            }
+        };
+
+        const syncSidebar = () => {
+            if (mobileQuery.matches) {
+                body.classList.remove('sidebar-collapsed');
+                body.classList.toggle('sidebar-open', mobileSidebarOpen);
+                explorerToggle.setAttribute('aria-expanded', String(mobileSidebarOpen));
+                explorerToggle.classList.toggle('selected', mobileSidebarOpen);
+                sidebarScrim.tabIndex = mobileSidebarOpen ? 0 : -1;
+            } else {
+                body.classList.remove('sidebar-open');
+                body.classList.toggle('sidebar-collapsed', !desktopSidebarOpen);
+                explorerToggle.setAttribute('aria-expanded', String(desktopSidebarOpen));
+                explorerToggle.classList.toggle('selected', desktopSidebarOpen);
+                sidebarScrim.tabIndex = -1;
+            }
+
+            if (monacoEditor) {
+                monacoEditor.updateOptions({
+                    minimap: {
+                        enabled: !mobileQuery.matches
+                    }
+                });
+                requestAnimationFrame(() => monacoEditor.layout());
+            }
+        };
+
+        const closeMobileSidebar = () => {
+            if (!mobileQuery.matches || !mobileSidebarOpen) return;
+            mobileSidebarOpen = false;
+            syncSidebar();
+            explorerToggle.focus();
+        };
+
+        explorerToggle.addEventListener('click', () => {
+            if (mobileQuery.matches) {
+                mobileSidebarOpen = !mobileSidebarOpen;
+            } else {
+                desktopSidebarOpen = !desktopSidebarOpen;
+            }
+            syncSidebar();
+        });
+
+        sidebarClose.addEventListener('click', closeMobileSidebar);
+        sidebarScrim.addEventListener('click', closeMobileSidebar);
+        mobileQuery.addEventListener('change', () => {
+            mobileSidebarOpen = false;
+            syncSidebar();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeMobileSidebar();
+        });
+
+        const createTreeFromEntries = (entries) => {
             const root = {
                 type: 'folder',
                 name: '',
@@ -179,8 +353,8 @@
                 children: new Map()
             };
 
-            paths.forEach((path) => {
-                const parts = path.split('/');
+            entries.forEach((entry) => {
+                const parts = entry.path.split('/');
                 let current = root;
 
                 parts.forEach((part, index) => {
@@ -188,12 +362,20 @@
                     const nextPath = current.path ? `${current.path}/${part}` : part;
 
                     if (!current.children.has(part)) {
-                        current.children.set(part, {
-                            type: isFile ? 'file' : 'folder',
-                            name: part,
-                            path: nextPath,
-                            children: isFile ? null : new Map(),
-                        });
+                        current.children.set(part, isFile
+                            ? {
+                                ...entry,
+                                type: 'file',
+                                name: part,
+                                path: nextPath,
+                                children: null,
+                            }
+                            : {
+                                type: 'folder',
+                                name: part,
+                                path: nextPath,
+                                children: new Map(),
+                            });
                     }
 
                     current = current.children.get(part);
@@ -203,83 +385,166 @@
             return root;
         };
 
-        const findFileElementByPath = (path) => {
-            return Array.from(fileTreeContainer.querySelectorAll('.sidebar-file[data-path]'))
-                .find((el) => el.dataset.path === path) || null;
+        const setTreeFocus = (item) => {
+            fileTreeContainer.querySelectorAll('[role="treeitem"]').forEach((treeItem) => {
+                treeItem.tabIndex = treeItem === item ? 0 : -1;
+            });
+            item?.focus();
         };
+
+        const setTreeTabStop = (item) => {
+            fileTreeContainer.querySelectorAll('[role="treeitem"]').forEach((treeItem) => {
+                treeItem.tabIndex = treeItem === item ? 0 : -1;
+            });
+        };
+
+        const getVisibleTreeItems = () => Array.from(
+            fileTreeContainer.querySelectorAll('[role="treeitem"]')
+        ).filter((item) => item.offsetParent !== null);
+
+        fileTreeContainer.addEventListener('keydown', (event) => {
+            const current = event.target.closest('[role="treeitem"]');
+            if (!current) return;
+
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                current.click();
+                return;
+            }
+
+            const items = getVisibleTreeItems();
+            const currentIndex = items.indexOf(current);
+            let nextItem = null;
+
+            if (event.key === 'ArrowDown') {
+                nextItem = items[Math.min(currentIndex + 1, items.length - 1)];
+            } else if (event.key === 'ArrowUp') {
+                nextItem = items[Math.max(currentIndex - 1, 0)];
+            } else if (event.key === 'Home') {
+                nextItem = items[0];
+            } else if (event.key === 'End') {
+                nextItem = items[items.length - 1];
+            } else if (event.key === 'ArrowRight' && current.matches('.sidebar-folder-header')) {
+                const folderPath = current.dataset.folderPath;
+                const controller = folderControllers.get(folderPath);
+                if (current.getAttribute('aria-expanded') === 'false') {
+                    controller?.setOpen(true);
+                } else {
+                    nextItem = controller?.element.querySelector('[role="group"] [role="treeitem"]');
+                }
+            } else if (event.key === 'ArrowLeft') {
+                const owningFolder = current.closest('.sidebar-folder');
+                if (current.matches('.sidebar-folder-header')
+                    && current.getAttribute('aria-expanded') === 'true') {
+                    folderControllers.get(current.dataset.folderPath)?.setOpen(false);
+                } else {
+                    const parentFolder = current.matches('.sidebar-folder-header')
+                        ? owningFolder?.parentElement?.closest('.sidebar-folder')
+                        : owningFolder;
+                    const parentHeader = parentFolder
+                        ?.querySelector(':scope > .sidebar-folder-header');
+                    nextItem = parentHeader || null;
+                }
+            } else {
+                return;
+            }
+
+            event.preventDefault();
+            if (nextItem) setTreeFocus(nextItem);
+        });
 
         const setSelectedFileElement = (fileElement) => {
             if (selectedFileElement) {
                 selectedFileElement.classList.remove('selected');
+                selectedFileElement.setAttribute('aria-selected', 'false');
             }
 
             selectedFileElement = fileElement;
 
             if (selectedFileElement) {
                 selectedFileElement.classList.add('selected');
+                selectedFileElement.setAttribute('aria-selected', 'true');
+                setTreeTabStop(selectedFileElement);
             }
         };
 
-        const getFileLanguage = (fileName) => {
+        const getSetiIconClass = (fileName) => {
             const lowerName = fileName.toLowerCase();
             const lastDot = lowerName.lastIndexOf('.');
             const extension = lastDot > 0 ? lowerName.slice(lastDot + 1) : '';
 
-            return languageExtensionMap[extension] || 'plaintext';
-        };
-
-        const selectDefaultFile = () => {
-            const defaultNode = fileNodesByPath.get(defaultFilePath);
-            const defaultElement = findFileElementByPath(defaultFilePath);
-
-            if (defaultNode && defaultElement) {
-                openFileInEditor(defaultNode, defaultElement);
+            if (extension && setiExtensionMap[extension]) {
+                return setiExtensionMap[extension];
             }
+
+            if (lowerName === 'license') return 'seti-license';
+            if (lowerName === 'cname' || lowerName === '.gitignore') return 'seti-config';
+
+            return 'seti-default';
         };
 
-        const setActiveTab = (path) => {
-            Array.from(tabBar.children).forEach((tab) => {
-                tab.classList.toggle('active', tab.dataset.path === path);
+        const setIconForFile = (fileName, iconElement) => {
+            const setiClass = getSetiIconClass(fileName);
+            const preservedClasses = Array.from(iconElement.classList).filter((className) => {
+                return className !== 'seti-icon'
+                    && !className.startsWith('seti-')
+                    && className !== 'codicon'
+                    && !className.startsWith('codicon-');
             });
+
+            iconElement.className = preservedClasses.join(' ');
+            iconElement.classList.add('seti-icon', setiClass);
         };
 
-        const openFileByPath = (path) => {
-            const node = fileNodesByPath.get(path);
-            const fileElement = findFileElementByPath(path);
+        const setActiveTab = (filePath) => {
+            let activeTabElement = null;
 
-            if (node && fileElement) {
-                openFileInEditor(node, fileElement);
-            }
-        };
+            openTabs.forEach((tabElement, tabPath) => {
+                const selectButton = tabElement.querySelector('.tab-select');
+                const isActive = tabPath === filePath;
+                tabElement.classList.toggle('active', isActive);
+                selectButton.setAttribute('aria-selected', String(isActive));
+                selectButton.tabIndex = isActive ? 0 : -1;
+                if (isActive) activeTabElement = tabElement;
+            });
 
-        const loadFileContent = async (path) => {
-            const url = path.split('/').map((part) => encodeURIComponent(part)).join('/');
-
-            try {
-                const response = await fetch(url);
-
-                if (response.ok) {
-                    return await response.text();
-                }
-
-                throw new Error(`Request failed with status ${response.status}`);
-            } catch (error) {
-                console.error(`Failed to fetch ${url}:`, error);
-                throw new Error('Unable to load file content.');
-            }
+            requestAnimationFrame(() => {
+                activeTabElement?.scrollIntoView({
+                    block: 'nearest',
+                    inline: 'nearest'
+                });
+            });
         };
 
         const createTabElement = (node) => {
             const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
             const tabIcon = tabElement.querySelector('.tab-icon');
             const tabLabel = tabElement.querySelector('.tab-label');
+            const selectButton = tabElement.querySelector('.tab-select');
             const closeButton = tabElement.querySelector('.tab-close');
+            const closeLabel = tabElement.querySelector('.tab-close-label');
 
             tabElement.dataset.path = node.path;
+            selectButton.setAttribute('aria-controls', 'source-panel');
+            selectButton.setAttribute('aria-label', node.path);
+            closeButton.setAttribute('aria-label', `Close ${node.path}`);
+            closeLabel.textContent = `Close ${node.name}`;
             setIconForFile(node.name, tabIcon);
             tabLabel.textContent = node.name;
 
-            tabElement.addEventListener('click', () => openFileByPath(node.path));
+            selectButton.addEventListener('click', () => openFileByPath(node.path));
+            selectButton.addEventListener('keydown', (event) => {
+                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+                const tabs = Array.from(tabBar.querySelectorAll('.tab-select'));
+                const currentIndex = tabs.indexOf(selectButton);
+                const offset = event.key === 'ArrowRight' ? 1 : -1;
+                const nextIndex = (currentIndex + offset + tabs.length) % tabs.length;
+                event.preventDefault();
+                tabs[nextIndex].click();
+                tabs[nextIndex].focus();
+            });
+
             closeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 closeTab(node.path);
@@ -300,73 +565,195 @@
             return tabElement;
         };
 
-        const closeTab = (path) => {
-            const tabElement = openTabs.get(path);
+        const revealFilePath = (filePath) => {
+            const parts = filePath.split('/');
+
+            for (let index = 1; index < parts.length; index += 1) {
+                const folderPath = parts.slice(0, index).join('/');
+                folderControllers.get(folderPath)?.setOpen(true);
+            }
+        };
+
+        const loadResponse = async (node) => {
+            let directResponse = null;
+            let rawResponse = null;
+
+            try {
+                directResponse = await fetch(node.sourceUrl, { cache: 'no-cache' });
+            } catch {
+                directResponse = null;
+            }
+
+            if (directResponse?.ok) return directResponse;
+
+            if (node.rawUrl) {
+                try {
+                    rawResponse = await fetch(node.rawUrl, { cache: 'no-cache' });
+                } catch {
+                    rawResponse = null;
+                }
+            }
+
+            if (rawResponse?.ok) return rawResponse;
+
+            const directResult = directResponse
+                ? `status ${directResponse.status}`
+                : 'a network error';
+            const rawResult = rawResponse
+                ? `status ${rawResponse.status}`
+                : 'a network error';
+
+            throw new Error(`The source returned ${directResult}. GitHub returned ${rawResult}.`);
+        };
+
+        const renderTextFile = async (node) => {
+            showState('loading', `Loading ${node.name}`, 'Preparing the source view.');
+
+            const [editor, response] = await Promise.all([
+                monacoReady,
+                loadResponse(node),
+            ]);
+            const content = await response.text();
+
+            if (activeFilePath !== node.path) return;
+
+            editor.setValue(content);
+            monaco.editor.setModelLanguage(editor.getModel(), node.language || 'plaintext');
+            showEditor();
+        };
+
+        const renderImageFile = async (node) => {
+            showState('loading', `Loading ${node.name}`, 'Preparing the image preview.');
+            const response = await loadResponse(node);
+            const blob = await response.blob();
+
+            if (activeFilePath !== node.path) return;
+
+            activeObjectUrl = URL.createObjectURL(blob);
+            mediaImage.src = activeObjectUrl;
+            mediaImage.alt = `Preview of ${node.path}`;
+            await mediaImage.decode();
+
+            if (activeFilePath !== node.path) return;
+
+            mediaImage.hidden = false;
+            binaryIcon.hidden = true;
+            mediaTitle.textContent = node.path;
+            mediaDescription.textContent = `${node.mediaType} - ${formatBytes(node.size)}`;
+            mediaDownload.href = activeObjectUrl;
+            mediaDownload.download = node.name;
+            showMedia();
+        };
+
+        const renderBinaryFile = async (node) => {
+            showState('loading', `Loading ${node.name}`, 'Preparing the file details.');
+            const response = await loadResponse(node);
+            const blob = await response.blob();
+
+            if (activeFilePath !== node.path) return;
+
+            activeObjectUrl = URL.createObjectURL(blob);
+            mediaImage.hidden = true;
+            mediaImage.removeAttribute('src');
+            binaryIcon.hidden = false;
+            mediaTitle.textContent = node.path;
+            mediaDescription.textContent = `${node.mediaType} - ${formatBytes(node.size)}`;
+            mediaDownload.href = activeObjectUrl;
+            mediaDownload.download = node.name;
+            showMedia();
+        };
+
+        const openFileInEditor = async (node, fileElement, historyMode = 'push') => {
+            revealFilePath(node.path);
+            setSelectedFileElement(fileElement);
+            ensureTabForFile(node);
+            setActiveTab(node.path);
+            activeFilePath = node.path;
+            document.title = `${node.name} - EmilioAK`;
+            updateRoute(node.path, historyMode);
+
+            if (mobileQuery.matches) {
+                mobileSidebarOpen = false;
+                syncSidebar();
+            }
+
+            try {
+                if (node.kind === 'image') {
+                    await renderImageFile(node);
+                } else if (node.kind === 'binary') {
+                    await renderBinaryFile(node);
+                } else {
+                    await renderTextFile(node);
+                }
+            } catch (error) {
+                if (activeFilePath !== node.path) return;
+
+                showState(
+                    'error',
+                    `Unable to open ${node.name}`,
+                    error instanceof Error ? error.message : 'The file did not load.'
+                );
+                console.error(`Failed to load file ${node.path}:`, error);
+            }
+        };
+
+        const openFileByPath = (filePath, historyMode = 'push') => {
+            const node = fileNodesByPath.get(filePath);
+            const fileElement = fileElementsByPath.get(filePath);
+
+            if (node && fileElement) {
+                void openFileInEditor(node, fileElement, historyMode);
+                return true;
+            }
+
+            return false;
+        };
+
+        const showEmptyEditor = (historyMode = 'push') => {
+            activeFilePath = null;
+            selectedFileElement?.classList.remove('selected');
+            selectedFileElement?.setAttribute('aria-selected', 'false');
+            selectedFileElement = null;
+            setActiveTab(null);
+            document.title = 'EmilioAK';
+            showState('empty', 'No file open', 'Select a file from the Explorer.');
+            clearRoute(historyMode);
+        };
+
+        const closeTab = (filePath) => {
+            const tabElement = openTabs.get(filePath);
             if (!tabElement) return;
 
             const tabs = Array.from(tabBar.children);
             const tabIndex = tabs.indexOf(tabElement);
 
             tabElement.remove();
-            openTabs.delete(path);
+            openTabs.delete(filePath);
 
-            if (activeFilePath === path) {
+            if (activeFilePath === filePath) {
                 const remainingTabs = Array.from(tabBar.children);
                 const fallbackTab = remainingTabs[tabIndex] || remainingTabs[tabIndex - 1];
 
                 if (fallbackTab) {
                     openFileByPath(fallbackTab.dataset.path);
                 } else {
-                    activeFilePath = null;
-                    setActiveTab(null);
-                    setSelectedFileElement(null);
-                    showWelcomeMessage();
+                    showEmptyEditor();
                 }
-            }
-        };
-
-        const openFileInEditor = async (node, fileElement) => {
-            setSelectedFileElement(fileElement);
-            ensureTabForFile(node);
-            setActiveTab(node.path);
-            activeFilePath = node.path;
-
-            await monacoReady;
-
-            monacoEditor.setValue(`Loading ${node.path}...`);
-            monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
-
-            try {
-                const content = await loadFileContent(node.path);
-                if (activeFilePath !== node.path) return;
-
-                const language = getFileLanguage(node.name);
-
-                monacoEditor.setValue(content);
-                monaco.editor.setModelLanguage(monacoEditor.getModel(), language);
-            } catch (error) {
-                if (activeFilePath !== node.path) return;
-
-                monacoEditor.setValue(`Unable to load ${node.path}\n\n${error.message}`);
-                monaco.editor.setModelLanguage(monacoEditor.getModel(), 'markdown');
-                console.error(`Failed to load file ${node.path}:`, error);
             }
         };
 
         const renderTreeChildren = (node, container) => {
-            const children = Array.from(node.children.values()).sort((a, b) => {
-                if (a.type === b.type) {
-                    return a.name.localeCompare(b.name);
+            const children = Array.from(node.children.values()).sort((left, right) => {
+                if (left.type === right.type) {
+                    return left.name.localeCompare(right.name);
                 }
-                return a.type === 'folder' ? -1 : 1;
+                return left.type === 'folder' ? -1 : 1;
             });
 
             children.forEach((child) => {
-                if (child.type === 'file') {
-                    container.appendChild(createFileElement(child));
-                } else {
-                    container.appendChild(createFolderElement(child));
-                }
+                container.appendChild(child.type === 'file'
+                    ? createFileElement(child)
+                    : createFolderElement(child));
             });
         };
 
@@ -378,10 +765,15 @@
             fileElement.querySelector('.sidebar-file-name').textContent = node.name;
             fileElement.dataset.path = node.path;
             fileElement.title = node.path;
+            fileElement.setAttribute('aria-label', node.path);
+            fileElement.setAttribute('aria-level', String(node.path.split('/').length));
 
             fileNodesByPath.set(node.path, node);
-
-            fileElement.addEventListener('click', () => openFileInEditor(node, fileElement));
+            fileElementsByPath.set(node.path, fileElement);
+            fileElement.addEventListener('click', () => {
+                setTreeFocus(fileElement);
+                void openFileInEditor(node, fileElement);
+            });
 
             return fileElement;
         };
@@ -392,63 +784,95 @@
             const folderContent = folderElement.querySelector('.sidebar-folder-content');
             const chevron = folderElement.querySelector('.codicon');
             const header = folderElement.querySelector('.sidebar-folder-header');
-
             const collapsedByDefault = node.path !== 'CV';
             let isOpen = !collapsedByDefault;
 
             folderName.textContent = node.name;
-            renderTreeChildren(node, folderContent);
+            header.dataset.folderPath = node.path;
+            header.setAttribute('aria-label', node.path);
+            header.setAttribute('aria-level', String(node.path.split('/').length));
 
-            const updateChevron = () => {
+            const setOpen = (nextOpen) => {
+                isOpen = nextOpen;
+                header.setAttribute('aria-expanded', String(isOpen));
                 chevron.classList.toggle('codicon-chevron-down', isOpen);
                 chevron.classList.toggle('codicon-chevron-right', !isOpen);
-                folderContent.style.display = isOpen ? '' : 'none';
+                folderContent.hidden = !isOpen;
             };
 
-            header.addEventListener('click', () => {
-                isOpen = !isOpen;
-                updateChevron();
+            folderControllers.set(node.path, {
+                element: folderElement,
+                setOpen,
             });
 
-            updateChevron();
+            renderTreeChildren(node, folderContent);
+            header.addEventListener('click', () => {
+                setOpen(!isOpen);
+                setTreeFocus(header);
+            });
+            setOpen(isOpen);
 
             return folderElement;
         };
 
-        const setIconForFile = (fileName, iconElement) => {
-            const setiClass = getSetiIconClass(fileName);
-            const preservedClasses = Array.from(iconElement.classList).filter((className) => {
-                return className !== 'seti-icon' &&
-                    !className.startsWith('seti-') &&
-                    className !== 'codicon' &&
-                    !className.startsWith('codicon-');
-            });
+        const selectInitialFile = () => {
+            const routedPath = getRoutePath();
 
-            iconElement.className = preservedClasses.join(' ');
+            if (routedPath && openFileByPath(routedPath, null)) return;
+            if (openFileByPath(defaultFilePath, 'replace')) return;
 
-            if (setiClass) {
-                iconElement.classList.add('seti-icon', setiClass);
-            } else {
-                iconElement.classList.add('codicon', 'codicon-file');
+            showState('empty', 'No source files', 'The source manifest contains no default file.');
+        };
+
+        const buildFileTree = async () => {
+            try {
+                const response = await fetch(manifestPath, { cache: 'no-cache' });
+
+                if (!response.ok) {
+                    throw new Error(`The server returned status ${response.status}.`);
+                }
+
+                const manifest = await response.json();
+                if (manifest.schemaVersion !== 2 || !Array.isArray(manifest.files)) {
+                    throw new Error('The source manifest is not valid.');
+                }
+
+                fileNodesByPath = new Map();
+                fileElementsByPath = new Map();
+                folderControllers = new Map();
+                fileTreeContainer.replaceChildren();
+
+                const tree = createTreeFromEntries(manifest.files);
+                renderTreeChildren(tree, fileTreeContainer);
+                fileTreeContainer.setAttribute('aria-busy', 'false');
+
+                const firstTreeItem = fileTreeContainer.querySelector('[role="treeitem"]');
+                if (firstTreeItem) firstTreeItem.tabIndex = 0;
+
+                selectInitialFile();
+            } catch (error) {
+                fileTreeContainer.setAttribute('aria-busy', 'false');
+                const message = document.createElement('div');
+                message.className = 'tree-error';
+                message.setAttribute('role', 'alert');
+                message.textContent = error instanceof Error
+                    ? error.message
+                    : 'The repository files did not load.';
+                fileTreeContainer.replaceChildren(message);
+                showState('error', 'Unable to load the site', 'The repository manifest did not load.');
+                console.error('Failed to build the file tree:', error);
             }
         };
 
-        const getSetiIconClass = (fileName) => {
-            const lowerName = fileName.toLowerCase();
-            const lastDot = lowerName.lastIndexOf('.');
-            const extension = lastDot > 0 ? lowerName.slice(lastDot + 1) : '';
+        window.addEventListener('popstate', () => {
+            const routedPath = getRoutePath();
 
-            if (extension && setiExtensionMap[extension]) {
-                return setiExtensionMap[extension];
-            }
+            if (routedPath && openFileByPath(routedPath, null)) return;
+            if (!routedPath) showEmptyEditor(null);
+        });
 
-            if (lowerName === 'license') return 'seti-license';
-            if (lowerName === 'cname' || lowerName === '.gitignore') return 'seti-config';
-
-            return 'seti-default';
-        };
-
-        buildFileTree();
+        syncSidebar();
+        void buildFileTree();
     </script>
 </body>
 

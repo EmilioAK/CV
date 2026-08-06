@@ -1,0 +1,33 @@
+name: Validate site
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Generate file manifest
+        run: node scripts/generate-manifest.mjs
+
+      - name: Make sure the manifest is current
+        run: |
+          if git diff --quiet --exit-code -- page-data/file-manifest.json; then
+            exit 0
+          fi
+
+          echo "page-data/file-manifest.json is stale."
+          echo "Run node scripts/generate-manifest.mjs and commit the result."
+          git diff -- page-data/file-manifest.json
+          exit 1
+
+      - name: Test source browser
+        run: node scripts/test-site.mjs
