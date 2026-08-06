@@ -14,16 +14,6 @@
       "sha256": "adda55188d85a0f894bc6991e34828d14213dbe7f3128a1723a68d5343721c25"
     },
     {
-      "path": "CNAME",
-      "sourceUrl": "CNAME",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CNAME",
-      "kind": "text",
-      "mediaType": "text/plain",
-      "language": "plaintext",
-      "size": 12,
-      "sha256": "b30914f03f50b62e09f1cc776b0fada69d7c4db270c51a6afdb9d3ebd2af276b"
-    },
-    {
       "path": "CV/about.md",
       "sourceUrl": "CV/about.md",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/about.md",
@@ -149,8 +139,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 5088,
-      "sha256": "935e9c96442d3949c1b68417cfd3d3e41577f66da258501d83f3c843cb76dea0"
+      "size": 5075,
+      "sha256": "2b2204830de2909d9b09ac5bc406b704324a721dac80568ea88f02e11f2ec2e2"
     }
   ]
 }

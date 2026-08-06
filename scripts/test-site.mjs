@@ -55,7 +55,6 @@ if (JSON.stringify(manifestPaths) !== JSON.stringify(sourceFiles)) {
 
 for (const requiredPath of [
     '.github/workflows/validate-site.yml',
-    'CNAME',
     'README.md',
     'index.html',
     'page-data/file-manifest.json',
