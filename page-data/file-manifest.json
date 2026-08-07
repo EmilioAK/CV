@@ -40,8 +40,18 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 62349,
-      "sha256": "b4a72507827e460bcfe2f60db2adc51d17738eb76f656148da34294967edff16"
+      "size": 84538,
+      "sha256": "c0863a8b3c27878ae42af788cb0c7d8f3ee1f798c6f2ab7344a901d6d25f15a4"
+    },
+    {
+      "path": "page-data/extensions.json",
+      "sourceUrl": "page-data/extensions.json",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/extensions.json",
+      "kind": "text",
+      "mediaType": "application/json",
+      "language": "json",
+      "size": 10034,
+      "sha256": "8ef3a3f891f6ffc2e311b069916301b9bce19ace40eb371cad7ba3645d594307"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -129,8 +139,8 @@
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 20998,
-      "sha256": "ea3525d950fa067cb10a71b3ea20f9250070d02ed092d332fe76aa8c9baf2cec"
+      "size": 29844,
+      "sha256": "48cb58f82d4dd81fb89d11697aa50a5c9feef365a85ff80711ec6a0e8a2d1553"
     },
     {
       "path": "README.md",
@@ -139,8 +149,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1248,
-      "sha256": "9a4031db718c365a2dea46eec7f31f25d5189ac1098d6d198aeaa49c633e4d46"
+      "size": 1273,
+      "sha256": "490a8c57f3f92e0f7742d50ebf9a6b755cccd0bd498cdbd3c5303145af57d773"
     },
     {
       "path": "scripts/generate-manifest.mjs",
@@ -169,8 +179,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 8322,
-      "sha256": "6ca6dfa56190513bbfbe8541e60af45208ec2e48d10d886a2f527a2d4e3bbba4"
+      "size": 12602,
+      "sha256": "fdaa00f429d9e6abbc4c24c7db48311736d31f6f5a0f75fe912ed4c0478201f3"
     }
   ]
 }

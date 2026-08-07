@@ -9,6 +9,8 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 const manifestRelativePath = 'page-data/file-manifest.json';
 const manifestPath = path.join(repositoryRoot, manifestRelativePath);
+const extensionsRelativePath = 'page-data/extensions.json';
+const extensionsPath = path.join(repositoryRoot, extensionsRelativePath);
 
 const fail = (message) => {
     throw new Error(message);
@@ -58,6 +60,7 @@ for (const requiredPath of [
     'CV/Emilio_Alvarez_Resume.pdf',
     'README.md',
     'index.html',
+    extensionsRelativePath,
     'page-data/file-manifest.json',
     'page-data/search.mjs',
     'page-data/style.css',
@@ -122,6 +125,7 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
 const styleCss = await readFile(path.join(repositoryRoot, 'page-data', 'style.css'), 'utf8');
+const extensionsManifest = JSON.parse(await readFile(extensionsPath, 'utf8'));
 
 for (const requiredText of [
     'name="viewport"',
@@ -138,13 +142,100 @@ for (const requiredText of [
     'buildSearchDocuments',
     'openSearchMatch',
     'Shift+Command+F',
+    'id="extensions-toggle"',
+    'id="extensions-sidebar-view"',
+    'id="extension-viewer"',
+    'id="extension-documents"',
+    'Search skills',
+    'Project stories',
+    '<h2>Evidence</h2>',
+    '<dt>Linked stories</dt>',
     'renderPdfFile',
+    'openExtensionById',
+    'data-file-path="README.md"',
+    'data-file-path="CV/Emilio_Alvarez_Resume.pdf"',
     "node.mediaType === 'application/pdf'",
     'node.rawUrl',
 ]) {
     if (!indexHtml.includes(requiredText)) {
         fail(`index.html is missing ${requiredText}.`);
     }
+}
+
+for (const removedControl of [
+    'id="extensions-sidebar-actions"',
+    'class="extensions-search-actions"',
+    'extension-list-settings',
+    'codicon-verified-filled',
+    'id="extension-view-files"',
+    '<span class="extension-detail-tab">FEATURES</span>',
+    '<span class="extension-detail-tab">CHANGELOG</span>',
+    '<h2>Marketplace</h2>',
+    '<h2>Installation</h2>',
+    'Repository notes',
+]) {
+    if (indexHtml.includes(removedControl)) {
+        fail(`index.html still includes the removed control ${removedControl}.`);
+    }
+}
+
+if ((indexHtml.match(/class="extension-detail-tab(?:\s|")/g) ?? []).length !== 1) {
+    fail('The extension view must contain one working Details tab.');
+}
+
+if (extensionsManifest.schemaVersion !== 1 || !Array.isArray(extensionsManifest.extensions)) {
+    fail('The extensions manifest schema is not version 1.');
+}
+
+const extensionIds = new Set();
+let linkedMarkdownCount = 0;
+
+for (const extension of extensionsManifest.extensions) {
+    if (!extension.id || !extension.name || !extension.description || !extension.overview) {
+        fail('Each extension must include its core text fields.');
+    }
+
+    if (extensionIds.has(extension.id)) {
+        fail(`The extension identifier ${extension.id} is duplicated.`);
+    }
+    extensionIds.add(extension.id);
+
+    if (!extension.icon?.label || !extension.icon.background || !extension.icon.color) {
+        fail(`The extension ${extension.id} is missing its icon treatment.`);
+    }
+
+    if (!Array.isArray(extension.categories) || extension.categories.length === 0) {
+        fail(`The extension ${extension.id} must include a category.`);
+    }
+
+    if (!Array.isArray(extension.documents)) {
+        fail(`The extension ${extension.id} must include a documents list.`);
+    }
+
+    for (const documentLink of extension.documents) {
+        if (!documentLink.path.endsWith('.md')) {
+            fail(`${documentLink.path} is not a Markdown file.`);
+        }
+
+        const sourceEntry = manifest.files.find((entry) => entry.path === documentLink.path);
+        if (!sourceEntry || sourceEntry.mediaType !== 'text/markdown') {
+            fail(`${documentLink.path} is not available as Markdown in Explorer.`);
+        }
+
+        if (!documentLink.label || !documentLink.description) {
+            fail(`${documentLink.path} is missing link text.`);
+        }
+
+        linkedMarkdownCount += 1;
+    }
+}
+
+if (!extensionIds.has('python')) {
+    fail('The extensions manifest must include Python.');
+}
+
+if (linkedMarkdownCount === 0) {
+    fail('At least one extension must link to an Explorer Markdown file.');
 }
 
 if (indexHtml.includes('id="resume-download"')) {
@@ -224,6 +315,10 @@ if (codiconsStylesheetIndex > siteStylesheetIndex) {
     fail('The site stylesheet must load after Codicons so local icon sizes take precedence.');
 }
 
+if (!/href="page-data\/style\.css\?v=[^"]+"/.test(indexHtml)) {
+    fail('The local stylesheet URL must include a cache version.');
+}
+
 if (!/\.activity-bar \.activity-button \.codicon\s*\{[^}]*font-size:\s*24px;/s.test(styleCss)) {
     fail('The activity bar icon size must match the 24px VS Code treatment.');
 }
@@ -248,8 +343,34 @@ if (/[—–]/.test(indexHtml)) {
     fail('The visible interface must use regular hyphens instead of long dashes.');
 }
 
+const extensionViewerStyles = cssRuleBody('.extension-viewer');
+
+if (!extensionViewerStyles.includes('container-name: extension-content;')
+    || !extensionViewerStyles.includes('container-type: inline-size;')) {
+    fail('The extension view must provide a responsive content container.');
+}
+
+if (!/@container extension-content \(max-width: 860px\)[\s\S]*?\.extension-detail-layout\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);/s.test(styleCss)) {
+    fail('The extension details must stack when the editor workspace is narrow.');
+}
+
+if (!styleCss.includes('@container extension-content (max-width: 760px)')) {
+    fail('The compact extension header rule is missing.');
+}
+
 if (!styleCss.includes('100dvh')) {
     fail('The stable viewport height rule is missing.');
+}
+
+for (const requiredSelector of [
+    '.extension-list-item',
+    '.extension-viewer',
+    '.extension-detail-layout',
+    '.extension-documents',
+]) {
+    if (!styleCss.includes(requiredSelector)) {
+        fail(`The extension view is missing ${requiredSelector}.`);
+    }
 }
 
 console.log(`Validated ${manifest.files.length} root source files.`);

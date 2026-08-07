@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "extensions": [
+    {
+      "id": "python",
+      "name": "Python",
+      "description": "Backend services, automation, and systems integration.",
+      "overview": "I use Python across backend services, automation, and systems integration. The linked stories provide broader context from this repository.",
+      "icon": {
+        "label": "Py",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+        "background": "#3776ab",
+        "color": "#ffd43b"
+      },
+      "categories": ["Programming Languages"],
+      "documents": [
+        {
+          "path": "CV/about.md",
+          "label": "My story",
+          "description": "The repository file for the longer story behind my experience."
+        },
+        {
+          "path": "README.md",
+          "label": "Portfolio overview",
+          "description": "The README for this portfolio and its repository-based design."
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "description": "Typed application development for web and backend systems.",
+      "overview": "TypeScript is part of my application-development toolkit. Public project stories can link from this page while remaining normal Explorer files.",
+      "icon": {
+        "label": "TS",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+        "background": "#3178c6",
+        "color": "#ffffff"
+      },
+      "categories": ["Programming Languages"],
+      "documents": []
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "description": "Web systems, Node.js, and asynchronous programming.",
+      "overview": "I use JavaScript for web systems and have taught asynchronous programming with Node.js. The portfolio README describes this site.",
+      "icon": {
+        "label": "JS",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+        "background": "#f7df1e",
+        "color": "#1e1e1e"
+      },
+      "categories": ["Programming Languages"],
+      "documents": [
+        {
+          "path": "README.md",
+          "label": "Interactive portfolio",
+          "description": "The README for the JavaScript-powered portfolio in this repository."
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "description": "Relational data, application persistence, and integrations.",
+      "overview": "I use SQL with relational application data and production integrations. Related public stories can connect here without moving from Explorer.",
+      "icon": {
+        "label": "SQL",
+        "background": "#336791",
+        "color": "#ffffff"
+      },
+      "categories": ["Programming Languages", "Databases"],
+      "documents": []
+    },
+    {
+      "id": "c",
+      "name": "C",
+      "description": "Systems programming, UNIX, and operating-system concepts.",
+      "overview": "I taught C and UNIX concepts in systems courses at Vrije Universiteit Amsterdam. Public course or project stories can connect here.",
+      "icon": {
+        "label": "C",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
+        "background": "#5c6bc0",
+        "color": "#ffffff"
+      },
+      "categories": ["Programming Languages", "Systems"],
+      "documents": []
+    },
+    {
+      "id": "scala",
+      "name": "Scala",
+      "description": "Functional and object-oriented programming.",
+      "overview": "Scala forms part of my programming-language experience. This page can collect related project stories as they become public.",
+      "icon": {
+        "label": "Sc",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scala/scala-original.svg",
+        "background": "#dc322f",
+        "color": "#ffffff"
+      },
+      "categories": ["Programming Languages"],
+      "documents": []
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "description": "Component-based web interface development.",
+      "overview": "I use React for component-based web interfaces. Supporting project stories remain regular repository files and can link from this page.",
+      "icon": {
+        "label": "Re",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+        "background": "#20232a",
+        "color": "#61dafb"
+      },
+      "categories": ["Frameworks"],
+      "documents": []
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "description": "Server-side JavaScript and asynchronous web systems.",
+      "overview": "I use Node.js for server-side JavaScript and have taught its asynchronous programming model. Related stories can connect here.",
+      "icon": {
+        "label": "N",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+        "background": "#3c873a",
+        "color": "#ffffff"
+      },
+      "categories": ["Frameworks", "Runtime Environments"],
+      "documents": []
+    },
+    {
+      "id": "django",
+      "name": "Django",
+      "description": "Python web applications and backend systems.",
+      "overview": "I use Django for Python web applications and backend systems. Public implementation stories can link from this page.",
+      "icon": {
+        "label": "Dj",
+        "background": "#0c4b33",
+        "color": "#ffffff"
+      },
+      "categories": ["Frameworks"],
+      "documents": []
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "description": "Relational storage for application and integration data.",
+      "overview": "I use PostgreSQL for relational application data. Repository stories can provide the detailed design and delivery context.",
+      "icon": {
+        "label": "Pg",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+        "background": "#336791",
+        "color": "#ffffff"
+      },
+      "categories": ["Databases"],
+      "documents": []
+    },
+    {
+      "id": "celery",
+      "name": "Celery",
+      "description": "Background jobs and asynchronous Python services.",
+      "overview": "I use Celery for background work in Python services. Public project stories can link here while staying visible in Explorer.",
+      "icon": {
+        "label": "Ce",
+        "background": "#37814a",
+        "color": "#ffffff"
+      },
+      "categories": ["Frameworks"],
+      "documents": []
+    },
+    {
+      "id": "microsoft-graph",
+      "name": "Microsoft Graph",
+      "description": "Microsoft 365 application and agent integrations.",
+      "overview": "I used Microsoft Graph in Microsoft 365 integration work. Supporting stories can connect here as normal Markdown files.",
+      "icon": {
+        "label": "G",
+        "background": "#6264a7",
+        "color": "#ffffff"
+      },
+      "categories": ["Cloud", "APIs"],
+      "documents": []
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "description": "Application containers and consistent development environments.",
+      "overview": "I built a Docker development environment for systems-programming students on macOS. Related stories can connect here.",
+      "icon": {
+        "label": "Do",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+        "background": "#0db7ed",
+        "color": "#082f49"
+      },
+      "categories": ["Containers", "Developer Tools"],
+      "documents": []
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "description": "Container orchestration and cloud workloads.",
+      "overview": "Kubernetes is part of my cloud and container platform toolkit. Public project stories can connect here from Explorer.",
+      "icon": {
+        "label": "K8s",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
+        "background": "#326ce5",
+        "color": "#ffffff"
+      },
+      "categories": ["Containers", "Cloud"],
+      "documents": []
+    },
+    {
+      "id": "azure",
+      "name": "Azure",
+      "description": "Cloud architecture and Microsoft platform delivery.",
+      "overview": "Azure formed part of my cloud architecture work at Microsoft. Public customer-safe project stories can connect here from Explorer.",
+      "icon": {
+        "label": "Az",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg",
+        "background": "#0078d4",
+        "color": "#ffffff"
+      },
+      "categories": ["Cloud"],
+      "documents": []
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "description": "Cloud infrastructure and hosted application systems.",
+      "overview": "AWS is part of my cloud infrastructure toolkit. Detailed public stories can link from this page without leaving the repository model.",
+      "icon": {
+        "label": "AWS",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+        "background": "#232f3e",
+        "color": "#ff9900"
+      },
+      "categories": ["Cloud"],
+      "documents": []
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "description": "Version control and collaborative software delivery.",
+      "overview": "Git supports my source-control and delivery workflow. This portfolio repository is one visible example of that workflow.",
+      "icon": {
+        "label": "Git",
+        "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+        "background": "#f05032",
+        "color": "#ffffff"
+      },
+      "categories": ["Developer Tools"],
+      "documents": [
+        {
+          "path": "README.md",
+          "label": "Portfolio repository",
+          "description": "The README that explains this repository and its self-exploring design."
+        }
+      ]
+    }
+  ]
+}

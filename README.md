@@ -5,7 +5,7 @@ Hi, I'm **Emilio Alvarez**, a Computer Science student at VU Amsterdam and a Clo
 This repository contains the source for my interactive portfolio site, designed to feel like VSCode.  
 On the website, the file explorer you see is generated from this project's real structure! So if you're reading this on GitHub, you're literally looking at the same workspace the site is built around.
 
-The site is still under development, but more activity bar buttons will become functional soon, with my own twist on what I think should be there :)
+The Explorer opens the repository's real files. The Extensions view presents my technical skills as VS Code extensions and links back to those same files for deeper context.
 
 You'll find more about me in the `CV/` folder. If you're curious about how everything is wired, the site data lives in the `page-data/` folder. But if you're short on time:
 

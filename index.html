@@ -7,7 +7,7 @@
     <title>EmilioAK</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons/dist/codicon.css" />
-    <link rel="stylesheet" href="page-data/style.css" />
+    <link rel="stylesheet" href="page-data/style.css?v=20260807-1" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="page-data/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="page-data/img/favicon-16x16.png" />
@@ -27,6 +27,11 @@
             title="Search (Shift+Command+F)" aria-label="Search" aria-controls="search-view"
             aria-keyshortcuts="Control+Shift+F Meta+Shift+F" aria-expanded="false">
             <i class="codicon codicon-search" aria-hidden="true"></i>
+        </button>
+        <button id="extensions-toggle" class="activity-button" type="button"
+            title="Extensions" aria-label="Extensions" aria-controls="extensions-sidebar-view"
+            aria-expanded="false">
+            <i class="codicon codicon-extensions" aria-hidden="true"></i>
         </button>
     </nav>
 
@@ -59,7 +64,6 @@
                         <div class="sidebar-folder-content" role="group" hidden></div>
                     </div>
                 </template>
-
                 <div id="file-tree" role="tree" aria-label="Repository files" aria-busy="true">
                     <div class="tree-loading" role="status">
                         <span class="sr-only">Loading repository files.</span>
@@ -130,6 +134,50 @@
                     aria-label="Search results" hidden></div>
             </div>
         </section>
+
+        <section id="extensions-sidebar-view" class="sidebar-view extensions-sidebar-view"
+            aria-labelledby="extensions-view-title" hidden>
+            <div class="sidebar-header">
+                <span id="extensions-view-title">EXTENSIONS</span>
+                <button class="sidebar-close" type="button"
+                    title="Close Extensions" aria-label="Close Extensions">
+                    <i class="codicon codicon-close" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-content extensions-sidebar-content">
+                <template id="extension-item-template">
+                <button class="extension-list-item" type="button">
+                    <span class="extension-icon extension-list-icon" aria-hidden="true">
+                        <span class="extension-icon-text"></span>
+                    </span>
+                    <span class="extension-list-copy">
+                        <strong class="extension-list-name"></strong>
+                        <span class="extension-list-description"></span>
+                        <span class="extension-list-publisher">EmilioAK</span>
+                    </span>
+                </button>
+                </template>
+
+                <div class="extensions-search">
+                    <label class="sr-only" for="extension-search">Search skills</label>
+                    <input id="extension-search" type="search" placeholder="Search skills"
+                        autocomplete="off" spellcheck="false" />
+                </div>
+                <div class="extensions-group-header">
+                    <span class="extensions-group-label">
+                        <i class="codicon codicon-chevron-down" aria-hidden="true"></i>
+                        <span>INSTALLED</span>
+                    </span>
+                    <span id="extension-count" class="extensions-count"></span>
+                </div>
+                <div id="extension-list" class="extension-list"
+                    aria-label="Installed skills" aria-busy="true"></div>
+                <p id="extension-empty" class="extension-empty" role="status" hidden>
+                    No skills match this search.
+                </p>
+            </div>
+        </section>
     </aside>
 
     <button id="sidebar-scrim" class="sidebar-scrim" type="button"
@@ -182,6 +230,85 @@
                     <a id="media-download" class="media-download" download>Download file</a>
                 </div>
             </section>
+
+            <section id="extension-viewer" class="extension-viewer"
+                aria-labelledby="extension-title" hidden>
+                <header class="extension-hero">
+                    <span id="extension-hero-icon" class="extension-icon extension-hero-icon"
+                        aria-hidden="true">
+                        <span class="extension-icon-text"></span>
+                    </span>
+                    <div class="extension-hero-copy">
+                        <h1 id="extension-title"></h1>
+                        <div class="extension-publisher-line">
+                            <a id="extension-publisher" href="https://github.com/EmilioAK"
+                                target="_blank" rel="noreferrer">EmilioAK</a>
+                            <span class="extension-publisher-separator" aria-hidden="true">|</span>
+                            <span>Portfolio skill</span>
+                        </div>
+                        <p id="extension-description"></p>
+                    </div>
+                </header>
+
+                <div class="extension-detail-tabs" aria-label="Extension sections">
+                    <span class="extension-detail-tab selected">DETAILS</span>
+                </div>
+
+                <div class="extension-detail-layout">
+                    <article class="extension-readme">
+                        <h2 id="extension-readme-title"></h2>
+                        <p id="extension-overview"></p>
+
+                        <section class="extension-documents-section"
+                            aria-labelledby="extension-documents-title">
+                            <h2 id="extension-documents-title">Project stories</h2>
+                            <p>
+                                These links open the same Markdown files that appear in Explorer.
+                            </p>
+                            <ul id="extension-documents" class="extension-documents"></ul>
+                            <p id="extension-documents-empty" class="extension-documents-empty" hidden>
+                                No public project stories are linked yet.
+                            </p>
+                        </section>
+                    </article>
+
+                    <aside class="extension-metadata" aria-label="Extension information">
+                        <section>
+                            <h2>Evidence</h2>
+                            <dl>
+                                <div>
+                                    <dt>Identifier</dt>
+                                    <dd id="extension-identifier"></dd>
+                                </div>
+                                <div>
+                                    <dt>Source</dt>
+                                    <dd>Public résumé</dd>
+                                </div>
+                                <div>
+                                    <dt>Linked stories</dt>
+                                    <dd id="extension-document-count"></dd>
+                                </div>
+                            </dl>
+                        </section>
+                        <section>
+                            <h2>Categories</h2>
+                            <div id="extension-categories" class="extension-categories"></div>
+                        </section>
+                        <section>
+                            <h2>Resources</h2>
+                            <a href="#/CV/Emilio_Alvarez_Resume.pdf"
+                                data-file-path="CV/Emilio_Alvarez_Resume.pdf">
+                                <i class="codicon codicon-file-pdf" aria-hidden="true"></i>
+                                Resume
+                            </a>
+                            <a href="#/README.md" data-file-path="README.md">
+                                <i class="codicon codicon-book" aria-hidden="true"></i>
+                                Portfolio README
+                            </a>
+                        </section>
+                    </aside>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -199,15 +326,18 @@
         } from './page-data/search.mjs';
 
         const manifestPath = 'page-data/file-manifest.json';
+        const extensionsManifestPath = 'page-data/extensions.json';
         const defaultFilePath = 'README.md';
         const mobileQuery = window.matchMedia('(max-width: 767px)');
 
         const body = document.body;
         const explorerToggle = document.getElementById('explorer-toggle');
         const searchToggle = document.getElementById('search-toggle');
+        const extensionsToggle = document.getElementById('extensions-toggle');
         const sidebar = document.getElementById('workspace-sidebar');
         const explorerView = document.getElementById('explorer-view');
         const searchView = document.getElementById('search-view');
+        const extensionsSidebarView = document.getElementById('extensions-sidebar-view');
         const sidebarCloseButtons = document.querySelectorAll('.sidebar-close');
         const sidebarScrim = document.getElementById('sidebar-scrim');
         const fileTreeContainer = document.getElementById('file-tree');
@@ -222,6 +352,11 @@
         const searchResults = document.getElementById('search-results');
         const searchSuggestionButtons = document.querySelectorAll('[data-search-query]');
         const searchQuickActions = document.getElementById('search-quick-actions');
+        const extensionItemTemplate = document.getElementById('extension-item-template');
+        const extensionSearch = document.getElementById('extension-search');
+        const extensionCount = document.getElementById('extension-count');
+        const extensionList = document.getElementById('extension-list');
+        const extensionEmpty = document.getElementById('extension-empty');
         const tabTemplate = document.getElementById('tab-template');
         const tabBar = document.querySelector('.tab-bar');
         const editorContainer = document.getElementById('monaco-editor');
@@ -236,6 +371,17 @@
         const mediaTitle = document.getElementById('media-title');
         const mediaDescription = document.getElementById('media-description');
         const mediaDownload = document.getElementById('media-download');
+        const extensionViewer = document.getElementById('extension-viewer');
+        const extensionHeroIcon = document.getElementById('extension-hero-icon');
+        const extensionTitle = document.getElementById('extension-title');
+        const extensionDescription = document.getElementById('extension-description');
+        const extensionReadmeTitle = document.getElementById('extension-readme-title');
+        const extensionOverview = document.getElementById('extension-overview');
+        const extensionDocuments = document.getElementById('extension-documents');
+        const extensionDocumentsEmpty = document.getElementById('extension-documents-empty');
+        const extensionIdentifier = document.getElementById('extension-identifier');
+        const extensionDocumentCount = document.getElementById('extension-document-count');
+        const extensionCategories = document.getElementById('extension-categories');
 
         const setiExtensionMap = {
             md: 'seti-markdown',
@@ -250,12 +396,15 @@
         };
 
         let selectedFileElement = null;
+        let selectedExtensionElement = null;
         let monacoEditor = null;
         let activeFilePath = null;
+        let activeExtensionId = null;
+        let activeTabKey = null;
         let activeObjectUrl = null;
+        let activeSidebarView = 'explorer';
         let desktopSidebarOpen = true;
         let mobileSidebarOpen = false;
-        let activeSidebarView = 'explorer';
         let manifestEntries = [];
         let searchDocumentsPromise = null;
         let searchRequestId = 0;
@@ -264,6 +413,8 @@
         let fileElementsByPath = new Map();
         let folderControllers = new Map();
         const fileContentPromises = new Map();
+        let extensionsById = new Map();
+        let extensionElementsById = new Map();
         const openTabs = new Map();
         let resolveManifestReady;
         let rejectManifestReady;
@@ -284,6 +435,11 @@
                 button: searchToggle,
                 view: searchView,
                 label: 'Search',
+            }],
+            ['extensions', {
+                button: extensionsToggle,
+                view: extensionsSidebarView,
+                label: 'Extensions',
             }],
         ]);
 
@@ -385,6 +541,7 @@
             clearSearchDecorations();
             editorContainer.hidden = true;
             mediaViewer.hidden = true;
+            extensionViewer.hidden = true;
             editorState.hidden = false;
             editorState.dataset.type = type;
             editorState.setAttribute('role', type === 'error' ? 'alert' : 'status');
@@ -397,6 +554,7 @@
             clearObjectUrl();
             editorState.hidden = true;
             mediaViewer.hidden = true;
+            extensionViewer.hidden = true;
             editorContainer.hidden = false;
             requestAnimationFrame(() => monacoEditor?.layout());
         };
@@ -405,7 +563,17 @@
             clearSearchDecorations();
             editorState.hidden = true;
             editorContainer.hidden = true;
+            extensionViewer.hidden = true;
             mediaViewer.hidden = false;
+        };
+
+        const showExtension = () => {
+            clearObjectUrl();
+            editorState.hidden = true;
+            editorContainer.hidden = true;
+            mediaViewer.hidden = true;
+            extensionViewer.hidden = false;
+            extensionViewer.scrollTop = 0;
         };
 
         const formatBytes = (size) => {
@@ -434,6 +602,12 @@
             }
         };
 
+        const getExtensionIdFromRoute = (routePath) => {
+            const prefix = 'extensions/';
+            if (!routePath?.startsWith(prefix)) return null;
+            return routePath.slice(prefix.length) || null;
+        };
+
         const updateRoute = (filePath, mode) => {
             if (!mode) return;
 
@@ -444,6 +618,19 @@
                 window.history.replaceState({ filePath }, '', url);
             } else if (window.location.hash !== hash) {
                 window.history.pushState({ filePath }, '', url);
+            }
+        };
+
+        const updateExtensionRoute = (extensionId, mode) => {
+            if (!mode) return;
+
+            const hash = `#/extensions/${encodeURIComponent(extensionId)}`;
+            const url = `${window.location.pathname}${window.location.search}${hash}`;
+
+            if (mode === 'replace') {
+                window.history.replaceState({ extensionId }, '', url);
+            } else if (window.location.hash !== hash) {
+                window.history.pushState({ extensionId }, '', url);
             }
         };
 
@@ -540,6 +727,8 @@
 
             if (viewName === 'search') {
                 requestAnimationFrame(() => searchInput.focus());
+            } else if (viewName === 'extensions') {
+                requestAnimationFrame(() => extensionSearch.focus());
             }
         };
 
@@ -549,6 +738,10 @@
 
         searchToggle.addEventListener('click', () => {
             activateSidebarView('search', true);
+        });
+
+        extensionsToggle.addEventListener('click', () => {
+            activateSidebarView('extensions', true);
         });
 
         sidebarCloseButtons.forEach((button) => {
@@ -725,12 +918,12 @@
             iconElement.classList.add('seti-icon', setiClass);
         };
 
-        const setActiveTab = (filePath) => {
+        const setActiveTab = (tabKey) => {
             let activeTabElement = null;
 
-            openTabs.forEach((tabElement, tabPath) => {
+            openTabs.forEach((tabElement, openTabKey) => {
                 const selectButton = tabElement.querySelector('.tab-select');
-                const isActive = tabPath === filePath;
+                const isActive = openTabKey === tabKey;
                 tabElement.classList.toggle('active', isActive);
                 selectButton.setAttribute('aria-pressed', String(isActive));
                 selectButton.tabIndex = isActive ? 0 : -1;
@@ -745,23 +938,7 @@
             });
         };
 
-        const createTabElement = (node) => {
-            const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
-            const tabIcon = tabElement.querySelector('.tab-icon');
-            const tabLabel = tabElement.querySelector('.tab-label');
-            const selectButton = tabElement.querySelector('.tab-select');
-            const closeButton = tabElement.querySelector('.tab-close');
-            const closeLabel = tabElement.querySelector('.tab-close-label');
-
-            tabElement.dataset.path = node.path;
-            selectButton.setAttribute('aria-controls', 'source-panel');
-            selectButton.setAttribute('aria-label', node.path);
-            closeButton.setAttribute('aria-label', `Close ${node.path}`);
-            closeLabel.textContent = `Close ${node.name}`;
-            setIconForFile(node.name, tabIcon);
-            tabLabel.textContent = node.name;
-
-            selectButton.addEventListener('click', () => openFileByPath(node.path));
+        const addTabKeyboardNavigation = (selectButton) => {
             selectButton.addEventListener('keydown', (event) => {
                 if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
 
@@ -773,10 +950,60 @@
                 tabs[nextIndex].click();
                 tabs[nextIndex].focus();
             });
+        };
+
+        const createFileTabElement = (node) => {
+            const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
+            const tabIcon = tabElement.querySelector('.tab-icon');
+            const tabLabel = tabElement.querySelector('.tab-label');
+            const selectButton = tabElement.querySelector('.tab-select');
+            const closeButton = tabElement.querySelector('.tab-close');
+            const closeLabel = tabElement.querySelector('.tab-close-label');
+
+            tabElement.dataset.tabKey = node.path;
+            selectButton.setAttribute('aria-controls', 'source-panel');
+            selectButton.setAttribute('aria-label', node.path);
+            closeButton.setAttribute('aria-label', `Close ${node.path}`);
+            closeLabel.textContent = `Close ${node.name}`;
+            setIconForFile(node.name, tabIcon);
+            tabLabel.textContent = node.name;
+
+            selectButton.addEventListener('click', () => openFileByPath(node.path));
+            addTabKeyboardNavigation(selectButton);
 
             closeButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 closeTab(node.path);
+            });
+
+            return tabElement;
+        };
+
+        const getExtensionTabKey = (extensionId) => `extension:${extensionId}`;
+
+        const createExtensionTabElement = (extension) => {
+            const tabKey = getExtensionTabKey(extension.id);
+            const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
+            const tabIcon = tabElement.querySelector('.tab-icon');
+            const tabLabel = tabElement.querySelector('.tab-label');
+            const selectButton = tabElement.querySelector('.tab-select');
+            const closeButton = tabElement.querySelector('.tab-close');
+            const closeLabel = tabElement.querySelector('.tab-close-label');
+            const tabName = `Extension: ${extension.name}`;
+
+            tabElement.dataset.tabKey = tabKey;
+            selectButton.setAttribute('aria-controls', 'source-panel');
+            selectButton.setAttribute('aria-label', tabName);
+            closeButton.setAttribute('aria-label', `Close ${tabName}`);
+            closeLabel.textContent = `Close ${tabName}`;
+            tabIcon.className = 'icon file-icon tab-icon codicon codicon-extensions';
+            tabLabel.textContent = tabName;
+
+            selectButton.addEventListener('click', () => openExtensionById(extension.id));
+            addTabKeyboardNavigation(selectButton);
+            closeButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                closeTab(tabKey);
             });
 
             return tabElement;
@@ -787,9 +1014,20 @@
                 return openTabs.get(node.path);
             }
 
-            const tabElement = createTabElement(node);
+            const tabElement = createFileTabElement(node);
             tabBar.appendChild(tabElement);
             openTabs.set(node.path, tabElement);
+
+            return tabElement;
+        };
+
+        const ensureTabForExtension = (extension) => {
+            const tabKey = getExtensionTabKey(extension.id);
+            if (openTabs.has(tabKey)) return openTabs.get(tabKey);
+
+            const tabElement = createExtensionTabElement(extension);
+            tabBar.appendChild(tabElement);
+            openTabs.set(tabKey, tabElement);
 
             return tabElement;
         };
@@ -978,7 +1216,9 @@
             setSelectedFileElement(fileElement);
             ensureTabForFile(node);
             setActiveTab(node.path);
+            activeTabKey = node.path;
             activeFilePath = node.path;
+            activeExtensionId = null;
             document.title = `${node.name} - EmilioAK`;
             updateRoute(node.path, historyMode);
 
@@ -1391,33 +1631,151 @@
 
         renderQuickActions();
 
-        const showEmptyEditor = (historyMode = 'push') => {
+        const setExtensionIcon = (iconElement, extension) => {
+            iconElement.style.setProperty('--extension-icon-background', extension.icon.background);
+            iconElement.style.setProperty('--extension-icon-color', extension.icon.color);
+            iconElement.classList.toggle('has-image', Boolean(extension.icon.asset));
+
+            const labelElement = document.createElement('span');
+            labelElement.className = 'extension-icon-text';
+            labelElement.textContent = extension.icon.label;
+
+            if (!extension.icon.asset) {
+                iconElement.replaceChildren(labelElement);
+                return;
+            }
+
+            const imageElement = document.createElement('img');
+            imageElement.src = extension.icon.asset;
+            imageElement.alt = '';
+            imageElement.decoding = 'async';
+            imageElement.addEventListener('error', () => {
+                iconElement.classList.remove('has-image');
+                iconElement.replaceChildren(labelElement);
+            }, { once: true });
+            iconElement.replaceChildren(imageElement);
+        };
+
+        const setSelectedExtensionElement = (extensionElement) => {
+            if (selectedExtensionElement) {
+                selectedExtensionElement.classList.remove('selected');
+                selectedExtensionElement.setAttribute('aria-current', 'false');
+            }
+
+            selectedExtensionElement = extensionElement;
+
+            if (selectedExtensionElement) {
+                selectedExtensionElement.classList.add('selected');
+                selectedExtensionElement.setAttribute('aria-current', 'page');
+            }
+        };
+
+        const renderExtension = (extension) => {
+            setExtensionIcon(extensionHeroIcon, extension);
+            extensionTitle.textContent = extension.name;
+            extensionDescription.textContent = extension.description;
+            extensionReadmeTitle.textContent = `${extension.name} in my work`;
+            extensionOverview.textContent = extension.overview;
+            extensionIdentifier.textContent = `emilioak.${extension.id}`;
+            extensionDocumentCount.textContent = String(extension.documents.length);
+
+            const categoryElements = extension.categories.map((category) => {
+                const categoryElement = document.createElement('span');
+                categoryElement.textContent = category;
+                return categoryElement;
+            });
+            extensionCategories.replaceChildren(...categoryElements);
+
+            const documentElements = extension.documents.map((documentLink) => {
+                const item = document.createElement('li');
+                const link = document.createElement('a');
+                const description = document.createElement('p');
+                const path = document.createElement('code');
+
+                link.href = `#/${encodeRoutePath(documentLink.path)}`;
+                link.dataset.filePath = documentLink.path;
+                link.textContent = documentLink.label;
+                description.textContent = documentLink.description;
+                path.textContent = documentLink.path;
+                item.append(link, description, path);
+                return item;
+            });
+
+            extensionDocuments.replaceChildren(...documentElements);
+            extensionDocumentsEmpty.hidden = documentElements.length !== 0;
+            showExtension();
+        };
+
+        const openExtensionById = (extensionId, historyMode = 'push') => {
+            const extension = extensionsById.get(extensionId);
+            if (!extension) return false;
+
+            const tabKey = getExtensionTabKey(extension.id);
+            setSelectedExtensionElement(extensionElementsById.get(extension.id) || null);
+            ensureTabForExtension(extension);
+            setActiveTab(tabKey);
+            activeTabKey = tabKey;
             activeFilePath = null;
+            activeExtensionId = extension.id;
+            document.title = `${extension.name} - Extensions - EmilioAK`;
+            renderExtension(extension);
+            updateExtensionRoute(extension.id, historyMode);
+
+            if (mobileQuery.matches) {
+                mobileSidebarOpen = false;
+                syncSidebar();
+            }
+
+            return true;
+        };
+
+        const openTabByKey = (tabKey) => {
+            const extensionPrefix = 'extension:';
+            if (tabKey.startsWith(extensionPrefix)) {
+                return openExtensionById(tabKey.slice(extensionPrefix.length));
+            }
+            return openFileByPath(tabKey);
+        };
+
+        extensionViewer.addEventListener('click', (event) => {
+            const fileLink = event.target.closest('[data-file-path]');
+            if (!fileLink) return;
+
+            event.preventDefault();
+            activateSidebarView('explorer');
+            openFileByPath(fileLink.dataset.filePath);
+        });
+
+        const showEmptyEditor = (historyMode = 'push') => {
+            activeTabKey = null;
+            activeFilePath = null;
+            activeExtensionId = null;
             selectedFileElement?.classList.remove('selected');
             selectedFileElement?.setAttribute('aria-selected', 'false');
             selectedFileElement = null;
+            setSelectedExtensionElement(null);
             setActiveTab(null);
             document.title = 'EmilioAK';
-            showState('empty', 'No file open', 'Select a file from the Explorer.');
+            showState('empty', 'No tab open', 'Select a file from Explorer or a skill from Extensions.');
             clearRoute(historyMode);
         };
 
-        const closeTab = (filePath) => {
-            const tabElement = openTabs.get(filePath);
+        const closeTab = (tabKey) => {
+            const tabElement = openTabs.get(tabKey);
             if (!tabElement) return;
 
             const tabs = Array.from(tabBar.children);
             const tabIndex = tabs.indexOf(tabElement);
 
             tabElement.remove();
-            openTabs.delete(filePath);
+            openTabs.delete(tabKey);
 
-            if (activeFilePath === filePath) {
+            if (activeTabKey === tabKey) {
                 const remainingTabs = Array.from(tabBar.children);
                 const fallbackTab = remainingTabs[tabIndex] || remainingTabs[tabIndex - 1];
 
                 if (fallbackTab) {
-                    openFileByPath(fallbackTab.dataset.path);
+                    openTabByKey(fallbackTab.dataset.tabKey);
                 } else {
                     showEmptyEditor();
                 }
@@ -1497,9 +1855,103 @@
             return folderElement;
         };
 
-        const selectInitialFile = () => {
-            const routedPath = getRoutePath();
+        const createExtensionListElement = (extension) => {
+            const extensionElement = extensionItemTemplate.content.firstElementChild.cloneNode(true);
+            const iconElement = extensionElement.querySelector('.extension-icon');
 
+            setExtensionIcon(iconElement, extension);
+            extensionElement.querySelector('.extension-list-name').textContent = extension.name;
+            extensionElement.querySelector('.extension-list-description').textContent = extension.description;
+            extensionElement.dataset.extensionId = extension.id;
+            extensionElement.setAttribute('aria-label', `${extension.name}. ${extension.description}`);
+            extensionElement.addEventListener('click', () => openExtensionById(extension.id));
+            extensionElementsById.set(extension.id, extensionElement);
+
+            return extensionElement;
+        };
+
+        const filterExtensionList = () => {
+            const searchValue = extensionSearch.value.trim().toLocaleLowerCase();
+            let visibleCount = 0;
+
+            extensionsById.forEach((extension, extensionId) => {
+                const searchableText = [
+                    extension.name,
+                    extension.description,
+                    ...extension.categories,
+                ].join(' ').toLocaleLowerCase();
+                const isVisible = !searchValue || searchableText.includes(searchValue);
+                extensionElementsById.get(extensionId).hidden = !isVisible;
+                if (isVisible) visibleCount += 1;
+            });
+
+            extensionEmpty.hidden = visibleCount !== 0;
+        };
+
+        extensionSearch.addEventListener('input', filterExtensionList);
+        extensionSearch.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || !extensionSearch.value) return;
+            extensionSearch.value = '';
+            filterExtensionList();
+        });
+
+        const buildExtensionList = async () => {
+            try {
+                const response = await fetch(extensionsManifestPath, { cache: 'no-cache' });
+                if (!response.ok) {
+                    throw new Error(`The server returned status ${response.status}.`);
+                }
+
+                const manifest = await response.json();
+                if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.extensions)) {
+                    throw new Error('The extensions manifest is not valid.');
+                }
+
+                extensionsById = new Map();
+                extensionElementsById = new Map();
+                extensionList.replaceChildren();
+
+                manifest.extensions.forEach((extension) => {
+                    if (!extension.id || !extension.name || extensionsById.has(extension.id)) {
+                        throw new Error('The extensions manifest contains an invalid skill.');
+                    }
+
+                    extension.documents.forEach((documentLink) => {
+                        if (!fileNodesByPath.has(documentLink.path)) {
+                            throw new Error(`${documentLink.path} is not available in Explorer.`);
+                        }
+                    });
+
+                    extensionsById.set(extension.id, extension);
+                    extensionList.appendChild(createExtensionListElement(extension));
+                });
+
+                extensionCount.textContent = String(extensionsById.size);
+                extensionList.setAttribute('aria-busy', 'false');
+                filterExtensionList();
+                return true;
+            } catch (error) {
+                extensionList.setAttribute('aria-busy', 'false');
+                const message = document.createElement('div');
+                message.className = 'tree-error';
+                message.setAttribute('role', 'alert');
+                message.textContent = error instanceof Error
+                    ? error.message
+                    : 'The skills did not load.';
+                extensionList.replaceChildren(message);
+                console.error('Failed to build the extensions list:', error);
+                return false;
+            }
+        };
+
+        const selectInitialContent = () => {
+            const routedPath = getRoutePath();
+            const routedExtensionId = getExtensionIdFromRoute(routedPath);
+
+            if (routedExtensionId) {
+                activateSidebarView('extensions');
+                if (openExtensionById(routedExtensionId, null)) return;
+            }
             if (routedPath && openFileByPath(routedPath, null)) return;
             if (openFileByPath(defaultFilePath, 'replace')) return;
 
@@ -1532,8 +1984,7 @@
 
                 const firstTreeItem = fileTreeContainer.querySelector('[role="treeitem"]');
                 if (firstTreeItem) firstTreeItem.tabIndex = 0;
-
-                selectInitialFile();
+                return true;
             } catch (error) {
                 fileTreeContainer.setAttribute('aria-busy', 'false');
                 const message = document.createElement('div');
@@ -1546,18 +1997,37 @@
                 rejectManifestReady(error);
                 showState('error', 'Unable to load the site', 'The repository manifest did not load.');
                 console.error('Failed to build the file tree:', error);
+                return false;
             }
+        };
+
+        const initializeSite = async () => {
+            const fileTreeReady = await buildFileTree();
+            if (!fileTreeReady) return;
+
+            await buildExtensionList();
+            selectInitialContent();
         };
 
         window.addEventListener('popstate', () => {
             const routedPath = getRoutePath();
+            const routedExtensionId = getExtensionIdFromRoute(routedPath);
 
-            if (routedPath && openFileByPath(routedPath, null)) return;
+            if (routedExtensionId) {
+                activateSidebarView('extensions');
+                if (openExtensionById(routedExtensionId, null)) return;
+            }
+
+            if (routedPath) {
+                activateSidebarView('explorer');
+                if (openFileByPath(routedPath, null)) return;
+            }
+
             if (!routedPath) showEmptyEditor(null);
         });
 
         syncSidebar();
-        void buildFileTree();
+        void initializeSite();
     </script>
 </body>
 
