@@ -59,8 +59,10 @@ for (const requiredPath of [
     'README.md',
     'index.html',
     'page-data/file-manifest.json',
+    'page-data/search.mjs',
     'page-data/style.css',
     'scripts/generate-manifest.mjs',
+    'scripts/test-search.mjs',
     'scripts/test-site.mjs',
 ]) {
     if (!manifestPaths.includes(requiredPath)) {
@@ -125,9 +127,17 @@ for (const requiredText of [
     'name="viewport"',
     'page-data/file-manifest.json',
     'role="tree"',
-    'role="tablist"',
+    'role="toolbar" aria-label="Open files"',
     'id="media-viewer"',
     'id="pdf-viewer"',
+    'id="search-toggle"',
+    'id="search-input"',
+    'id="search-results"',
+    "from './page-data/search.mjs'",
+    'isCareerPath(entry.path)',
+    'buildSearchDocuments',
+    'openSearchMatch',
+    'Shift+Command+F',
     'renderPdfFile',
     "node.mediaType === 'application/pdf'",
     'node.rawUrl',
@@ -139,6 +149,26 @@ for (const requiredText of [
 
 if (indexHtml.includes('id="resume-download"')) {
     fail('The activity bar must not contain a separate resume shortcut.');
+}
+
+if (indexHtml.includes('data-search-scope') || indexHtml.includes('REPOSITORY MATCHES')) {
+    fail('The Search view must not contain repository scope controls.');
+}
+
+if (indexHtml.includes('Find relevant experience')
+    || styleCss.includes('.search-empty-copy')) {
+    fail('The Search view must not contain the introductory empty-state block.');
+}
+
+for (const actionLabel of [
+    'Open my resume',
+    'Email me',
+    'Open my LinkedIn',
+    'Open my GitHub',
+]) {
+    if (!indexHtml.includes(`label: '${actionLabel}'`)) {
+        fail(`The Search view is missing the ${actionLabel} action.`);
+    }
 }
 
 if (!readme.includes('[Download my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
@@ -200,6 +230,22 @@ if (!/\.activity-bar \.activity-button \.codicon\s*\{[^}]*font-size:\s*24px;/s.t
 
 if (!styleCss.includes('@media (max-width: 767px)')) {
     fail('The mobile layout rule is missing.');
+}
+
+for (const requiredSelector of [
+    '.search-input-shell',
+    '.search-status:empty',
+    '.search-result-match',
+    '.search-message-error',
+    '.monaco-editor .search-match-highlight',
+]) {
+    if (!styleCss.includes(requiredSelector)) {
+        fail(`The search interface is missing ${requiredSelector}.`);
+    }
+}
+
+if (/[—–]/.test(indexHtml)) {
+    fail('The visible interface must use regular hyphens instead of long dashes.');
 }
 
 if (!styleCss.includes('100dvh')) {

@@ -10,8 +10,8 @@
       "kind": "text",
       "mediaType": "text/yaml",
       "language": "yaml",
-      "size": 758,
-      "sha256": "adda55188d85a0f894bc6991e34828d14213dbe7f3128a1723a68d5343721c25"
+      "size": 809,
+      "sha256": "dbe15465ef11732cafb51803a9ba3ded30bb37f43cb1c08b7e94b4796907f6b7"
     },
     {
       "path": "CV/about.md",
@@ -40,8 +40,8 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 36481,
-      "sha256": "6b101675b38c8a77ef28d551ca7908b374dc09d1cfddf47f21d3e8a8889c6628"
+      "size": 62349,
+      "sha256": "b4a72507827e460bcfe2f60db2adc51d17738eb76f656148da34294967edff16"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -113,14 +113,24 @@
       "sha256": "bf58a2ab0ea0b48010ce979958ac4dbdfd917dd0cf28008d840f6708e8a20b01"
     },
     {
+      "path": "page-data/search.mjs",
+      "sourceUrl": "page-data/search.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/search.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 5087,
+      "sha256": "3c86d5ef6cd71e27f07961e07a398b1df8aee76619a17dc1600758cbf5b854f5"
+    },
+    {
       "path": "page-data/style.css",
       "sourceUrl": "page-data/style.css",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/style.css",
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 13730,
-      "sha256": "6468cfc17e621b2ae48823c8746e2844c523c4e995456b64b1bc4da1befd47fb"
+      "size": 20998,
+      "sha256": "ea3525d950fa067cb10a71b3ea20f9250070d02ed092d332fe76aa8c9baf2cec"
     },
     {
       "path": "README.md",
@@ -143,14 +153,24 @@
       "sha256": "5ee7a83d51e26bd24abf5aa796794b4454db247f7e46ee0631f62d221ef875b9"
     },
     {
+      "path": "scripts/test-search.mjs",
+      "sourceUrl": "scripts/test-search.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/test-search.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 2308,
+      "sha256": "65a1752afb913e0394e7492c9538cfda57ae78ccd78970a9f2287df7f2214210"
+    },
+    {
       "path": "scripts/test-site.mjs",
       "sourceUrl": "scripts/test-site.mjs",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/test-site.mjs",
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 6966,
-      "sha256": "4db63250f278d202bc68bf9d7dbf8a93f001a2023b596e8351e13c89d65793cd"
+      "size": 8322,
+      "sha256": "6ca6dfa56190513bbfbe8541e60af45208ec2e48d10d886a2f527a2d4e3bbba4"
     }
   ]
 }

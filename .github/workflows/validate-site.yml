@@ -30,4 +30,6 @@ jobs:
           exit 1
 
       - name: Test source browser
-        run: node scripts/test-site.mjs
+        run: |
+          node scripts/test-search.mjs
+          node scripts/test-site.mjs

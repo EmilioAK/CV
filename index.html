@@ -19,62 +19,129 @@
 <body>
     <nav class="activity-bar" aria-label="Workspace views">
         <button id="explorer-toggle" class="activity-button selected" type="button"
-            title="Explorer" aria-label="Toggle Explorer" aria-controls="explorer-sidebar"
+            title="Explorer" aria-label="Explorer" aria-controls="explorer-view"
             aria-expanded="true">
             <i class="codicon codicon-files" aria-hidden="true"></i>
         </button>
+        <button id="search-toggle" class="activity-button" type="button"
+            title="Search (Shift+Command+F)" aria-label="Search" aria-controls="search-view"
+            aria-keyshortcuts="Control+Shift+F Meta+Shift+F" aria-expanded="false">
+            <i class="codicon codicon-search" aria-hidden="true"></i>
+        </button>
     </nav>
 
-    <aside id="explorer-sidebar" class="sidebar" aria-label="Explorer">
-        <div class="sidebar-header">
-            <span>EXPLORER</span>
-            <button id="sidebar-close" class="sidebar-close" type="button"
-                title="Close Explorer" aria-label="Close Explorer">
-                <i class="codicon codicon-close" aria-hidden="true"></i>
-            </button>
-        </div>
-
-        <div class="sidebar-content">
-            <template id="file-template">
-                <button class="sidebar-file" type="button" role="treeitem"
-                    aria-selected="false" tabindex="-1">
-                    <span class="icon file-icon" aria-hidden="true"></span>
-                    <span class="sidebar-file-name"></span>
+    <aside id="workspace-sidebar" class="sidebar" aria-label="Explorer">
+        <section id="explorer-view" class="sidebar-view" aria-labelledby="explorer-view-title">
+            <div class="sidebar-header">
+                <span id="explorer-view-title">EXPLORER</span>
+                <button class="sidebar-close" type="button"
+                    title="Close Explorer" aria-label="Close Explorer">
+                    <i class="codicon codicon-close" aria-hidden="true"></i>
                 </button>
-            </template>
+            </div>
 
-            <template id="folder-template">
-                <div class="sidebar-folder" role="none">
-                    <button class="sidebar-file sidebar-folder-header" type="button"
-                        role="treeitem" aria-expanded="false" tabindex="-1">
-                        <i class="codicon codicon-chevron-right" aria-hidden="true"></i>
-                        <span class="sidebar-folder-name"></span>
+            <div class="sidebar-content">
+                <template id="file-template">
+                    <button class="sidebar-file" type="button" role="treeitem"
+                        aria-selected="false" tabindex="-1">
+                        <span class="icon file-icon" aria-hidden="true"></span>
+                        <span class="sidebar-file-name"></span>
                     </button>
-                    <div class="sidebar-folder-content" role="group" hidden></div>
-                </div>
-            </template>
+                </template>
 
-            <div id="file-tree" role="tree" aria-label="Repository files" aria-busy="true">
-                <div class="tree-loading" role="status">
-                    <span class="sr-only">Loading repository files.</span>
-                    <span class="tree-skeleton tree-skeleton-wide"></span>
-                    <span class="tree-skeleton"></span>
-                    <span class="tree-skeleton tree-skeleton-short"></span>
+                <template id="folder-template">
+                    <div class="sidebar-folder" role="none">
+                        <button class="sidebar-file sidebar-folder-header" type="button"
+                            role="treeitem" aria-expanded="false" tabindex="-1">
+                            <i class="codicon codicon-chevron-right" aria-hidden="true"></i>
+                            <span class="sidebar-folder-name"></span>
+                        </button>
+                        <div class="sidebar-folder-content" role="group" hidden></div>
+                    </div>
+                </template>
+
+                <div id="file-tree" role="tree" aria-label="Repository files" aria-busy="true">
+                    <div class="tree-loading" role="status">
+                        <span class="sr-only">Loading repository files.</span>
+                        <span class="tree-skeleton tree-skeleton-wide"></span>
+                        <span class="tree-skeleton"></span>
+                        <span class="tree-skeleton tree-skeleton-short"></span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section id="search-view" class="sidebar-view" aria-labelledby="search-view-title" hidden>
+            <div class="sidebar-header">
+                <span id="search-view-title">SEARCH</span>
+                <button class="sidebar-close" type="button"
+                    title="Close Search" aria-label="Close Search">
+                    <i class="codicon codicon-close" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-content search-sidebar-content">
+                <form id="search-form" class="search-form" role="search">
+                    <label class="search-label" for="search-input">Search my CV</label>
+                    <div class="search-input-shell">
+                        <i class="codicon codicon-search" aria-hidden="true"></i>
+                        <input id="search-input" type="search" autocomplete="off"
+                            spellcheck="false" placeholder="Search my CV"
+                            aria-describedby="search-help search-status"
+                            aria-controls="search-results" />
+                        <button id="search-clear" class="search-clear" type="button"
+                            title="Clear Search" aria-label="Clear Search" hidden>
+                            <i class="codicon codicon-close" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <span id="search-help" class="search-help">
+                        Search my experience, skills, and contact details.
+                    </span>
+                </form>
+
+                <div id="search-status" class="search-status" role="status"
+                    aria-live="polite"></div>
+
+                <div id="search-empty" class="search-empty">
+                    <div class="search-section">
+                        <span class="search-section-title">TRY A SEARCH</span>
+                        <div class="search-suggestions" aria-label="Suggested searches">
+                            <button type="button" data-search-query="Microsoft">Microsoft</button>
+                            <button type="button" data-search-query="cloud">cloud</button>
+                            <button type="button" data-search-query="teaching">teaching</button>
+                            <button type="button" data-search-query="security">security</button>
+                        </div>
+                    </div>
+
+                    <div class="search-section">
+                        <span class="search-section-title">QUICK ACTIONS</span>
+                        <div id="search-quick-actions" class="search-actions"></div>
+                    </div>
+                </div>
+
+                <div id="search-loading" class="search-loading" role="status" hidden>
+                    <span class="sr-only">Preparing the search index.</span>
+                    <span class="search-skeleton search-skeleton-wide"></span>
+                    <span class="search-skeleton"></span>
+                    <span class="search-skeleton search-skeleton-short"></span>
+                </div>
+
+                <div id="search-results" class="search-results"
+                    aria-label="Search results" hidden></div>
+            </div>
+        </section>
     </aside>
 
     <button id="sidebar-scrim" class="sidebar-scrim" type="button"
-        aria-label="Close Explorer" tabindex="-1"></button>
+        aria-label="Close sidebar" tabindex="-1"></button>
 
     <main class="workspace" aria-label="Source browser">
-        <div class="tab-bar" role="tablist" aria-label="Open files"></div>
+        <div class="tab-bar" role="toolbar" aria-label="Open files"></div>
 
         <template id="tab-template">
-            <div class="tab" role="presentation">
-                <button class="tab-select" type="button" role="tab"
-                    aria-selected="false" tabindex="-1">
+            <div class="tab">
+                <button class="tab-select" type="button"
+                    aria-pressed="false" tabindex="-1">
                     <span class="icon file-icon tab-icon" aria-hidden="true"></span>
                     <span class="tab-label"></span>
                 </button>
@@ -85,7 +152,8 @@
             </div>
         </template>
 
-        <div id="source-panel" class="editor-stage" role="tabpanel">
+        <div id="source-panel" class="editor-stage" role="region"
+            aria-label="File preview">
             <div id="editor-state" class="editor-state" role="status" aria-live="polite">
                 <div class="state-copy">
                     <strong id="state-title">Loading site</strong>
@@ -121,19 +189,39 @@
         src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"
         crossorigin="anonymous"></script>
 
-    <script>
+    <script type="module">
+        import {
+            createSearchDocument,
+            isCareerPath,
+            isSearchableEntry,
+            parseSearchQuery,
+            searchDocuments,
+        } from './page-data/search.mjs';
+
         const manifestPath = 'page-data/file-manifest.json';
         const defaultFilePath = 'README.md';
         const mobileQuery = window.matchMedia('(max-width: 767px)');
 
         const body = document.body;
         const explorerToggle = document.getElementById('explorer-toggle');
-        const sidebar = document.getElementById('explorer-sidebar');
-        const sidebarClose = document.getElementById('sidebar-close');
+        const searchToggle = document.getElementById('search-toggle');
+        const sidebar = document.getElementById('workspace-sidebar');
+        const explorerView = document.getElementById('explorer-view');
+        const searchView = document.getElementById('search-view');
+        const sidebarCloseButtons = document.querySelectorAll('.sidebar-close');
         const sidebarScrim = document.getElementById('sidebar-scrim');
         const fileTreeContainer = document.getElementById('file-tree');
         const fileTemplate = document.getElementById('file-template');
         const folderTemplate = document.getElementById('folder-template');
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        const searchStatus = document.getElementById('search-status');
+        const searchEmpty = document.getElementById('search-empty');
+        const searchLoading = document.getElementById('search-loading');
+        const searchResults = document.getElementById('search-results');
+        const searchSuggestionButtons = document.querySelectorAll('[data-search-query]');
+        const searchQuickActions = document.getElementById('search-quick-actions');
         const tabTemplate = document.getElementById('tab-template');
         const tabBar = document.querySelector('.tab-bar');
         const editorContainer = document.getElementById('monaco-editor');
@@ -167,10 +255,74 @@
         let activeObjectUrl = null;
         let desktopSidebarOpen = true;
         let mobileSidebarOpen = false;
+        let activeSidebarView = 'explorer';
+        let manifestEntries = [];
+        let searchDocumentsPromise = null;
+        let searchRequestId = 0;
+        let searchDecorationCollection = null;
         let fileNodesByPath = new Map();
         let fileElementsByPath = new Map();
         let folderControllers = new Map();
+        const fileContentPromises = new Map();
         const openTabs = new Map();
+        let resolveManifestReady;
+        let rejectManifestReady;
+        const manifestReady = new Promise((resolve, reject) => {
+            resolveManifestReady = resolve;
+            rejectManifestReady = reject;
+        });
+
+        manifestReady.catch(() => {});
+
+        const sidebarControls = new Map([
+            ['explorer', {
+                button: explorerToggle,
+                view: explorerView,
+                label: 'Explorer',
+            }],
+            ['search', {
+                button: searchToggle,
+                view: searchView,
+                label: 'Search',
+            }],
+        ]);
+
+        const quickActions = [
+            {
+                id: 'resume',
+                label: 'Open my resume',
+                description: 'View or download the PDF',
+                icon: 'codicon-file-pdf',
+                keywords: 'resume cv pdf download',
+                path: 'CV/Emilio_Alvarez_Resume.pdf',
+            },
+            {
+                id: 'email',
+                label: 'Email me',
+                description: 'me@emilioak.dev',
+                icon: 'codicon-mail',
+                keywords: 'email contact message emilio',
+                href: 'mailto:me@emilioak.dev',
+            },
+            {
+                id: 'linkedin',
+                label: 'Open my LinkedIn',
+                description: 'linkedin.com/in/EmilioAK',
+                icon: 'codicon-link-external',
+                keywords: 'linkedin profile social emilio',
+                href: 'https://www.linkedin.com/in/EmilioAK',
+                external: true,
+            },
+            {
+                id: 'github',
+                label: 'Open my GitHub',
+                description: 'github.com/EmilioAK',
+                icon: 'codicon-github-inverted',
+                keywords: 'github code repository source emilio',
+                href: 'https://github.com/EmilioAK',
+                external: true,
+            },
+        ];
 
         const monacoReady = new Promise((resolve, reject) => {
             if (typeof window.require !== 'function') {
@@ -212,6 +364,11 @@
 
         monacoReady.catch(() => {});
 
+        const clearSearchDecorations = () => {
+            searchDecorationCollection?.clear();
+            searchDecorationCollection = null;
+        };
+
         const clearObjectUrl = () => {
             pdfViewer.hidden = true;
             pdfViewer.removeAttribute('src');
@@ -225,6 +382,7 @@
 
         const showState = (type, title, detail) => {
             clearObjectUrl();
+            clearSearchDecorations();
             editorContainer.hidden = true;
             mediaViewer.hidden = true;
             editorState.hidden = false;
@@ -244,6 +402,7 @@
         };
 
         const showMedia = () => {
+            clearSearchDecorations();
             editorState.hidden = true;
             editorContainer.hidden = true;
             mediaViewer.hidden = false;
@@ -299,18 +458,38 @@
             }
         };
 
+        const isSidebarOpen = () => mobileQuery.matches
+            ? mobileSidebarOpen
+            : desktopSidebarOpen;
+
         const syncSidebar = () => {
+            const sidebarOpen = isSidebarOpen();
+
+            sidebarControls.forEach((control, viewName) => {
+                const isActive = activeSidebarView === viewName;
+                const isInteractive = isActive && sidebarOpen;
+                control.view.hidden = !isActive;
+                control.view.inert = !isInteractive;
+                control.view.setAttribute('aria-hidden', String(!isInteractive));
+                control.button.setAttribute('aria-expanded', String(isInteractive));
+                control.button.classList.toggle('selected', isInteractive);
+            });
+
+            sidebar.setAttribute(
+                'aria-label',
+                sidebarControls.get(activeSidebarView)?.label || 'Workspace'
+            );
+            sidebar.hidden = !sidebarOpen;
+            sidebar.inert = !sidebarOpen;
+            sidebar.setAttribute('aria-hidden', String(!sidebarOpen));
+
             if (mobileQuery.matches) {
                 body.classList.remove('sidebar-collapsed');
                 body.classList.toggle('sidebar-open', mobileSidebarOpen);
-                explorerToggle.setAttribute('aria-expanded', String(mobileSidebarOpen));
-                explorerToggle.classList.toggle('selected', mobileSidebarOpen);
                 sidebarScrim.tabIndex = mobileSidebarOpen ? 0 : -1;
             } else {
                 body.classList.remove('sidebar-open');
                 body.classList.toggle('sidebar-collapsed', !desktopSidebarOpen);
-                explorerToggle.setAttribute('aria-expanded', String(desktopSidebarOpen));
-                explorerToggle.classList.toggle('selected', desktopSidebarOpen);
                 sidebarScrim.tabIndex = -1;
             }
 
@@ -324,30 +503,74 @@
             }
         };
 
-        const closeMobileSidebar = () => {
-            if (!mobileQuery.matches || !mobileSidebarOpen) return;
-            mobileSidebarOpen = false;
+        const closeSidebar = (restoreFocus = true) => {
+            if (mobileQuery.matches) {
+                mobileSidebarOpen = false;
+            } else {
+                desktopSidebarOpen = false;
+            }
             syncSidebar();
-            explorerToggle.focus();
+
+            if (restoreFocus) {
+                sidebarControls.get(activeSidebarView)?.button.focus();
+            }
+        };
+
+        const closeMobileSidebar = (restoreFocus = true) => {
+            if (!mobileQuery.matches || !mobileSidebarOpen) return;
+            closeSidebar(restoreFocus);
+        };
+
+        const activateSidebarView = (viewName, toggleCurrent = false) => {
+            if (!sidebarControls.has(viewName)) return;
+
+            const selectedCurrentView = activeSidebarView === viewName;
+            if (selectedCurrentView && toggleCurrent && isSidebarOpen()) {
+                closeSidebar(false);
+                return;
+            }
+
+            activeSidebarView = viewName;
+            if (mobileQuery.matches) {
+                mobileSidebarOpen = true;
+            } else {
+                desktopSidebarOpen = true;
+            }
+            syncSidebar();
+
+            if (viewName === 'search') {
+                requestAnimationFrame(() => searchInput.focus());
+            }
         };
 
         explorerToggle.addEventListener('click', () => {
-            if (mobileQuery.matches) {
-                mobileSidebarOpen = !mobileSidebarOpen;
-            } else {
-                desktopSidebarOpen = !desktopSidebarOpen;
-            }
-            syncSidebar();
+            activateSidebarView('explorer', true);
         });
 
-        sidebarClose.addEventListener('click', closeMobileSidebar);
-        sidebarScrim.addEventListener('click', closeMobileSidebar);
+        searchToggle.addEventListener('click', () => {
+            activateSidebarView('search', true);
+        });
+
+        sidebarCloseButtons.forEach((button) => {
+            button.addEventListener('click', () => closeSidebar());
+        });
+        sidebarScrim.addEventListener('click', () => closeMobileSidebar());
         mobileQuery.addEventListener('change', () => {
             mobileSidebarOpen = false;
             syncSidebar();
         });
 
         document.addEventListener('keydown', (event) => {
+            const opensSearch = (event.metaKey || event.ctrlKey)
+                && event.shiftKey
+                && event.key.toLocaleLowerCase() === 'f';
+
+            if (opensSearch) {
+                event.preventDefault();
+                activateSidebarView('search');
+                return;
+            }
+
             if (event.key === 'Escape') closeMobileSidebar();
         });
 
@@ -509,7 +732,7 @@
                 const selectButton = tabElement.querySelector('.tab-select');
                 const isActive = tabPath === filePath;
                 tabElement.classList.toggle('active', isActive);
-                selectButton.setAttribute('aria-selected', String(isActive));
+                selectButton.setAttribute('aria-pressed', String(isActive));
                 selectButton.tabIndex = isActive ? 0 : -1;
                 if (isActive) activeTabElement = tabElement;
             });
@@ -612,20 +835,74 @@
             throw new Error(`The source returned ${directResult}. GitHub returned ${rawResult}.`);
         };
 
-        const renderTextFile = async (node) => {
+        const loadTextContent = (node) => {
+            if (!fileContentPromises.has(node.path)) {
+                const contentPromise = loadResponse(node)
+                    .then((response) => response.text())
+                    .catch((error) => {
+                        fileContentPromises.delete(node.path);
+                        throw error;
+                    });
+                fileContentPromises.set(node.path, contentPromise);
+            }
+
+            return fileContentPromises.get(node.path);
+        };
+
+        const revealSearchMatch = (editor, location) => {
+            clearSearchDecorations();
+            if (!location) return;
+
+            const model = editor.getModel();
+            const lineNumber = Math.min(
+                Math.max(1, location.lineNumber),
+                model.getLineCount()
+            );
+            const maximumColumn = model.getLineMaxColumn(lineNumber);
+            const startColumn = Math.min(
+                Math.max(1, location.column),
+                maximumColumn
+            );
+            const endColumn = Math.min(
+                maximumColumn,
+                startColumn + Math.max(1, location.matchLength)
+            );
+            const range = new monaco.Range(
+                lineNumber,
+                startColumn,
+                lineNumber,
+                Math.max(startColumn + 1, endColumn)
+            );
+
+            searchDecorationCollection = editor.createDecorationsCollection([{
+                range,
+                options: {
+                    inlineClassName: 'search-match-highlight',
+                    overviewRuler: {
+                        color: '#e2c08d',
+                        position: monaco.editor.OverviewRulerLane.Center,
+                    },
+                },
+            }]);
+            editor.setSelection(range);
+            editor.revealLineInCenter(lineNumber);
+            requestAnimationFrame(() => editor.focus());
+        };
+
+        const renderTextFile = async (node, location = null) => {
             showState('loading', `Loading ${node.name}`, 'Preparing the source view.');
 
-            const [editor, response] = await Promise.all([
+            const [editor, content] = await Promise.all([
                 monacoReady,
-                loadResponse(node),
+                loadTextContent(node),
             ]);
-            const content = await response.text();
 
             if (activeFilePath !== node.path) return;
 
             editor.setValue(content);
             monaco.editor.setModelLanguage(editor.getModel(), node.language || 'plaintext');
             showEditor();
+            revealSearchMatch(editor, location);
         };
 
         const renderImageFile = async (node) => {
@@ -691,7 +968,12 @@
             showMedia();
         };
 
-        const openFileInEditor = async (node, fileElement, historyMode = 'push') => {
+        const openFileInEditor = async (
+            node,
+            fileElement,
+            historyMode = 'push',
+            location = null,
+        ) => {
             revealFilePath(node.path);
             setSelectedFileElement(fileElement);
             ensureTabForFile(node);
@@ -701,8 +983,7 @@
             updateRoute(node.path, historyMode);
 
             if (mobileQuery.matches) {
-                mobileSidebarOpen = false;
-                syncSidebar();
+                closeMobileSidebar(false);
             }
 
             try {
@@ -713,7 +994,7 @@
                 } else if (node.kind === 'binary') {
                     await renderBinaryFile(node);
                 } else {
-                    await renderTextFile(node);
+                    await renderTextFile(node, location);
                 }
             } catch (error) {
                 if (activeFilePath !== node.path) return;
@@ -738,6 +1019,377 @@
 
             return false;
         };
+
+        const createActionElement = (action) => {
+            const element = document.createElement(action.href ? 'a' : 'button');
+            element.className = 'search-action';
+
+            if (action.href) {
+                element.href = action.href;
+                if (action.external) {
+                    element.target = '_blank';
+                    element.rel = 'noreferrer';
+                }
+            } else {
+                element.type = 'button';
+                element.addEventListener('click', () => {
+                    if (!openFileByPath(action.path)) {
+                        searchStatus.textContent = 'The resume is still loading.';
+                    }
+                });
+            }
+
+            const icon = document.createElement('i');
+            icon.className = `codicon ${action.icon}`;
+            icon.setAttribute('aria-hidden', 'true');
+
+            const copy = document.createElement('span');
+            copy.className = 'search-action-copy';
+
+            const label = document.createElement('strong');
+            label.textContent = action.label;
+
+            const description = document.createElement('small');
+            description.textContent = action.description;
+
+            copy.append(label, description);
+            element.append(icon, copy);
+
+            return element;
+        };
+
+        const renderQuickActions = () => {
+            searchQuickActions.replaceChildren(
+                ...quickActions.map((action) => createActionElement(action))
+            );
+        };
+
+        const getMatchingActions = (rawQuery) => {
+            const { terms } = parseSearchQuery(rawQuery);
+
+            return quickActions.filter((action) => {
+                const searchableText = `${action.label} ${action.description} ${action.keywords}`
+                    .toLocaleLowerCase();
+                return terms.every((term) => searchableText.includes(term));
+            });
+        };
+
+        const setSearchState = (state, status = '') => {
+            searchEmpty.hidden = state !== 'empty';
+            searchLoading.hidden = state !== 'loading';
+            searchResults.hidden = state !== 'results' && state !== 'error';
+            searchStatus.textContent = status;
+        };
+
+        const buildSearchDocuments = async () => {
+            if (searchDocumentsPromise) return searchDocumentsPromise;
+
+            searchDocumentsPromise = (async () => {
+                await manifestReady;
+
+                const searchableEntries = manifestEntries.filter((entry) => {
+                    return isSearchableEntry(entry) && isCareerPath(entry.path);
+                });
+                const settledDocuments = await Promise.allSettled(
+                    searchableEntries.map(async (entry) => {
+                        const content = await loadTextContent(entry);
+                        return createSearchDocument(entry, content);
+                    })
+                );
+                const documents = settledDocuments
+                    .filter((result) => result.status === 'fulfilled')
+                    .map((result) => result.value);
+                const failureCount = settledDocuments.length - documents.length;
+
+                if (documents.length === 0) {
+                    throw new Error('The searchable files did not load.');
+                }
+
+                return { documents, failureCount };
+            })().catch((error) => {
+                searchDocumentsPromise = null;
+                throw error;
+            });
+
+            return searchDocumentsPromise;
+        };
+
+        const appendHighlightedText = (container, text, rawQuery) => {
+            const { query } = parseSearchQuery(rawQuery);
+            const terms = query
+                .split(' ')
+                .filter(Boolean)
+                .sort((left, right) => right.length - left.length)
+                .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+            if (terms.length === 0) {
+                container.textContent = text;
+                return;
+            }
+
+            const expression = new RegExp(`(${terms.join('|')})`, 'gi');
+            text.split(expression).filter(Boolean).forEach((part) => {
+                if (expression.test(part)) {
+                    const mark = document.createElement('mark');
+                    mark.textContent = part;
+                    container.appendChild(mark);
+                } else {
+                    container.appendChild(document.createTextNode(part));
+                }
+                expression.lastIndex = 0;
+            });
+        };
+
+        const openSearchMatch = (path, match) => {
+            const node = fileNodesByPath.get(path);
+            const fileElement = fileElementsByPath.get(path);
+
+            if (!node || !fileElement) {
+                searchStatus.textContent = 'The selected file is not available.';
+                return;
+            }
+
+            void openFileInEditor(
+                node,
+                fileElement,
+                'push',
+                match.pathOnly ? null : match,
+            );
+        };
+
+        const createResultActionSection = (actions) => {
+            const section = document.createElement('section');
+            section.className = 'search-result-section';
+            section.setAttribute('aria-label', 'Actions');
+
+            const heading = document.createElement('div');
+            heading.className = 'search-results-heading';
+            heading.textContent = 'ACTIONS';
+            section.appendChild(heading);
+
+            actions.forEach((action) => {
+                section.appendChild(createActionElement(action));
+            });
+
+            return section;
+        };
+
+        const createResultGroup = (group, rawQuery) => {
+            const section = document.createElement('section');
+            section.className = 'search-result-group';
+            section.setAttribute('aria-label', `${group.path}, ${group.matchCount} matches`);
+
+            const fileButton = document.createElement('button');
+            fileButton.className = 'search-result-file';
+            fileButton.type = 'button';
+
+            const fileIcon = document.createElement('span');
+            fileIcon.className = 'icon file-icon';
+            fileIcon.setAttribute('aria-hidden', 'true');
+            setIconForFile(group.path, fileIcon);
+
+            const path = document.createElement('span');
+            path.className = 'search-result-path';
+            path.textContent = group.path;
+
+            const count = document.createElement('span');
+            count.className = 'search-result-count';
+            count.textContent = String(group.matchCount);
+            count.setAttribute('aria-hidden', 'true');
+
+            fileButton.append(fileIcon, path, count);
+            fileButton.addEventListener('click', () => {
+                openSearchMatch(group.path, group.matches[0]);
+            });
+            section.appendChild(fileButton);
+
+            group.matches.forEach((match) => {
+                const matchButton = document.createElement('button');
+                matchButton.className = 'search-result-match';
+                matchButton.type = 'button';
+                matchButton.setAttribute(
+                    'aria-label',
+                    `${group.path}, line ${match.lineNumber}: ${match.snippet}`
+                );
+
+                const lineNumber = document.createElement('span');
+                lineNumber.className = 'search-result-line';
+                lineNumber.textContent = String(match.lineNumber);
+                lineNumber.setAttribute('aria-hidden', 'true');
+
+                const snippet = document.createElement('span');
+                snippet.className = 'search-result-snippet';
+                appendHighlightedText(snippet, match.snippet, rawQuery);
+
+                matchButton.append(lineNumber, snippet);
+                matchButton.addEventListener('click', () => {
+                    openSearchMatch(group.path, match);
+                });
+                section.appendChild(matchButton);
+            });
+
+            if (group.matchCount > group.matches.length) {
+                const remaining = document.createElement('span');
+                remaining.className = 'search-result-more';
+                remaining.textContent = `${group.matchCount - group.matches.length} more matches`;
+                section.appendChild(remaining);
+            }
+
+            return section;
+        };
+
+        const renderSearchResults = (result, actions, failureCount) => {
+            searchResults.replaceChildren();
+
+            if (actions.length > 0) {
+                searchResults.appendChild(createResultActionSection(actions));
+            }
+
+            if (result.groups.length > 0) {
+                const heading = document.createElement('div');
+                heading.className = 'search-results-heading search-file-results-heading';
+                heading.textContent = 'CV MATCHES';
+                searchResults.appendChild(heading);
+
+                result.groups.forEach((group) => {
+                    searchResults.appendChild(createResultGroup(group, result.query));
+                });
+            }
+
+            if (actions.length === 0 && result.groups.length === 0) {
+                const message = document.createElement('div');
+                message.className = 'search-message';
+
+                const title = document.createElement('strong');
+                title.textContent = 'No CV matches';
+
+                const detail = document.createElement('span');
+                detail.textContent = 'Try another search term.';
+
+                message.append(title, detail);
+                searchResults.appendChild(message);
+            }
+
+            const statusParts = [];
+            if (result.totalMatches > 0) {
+                const fileWord = result.totalFiles === 1 ? 'file' : 'files';
+                statusParts.push(
+                    `${result.totalMatches} matches in ${result.totalFiles} ${fileWord}`
+                );
+            }
+            if (actions.length > 0) {
+                const actionWord = actions.length === 1 ? 'action' : 'actions';
+                statusParts.push(`${actions.length} ${actionWord}`);
+            }
+            if (statusParts.length === 0) {
+                statusParts.push('No matches');
+            }
+            if (failureCount > 0) {
+                statusParts.push(`${failureCount} source files unavailable`);
+            }
+
+            setSearchState('results', `${statusParts.join('. ')}.`);
+        };
+
+        const renderSearchError = (error) => {
+            const message = document.createElement('div');
+            message.className = 'search-message search-message-error';
+
+            const title = document.createElement('strong');
+            title.textContent = 'Search is unavailable';
+
+            const detail = document.createElement('span');
+            detail.textContent = error instanceof Error
+                ? error.message
+                : 'The search index did not load.';
+
+            const retry = document.createElement('button');
+            retry.type = 'button';
+            retry.textContent = 'Try again';
+            retry.addEventListener('click', () => void executeSearch());
+
+            message.append(title, detail, retry);
+            searchResults.replaceChildren(message);
+            setSearchState('error', 'Search failed.');
+        };
+
+        const executeSearch = async () => {
+            const requestId = ++searchRequestId;
+            const { query } = parseSearchQuery(searchInput.value);
+            searchClear.hidden = !query;
+
+            if (!query) {
+                searchResults.replaceChildren();
+                setSearchState('empty');
+                return;
+            }
+
+            setSearchState('loading', 'Preparing search.');
+
+            try {
+                const { documents, failureCount } = await buildSearchDocuments();
+                if (requestId !== searchRequestId) return;
+
+                const result = searchDocuments(documents, query);
+                const actions = getMatchingActions(query);
+                renderSearchResults(result, actions, failureCount);
+            } catch (error) {
+                if (requestId !== searchRequestId) return;
+                renderSearchError(error);
+            }
+        };
+
+        let searchDebounceTimer = null;
+
+        searchInput.addEventListener('input', () => {
+            searchClear.hidden = !parseSearchQuery(searchInput.value).query;
+            window.clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = window.setTimeout(() => void executeSearch(), 120);
+        });
+
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && searchInput.value) {
+                event.preventDefault();
+                event.stopPropagation();
+                searchInput.value = '';
+                void executeSearch();
+                return;
+            }
+
+            if (event.key === 'ArrowDown') {
+                const firstResult = searchResults.querySelector('button, a');
+                if (firstResult) {
+                    event.preventDefault();
+                    firstResult.focus();
+                }
+            }
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            void executeSearch();
+            searchInput.focus();
+        });
+
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const firstMatch = searchResults.querySelector('.search-result-match');
+            if (firstMatch) {
+                firstMatch.click();
+            } else {
+                void executeSearch();
+            }
+        });
+
+        searchSuggestionButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                searchInput.value = button.dataset.searchQuery;
+                void executeSearch();
+                searchInput.focus();
+            });
+        });
+
+        renderQuickActions();
 
         const showEmptyEditor = (historyMode = 'push') => {
             activeFilePath = null;
@@ -867,14 +1519,16 @@
                     throw new Error('The source manifest is not valid.');
                 }
 
+                manifestEntries = manifest.files;
                 fileNodesByPath = new Map();
                 fileElementsByPath = new Map();
                 folderControllers = new Map();
                 fileTreeContainer.replaceChildren();
 
-                const tree = createTreeFromEntries(manifest.files);
+                const tree = createTreeFromEntries(manifestEntries);
                 renderTreeChildren(tree, fileTreeContainer);
                 fileTreeContainer.setAttribute('aria-busy', 'false');
+                resolveManifestReady(manifestEntries);
 
                 const firstTreeItem = fileTreeContainer.querySelector('[role="treeitem"]');
                 if (firstTreeItem) firstTreeItem.tabIndex = 0;
@@ -889,6 +1543,7 @@
                     ? error.message
                     : 'The repository files did not load.';
                 fileTreeContainer.replaceChildren(message);
+                rejectManifestReady(error);
                 showState('error', 'Unable to load the site', 'The repository manifest did not load.');
                 console.error('Failed to build the file tree:', error);
             }
