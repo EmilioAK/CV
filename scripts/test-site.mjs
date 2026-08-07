@@ -168,6 +168,10 @@ if (sourceControlData.branch !== 'main') {
     fail('The Source Control story must identify the main branch.');
 }
 
+if (sourceControlData.staged.length !== 4 || sourceControlData.changes.length !== 3) {
+    fail('The Source Control view must keep the VS Code 4 staged and 3 changed file composition.');
+}
+
 const laneIds = new Set(sourceControlData.lanes.map((lane) => lane.id));
 const commitHashes = new Set();
 
@@ -198,6 +202,8 @@ if (/[–—]/.test(JSON.stringify(sourceControlData))) {
 
 for (const requiredText of [
     'window.SourceControlView',
+    'scm-commit-composer',
+    'scm-graph-toolbar',
     'scm-graph-svg',
     'scm-commit-tooltip',
     'role',
@@ -210,6 +216,8 @@ for (const requiredText of [
 
 for (const requiredSelector of [
     '.source-control-view',
+    '.scm-commit-composer',
+    '.scm-graph-toolbar',
     '.scm-graph-svg',
     '.scm-commit-row',
     '.scm-detail-viewer',

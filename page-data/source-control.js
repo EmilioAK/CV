@@ -1,6 +1,7 @@
 (() => {
     const svgNamespace = 'http://www.w3.org/2000/svg';
-    const graphRowHeight = 28;
+    const graphRowHeight = 25;
+    const graphWidth = 48;
 
     const createElement = (tagName, className, text) => {
         const element = document.createElement(tagName);
@@ -54,6 +55,9 @@
             if (commitHashes.has(commit.hash)) {
                 throw new Error(`Commit hash ${commit.hash} is duplicated.`);
             }
+            if (!Array.isArray(commit.files) || !Array.isArray(commit.edges)) {
+                throw new Error(`Commit ${commit.hash} is missing graph data.`);
+            }
             commitHashes.add(commit.hash);
         });
     };
@@ -61,13 +65,13 @@
     const renderGraphSvg = (commits, lanes) => {
         const laneMap = new Map(lanes.map((lane, index) => [lane.id, {
             ...lane,
-            x: 10 + (index * 14),
+            x: 10 + (index * 8),
         }]));
         const height = commits.length * graphRowHeight;
         const svg = document.createElementNS(svgNamespace, 'svg');
         svg.classList.add('scm-graph-svg');
-        svg.setAttribute('viewBox', `0 0 68 ${height}`);
-        svg.setAttribute('width', '68');
+        svg.setAttribute('viewBox', `0 0 ${graphWidth} ${height}`);
+        svg.setAttribute('width', String(graphWidth));
         svg.setAttribute('height', String(height));
         svg.setAttribute('aria-hidden', 'true');
 
@@ -103,7 +107,7 @@
             const node = document.createElementNS(svgNamespace, 'circle');
             node.setAttribute('cx', String(lane.x));
             node.setAttribute('cy', String((index * graphRowHeight) + (graphRowHeight / 2)));
-            node.setAttribute('r', commit.kind === 'merge' ? '4.5' : '3.8');
+            node.setAttribute('r', commit.kind === 'merge' ? '4' : '3.5');
             node.setAttribute('stroke', lane.color);
             node.setAttribute('fill', commit.kind === 'merge' ? '#181818' : lane.color);
             node.setAttribute('class', `scm-graph-node ${commit.kind === 'merge' ? 'merge' : ''}`.trim());
@@ -152,6 +156,16 @@
         tooltip.style.top = `${Math.max(8, Math.min(rowRect.top, window.innerHeight - tooltip.offsetHeight - 8))}px`;
     };
 
+    const createToolbarButton = (iconName, label, disabled = false) => {
+        const button = createElement('button', 'scm-graph-action');
+        button.type = 'button';
+        button.title = label;
+        button.setAttribute('aria-label', label);
+        button.disabled = disabled;
+        button.appendChild(createIcon(iconName));
+        return button;
+    };
+
     const create = async ({
         container,
         dataUrl,
@@ -178,9 +192,14 @@
         validateData(data);
 
         const itemButtons = new Map();
-        let selectedKey = null;
+        const collapseSections = [];
         const tooltip = createTooltip();
         const sidebar = container.closest('.sidebar');
+        let selectedKey = null;
+        let resizeObserver = null;
+        let userResized = false;
+
+        if (!sidebar) throw new Error('The Source Control sidebar is missing.');
 
         const select = (key) => {
             if (selectedKey && itemButtons.has(selectedKey)) {
@@ -210,8 +229,15 @@
             const list = createElement('div', 'scm-file-list');
             let open = true;
 
+            const setOpen = (nextOpen) => {
+                open = nextOpen;
+                header.setAttribute('aria-expanded', String(open));
+                chevron.classList.toggle('codicon-chevron-down', open);
+                chevron.classList.toggle('codicon-chevron-right', !open);
+                list.hidden = !open;
+            };
+
             header.type = 'button';
-            header.setAttribute('aria-expanded', 'true');
             header.append(chevron, title, count);
             list.setAttribute('role', 'listbox');
             list.setAttribute('aria-label', label);
@@ -220,11 +246,6 @@
                 const key = `change:${item.id}`;
                 const parts = getPathParts(item.path);
                 const row = createElement('button', 'scm-file-row scm-navigable');
-                const statusIconName = item.status === 'A'
-                    ? 'diff-added'
-                    : item.status === 'D'
-                        ? 'diff-removed'
-                        : 'diff-modified';
 
                 row.type = 'button';
                 row.dataset.scmKey = key;
@@ -232,8 +253,9 @@
                 row.setAttribute('aria-selected', 'false');
                 row.setAttribute('aria-label', `${parts.name}, ${item.summary}`);
                 row.title = item.summary;
+                row.classList.toggle('deleted', item.status === 'D');
                 row.append(
-                    createIcon(statusIconName, `scm-change-icon ${staged ? 'staged' : ''}`),
+                    createIcon('arrow-down', `scm-change-icon ${staged ? 'staged' : ''}`),
                     createElement('span', 'scm-file-name', parts.name),
                     createElement('span', 'scm-file-directory', parts.directory),
                     createElement('span', `scm-status status-${item.status.toLowerCase()}`, item.status)
@@ -246,37 +268,171 @@
                 list.appendChild(row);
             });
 
-            header.addEventListener('click', () => {
-                open = !open;
-                header.setAttribute('aria-expanded', String(open));
-                chevron.classList.toggle('codicon-chevron-down', open);
-                chevron.classList.toggle('codicon-chevron-right', !open);
-                list.hidden = !open;
-            });
-
+            header.addEventListener('click', () => setOpen(!open));
+            collapseSections.push(() => setOpen(false));
+            setOpen(true);
             section.append(header, list);
             return section;
         };
 
+        const createCommitComposer = () => {
+            const form = createElement('form', 'scm-commit-composer');
+            const inputWrap = createElement('div', 'scm-commit-input-wrap');
+            const input = createElement('input', 'scm-commit-input');
+            const actions = createElement('div', 'scm-commit-actions');
+            const primary = createElement('button', 'scm-commit-primary');
+            const menuToggle = createElement('button', 'scm-commit-menu-toggle');
+            const menu = createElement('div', 'scm-commit-options');
+            let menuOpen = false;
+
+            const setMenuOpen = (nextOpen) => {
+                menuOpen = nextOpen;
+                menu.hidden = !menuOpen;
+                menuToggle.setAttribute('aria-expanded', String(menuOpen));
+            };
+
+            const previewCommit = (mode) => {
+                const message = input.value.trim();
+                if (!message) {
+                    input.setCustomValidity('Enter a commit message.');
+                    input.reportValidity();
+                    input.focus();
+                    return;
+                }
+
+                input.setCustomValidity('');
+                const files = mode === 'all'
+                    ? [...data.staged, ...data.changes]
+                    : data.staged;
+                onOpenCommit({
+                    hash: 'preview',
+                    message,
+                    author: 'You',
+                    date: 'Preview',
+                    lane: 'main',
+                    branch: data.branch,
+                    kind: 'commit',
+                    summary: 'This commit preview exists only in this browser.',
+                    files,
+                    edges: [],
+                });
+                input.value = '';
+                setMenuOpen(false);
+            };
+
+            input.type = 'text';
+            input.placeholder = `Message (⌘Enter to commit on "${data.branch}")`;
+            input.setAttribute('aria-label', 'Commit message');
+            input.autocomplete = 'off';
+            input.addEventListener('input', () => input.setCustomValidity(''));
+            input.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' || !event.metaKey) return;
+                event.preventDefault();
+                previewCommit('staged');
+            });
+            inputWrap.append(input, createIcon('sparkle'));
+
+            primary.type = 'submit';
+            primary.append(createIcon('check'), createElement('span', '', 'Commit'));
+            menuToggle.type = 'button';
+            menuToggle.title = 'More Commit Actions';
+            menuToggle.setAttribute('aria-label', 'More Commit Actions');
+            menuToggle.setAttribute('aria-haspopup', 'menu');
+            menuToggle.appendChild(createIcon('chevron-down'));
+            menuToggle.addEventListener('click', () => setMenuOpen(!menuOpen));
+
+            [
+                ['Commit Staged', 'staged'],
+                ['Commit All', 'all'],
+            ].forEach(([label, mode]) => {
+                const option = createElement('button', 'scm-commit-option', label);
+                option.type = 'button';
+                option.setAttribute('role', 'menuitem');
+                option.addEventListener('click', () => previewCommit(mode));
+                menu.appendChild(option);
+            });
+            menu.setAttribute('role', 'menu');
+            menu.hidden = true;
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                previewCommit('staged');
+            });
+            actions.append(primary, menuToggle, menu);
+            form.append(inputWrap, actions);
+            return form;
+        };
+
         const changesPane = createElement('div', 'scm-changes-pane');
-        const repositoryHeader = createElement('div', 'scm-repository-header');
+        const repository = createElement('section', 'scm-repository');
+        const repositoryHeader = createElement('button', 'scm-repository-header');
+        const repositoryChevron = createIcon('chevron-down');
         const repositoryName = createElement('strong', '', 'CHANGES');
-        const repositoryMeta = createElement('span', '', data.repository);
-        repositoryHeader.append(repositoryName, repositoryMeta);
-        changesPane.append(
-            repositoryHeader,
+        const repositoryBody = createElement('div', 'scm-repository-body');
+        let repositoryOpen = true;
+
+        const setRepositoryOpen = (nextOpen) => {
+            repositoryOpen = nextOpen;
+            repositoryHeader.setAttribute('aria-expanded', String(repositoryOpen));
+            repositoryChevron.classList.toggle('codicon-chevron-down', repositoryOpen);
+            repositoryChevron.classList.toggle('codicon-chevron-right', !repositoryOpen);
+            repositoryBody.hidden = !repositoryOpen;
+        };
+
+        repositoryHeader.type = 'button';
+        repositoryHeader.append(repositoryChevron, repositoryName);
+        repositoryHeader.addEventListener('click', () => setRepositoryOpen(!repositoryOpen));
+        repositoryBody.append(
+            createCommitComposer(),
             createGroup('Staged Changes', data.staged, true),
             createGroup('Changes', data.changes, false)
         );
+        collapseSections.unshift(() => setRepositoryOpen(false));
+        setRepositoryOpen(true);
+        repository.append(repositoryHeader, repositoryBody);
+        changesPane.appendChild(repository);
 
         const graphPane = createElement('section', 'scm-graph-pane');
         const graphHeader = createElement('div', 'scm-graph-header');
+        const graphTitleWrap = createElement('div', 'scm-graph-title');
+        const graphTitleChevron = createIcon('chevron-down');
         const graphTitle = createElement('strong', '', 'GRAPH');
-        const branch = createElement('span', 'scm-current-branch');
+        const graphToolbar = createElement('div', 'scm-graph-toolbar');
+        const autoButton = createElement('button', 'scm-graph-action scm-auto-action');
+        const locateButton = createToolbarButton('target', 'Locate Current Commit');
+        const fetchButton = createToolbarButton('arrow-down', 'Fetch is unavailable in this portfolio.', true);
+        const pushButton = createToolbarButton('arrow-up', 'Push is unavailable in this portfolio.', true);
+        const syncButton = createToolbarButton('cloud-download', 'Remote sync is unavailable in this portfolio.', true);
+        const refreshButton = createToolbarButton('refresh', 'Refresh Current Commit');
+        const moreButton = createToolbarButton('more', 'More graph actions are unavailable.', true);
         const graphList = createElement('div', 'scm-graph-list');
         const graphRows = createElement('div', 'scm-graph-rows');
-        branch.append(createIcon('git-branch'), createElement('span', '', data.branch));
-        graphHeader.append(graphTitle, branch);
+        let autoLayout = true;
+
+        graphTitleWrap.append(graphTitleChevron, graphTitle);
+        autoButton.type = 'button';
+        autoButton.title = 'Graph Layout: Auto';
+        autoButton.setAttribute('aria-label', 'Graph Layout: Auto');
+        autoButton.setAttribute('aria-pressed', 'true');
+        autoButton.append(createIcon('git-branch'), createElement('span', '', 'Auto'));
+        autoButton.addEventListener('click', () => {
+            autoLayout = !autoLayout;
+            autoButton.classList.toggle('active', autoLayout);
+            autoButton.setAttribute('aria-pressed', String(autoLayout));
+        });
+        autoButton.classList.add('active');
+        graphToolbar.setAttribute('role', 'toolbar');
+        graphToolbar.setAttribute('aria-label', 'Graph actions');
+        graphToolbar.append(
+            autoButton,
+            locateButton,
+            fetchButton,
+            pushButton,
+            syncButton,
+            refreshButton,
+            moreButton
+        );
+        graphHeader.append(graphTitleWrap, graphToolbar);
         graphList.setAttribute('role', 'listbox');
         graphList.setAttribute('aria-label', 'Life story commit graph');
         graphList.append(renderGraphSvg(data.commits, data.lanes), graphRows);
@@ -289,21 +445,24 @@
             const key = `commit:${commit.hash}`;
             const row = createElement('button', 'scm-commit-row scm-navigable');
             const message = createElement('span', 'scm-commit-message', commit.message);
-            const date = createElement('span', 'scm-commit-date', commit.date);
+            const author = createElement('span', 'scm-commit-author', commit.author);
+            const action = createIcon('open-preview', 'scm-commit-open');
 
             row.type = 'button';
             row.dataset.scmKey = key;
             row.setAttribute('role', 'option');
             row.setAttribute('aria-selected', 'false');
             row.setAttribute('aria-describedby', tooltip.id);
-            row.setAttribute('aria-label', `${commit.message}, ${commit.date}`);
-            row.append(message, date);
+            row.setAttribute('aria-label', `${commit.message}, ${commit.author}, ${commit.date}`);
+            row.appendChild(message);
 
             if (commit.branch) {
                 const branchLabel = createElement('span', 'scm-branch-label');
                 branchLabel.append(createIcon('git-branch'), createElement('span', '', commit.branch));
                 row.appendChild(branchLabel);
             }
+
+            row.append(author, action);
 
             const showTooltip = () => {
                 if (window.innerWidth <= 767) return;
@@ -325,6 +484,19 @@
             graphRows.appendChild(row);
         });
 
+        const currentKey = data.commits[0] ? `commit:${data.commits[0].hash}` : null;
+        const locateCurrentCommit = () => {
+            if (!currentKey) return;
+            select(currentKey);
+            const row = itemButtons.get(currentKey);
+            row?.scrollIntoView({ block: 'nearest' });
+        };
+
+        locateButton.addEventListener('click', () => {
+            locateCurrentCommit();
+            itemButtons.get(currentKey)?.focus();
+        });
+        refreshButton.addEventListener('click', locateCurrentCommit);
         graphList.addEventListener('scroll', hideTooltip, { passive: true });
         graphPane.append(graphHeader, graphList);
 
@@ -333,10 +505,10 @@
         resizer.setAttribute('role', 'separator');
         resizer.setAttribute('aria-label', 'Resize changes and graph');
         resizer.setAttribute('aria-orientation', 'horizontal');
-        resizer.setAttribute('aria-valuemin', '120');
+        resizer.setAttribute('aria-valuemin', '160');
 
         const setChangesHeight = (height) => {
-            const minimum = 120;
+            const minimum = 160;
             const maximum = Math.max(minimum, container.clientHeight - 170);
             const nextHeight = Math.max(minimum, Math.min(maximum, height));
             container.style.setProperty('--scm-changes-height', `${nextHeight}px`);
@@ -344,7 +516,15 @@
             resizer.setAttribute('aria-valuenow', String(Math.round(nextHeight)));
         };
 
+        const syncDefaultHeight = () => {
+            if (userResized || container.clientHeight <= 0) return;
+            const height = Math.round(container.clientHeight * 0.52);
+            resizer.setAttribute('aria-valuemax', String(Math.max(160, container.clientHeight - 170)));
+            resizer.setAttribute('aria-valuenow', String(height));
+        };
+
         resizer.addEventListener('pointerdown', (event) => {
+            userResized = true;
             resizer.setPointerCapture(event.pointerId);
             resizer.classList.add('dragging');
         });
@@ -364,6 +544,7 @@
         resizer.addEventListener('keydown', (event) => {
             if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
             const current = Number.parseInt(resizer.getAttribute('aria-valuenow') || '220', 10);
+            userResized = true;
             event.preventDefault();
             setChangesHeight(current + (event.key === 'ArrowDown' ? 20 : -20));
         });
@@ -394,14 +575,26 @@
         });
 
         container.replaceChildren(changesPane, resizer, graphPane);
-        resizer.setAttribute('aria-valuemax', '500');
-        resizer.setAttribute('aria-valuenow', '250');
+        resizeObserver = typeof ResizeObserver === 'function'
+            ? new ResizeObserver(syncDefaultHeight)
+            : null;
+        resizeObserver?.observe(container);
+        syncDefaultHeight();
+        locateCurrentCommit();
         onCountChange(data.staged.length + data.changes.length);
 
         return {
             data,
             select,
+            ensureSelection: () => {
+                if (!selectedKey) locateCurrentCommit();
+            },
             hideTooltip,
+            collapseAll: () => collapseSections.forEach((collapse) => collapse()),
+            destroy: () => {
+                resizeObserver?.disconnect();
+                tooltip.remove();
+            },
         };
     };
 

@@ -8,15 +8,19 @@
       "color": "#3794ff"
     },
     {
-      "id": "career",
-      "color": "#c586c0"
-    },
-    {
       "id": "projects",
       "color": "#cca700"
     },
     {
       "id": "teaching",
+      "color": "#d64b8c"
+    },
+    {
+      "id": "career",
+      "color": "#c26712"
+    },
+    {
+      "id": "education",
       "color": "#4ec9b0"
     }
   ],
@@ -38,6 +42,24 @@
       "language": "markdown",
       "before": "",
       "after": "# Source Control Story\n\nCommits represent events.\nBranches represent parallel parts of the story.\nThe editor contains the evidence behind each change.\n"
+    },
+    {
+      "id": "current-focus",
+      "path": "notes/current-focus.md",
+      "status": "M",
+      "summary": "The current focus now connects production work with deeper systems study.",
+      "language": "markdown",
+      "before": "# Current Focus\n\nBuild production software.\n",
+      "after": "# Current Focus\n\nBuild production software and deepen systems knowledge.\n"
+    },
+    {
+      "id": "old-plan",
+      "path": "notes/old-plan.md",
+      "status": "D",
+      "summary": "An old plan no longer reflects the current direction.",
+      "language": "markdown",
+      "before": "# Old Plan\n\nFollow the first career plan without revision.\n",
+      "after": ""
     }
   ],
   "changes": [
@@ -58,16 +80,49 @@
       "language": "markdown",
       "before": "# Systems\n\nOperating systems and C.\n",
       "after": "# Systems\n\nOperating systems, C, distributed services, and production recovery.\n"
+    },
+    {
+      "id": "next-chapter",
+      "path": "ideas/next-chapter.md",
+      "status": "U",
+      "summary": "The next chapter remains open for new work and study.",
+      "language": "markdown",
+      "before": "",
+      "after": "# Next Chapter\n\nKeep room for the next useful problem.\n"
     }
   ],
   "commits": [
+    {
+      "hash": "ad4c210",
+      "message": "docs: add the VS Code inspection notes",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "main",
+      "branch": "main",
+      "kind": "commit",
+      "summary": "The portfolio records the visual details that make the Source Control view feel native.",
+      "files": [
+        {
+          "path": "notes/vscode-source-control.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# VS Code Source Control\n\nMatch the native controls, spacing, graph, and selection states.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
     {
       "hash": "7f4c9d2",
       "message": "docs(profile): connect systems, cloud, and developer tooling",
       "author": "Emilio Alvarez",
       "date": "2026",
       "lane": "main",
-      "branch": "main",
       "kind": "commit",
       "summary": "The current profile connects technical systems work with communication and product judgment.",
       "files": [
@@ -311,11 +366,39 @@
       ]
     },
     {
+      "hash": "43a18d9",
+      "message": "merge: connect the education chapter",
+      "author": "Emilio Alvarez",
+      "date": "2023",
+      "lane": "main",
+      "kind": "merge",
+      "summary": "Education provides the foundation for the later projects, teaching, and professional work.",
+      "files": [
+        {
+          "path": "education/README.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Education\n",
+          "after": "# Education\n\nComputer science, systems, and infrastructure.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "education"
+        }
+      ]
+    },
+    {
       "hash": "d7e20c4",
       "message": "feat(education): focus on systems and infrastructure",
       "author": "Emilio Alvarez",
       "date": "2023",
-      "lane": "main",
+      "lane": "education",
       "kind": "commit",
       "summary": "Operating systems and infrastructure become central technical interests.",
       "files": [
@@ -331,6 +414,10 @@
         {
           "from": "main",
           "to": "main"
+        },
+        {
+          "from": "education",
+          "to": "education"
         }
       ]
     },
@@ -339,7 +426,7 @@
       "message": "feat(education): begin computer science at VU Amsterdam",
       "author": "Emilio Alvarez",
       "date": "2022",
-      "lane": "main",
+      "lane": "education",
       "kind": "commit",
       "summary": "Computer science study provides the foundation for later teaching, projects, and professional work.",
       "files": [
@@ -349,6 +436,30 @@
           "language": "markdown",
           "before": "",
           "after": "# Vrije Universiteit Amsterdam\n\nBSc Computer Science.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "education",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "1b6c0de",
+      "message": "chore(repo): initialize the life repository",
+      "author": "Emilio Alvarez",
+      "date": "2022",
+      "lane": "main",
+      "kind": "commit",
+      "summary": "The first commit starts the public story.",
+      "files": [
+        {
+          "path": "README.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Emilio Alvarez\n"
         }
       ],
       "edges": []

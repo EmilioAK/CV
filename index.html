@@ -34,10 +34,21 @@
     <aside id="explorer-sidebar" class="sidebar" aria-label="Explorer">
         <div class="sidebar-header">
             <span id="sidebar-title">EXPLORER</span>
-            <button id="sidebar-close" class="sidebar-close" type="button"
-                title="Close Sidebar" aria-label="Close Sidebar">
-                <i class="codicon codicon-close" aria-hidden="true"></i>
-            </button>
+            <div class="sidebar-header-actions">
+                <button id="sidebar-view-actions" class="sidebar-view-actions" type="button"
+                    title="More Actions" aria-label="More Actions" aria-haspopup="menu"
+                    aria-expanded="false">
+                    <i class="codicon codicon-more" aria-hidden="true"></i>
+                </button>
+                <div id="sidebar-view-menu" class="sidebar-view-menu" role="menu" hidden>
+                    <button id="sidebar-refresh" type="button" role="menuitem">Refresh</button>
+                    <button id="sidebar-collapse-all" type="button" role="menuitem">Collapse All</button>
+                </div>
+                <button id="sidebar-close" class="sidebar-close" type="button"
+                    title="Close Sidebar" aria-label="Close Sidebar">
+                    <i class="codicon codicon-close" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
 
         <div id="explorer-view" class="sidebar-view sidebar-content">
@@ -148,6 +159,10 @@
         const sourceControlBadge = document.getElementById('source-control-badge');
         const sidebar = document.getElementById('explorer-sidebar');
         const sidebarTitle = document.getElementById('sidebar-title');
+        const sidebarViewActions = document.getElementById('sidebar-view-actions');
+        const sidebarViewMenu = document.getElementById('sidebar-view-menu');
+        const sidebarRefresh = document.getElementById('sidebar-refresh');
+        const sidebarCollapseAll = document.getElementById('sidebar-collapse-all');
         const sidebarClose = document.getElementById('sidebar-close');
         const sidebarScrim = document.getElementById('sidebar-scrim');
         const explorerView = document.getElementById('explorer-view');
@@ -204,6 +219,7 @@
         let activeSidebarView = 'explorer';
         let desktopSidebarOpen = true;
         let mobileSidebarOpen = false;
+        let sidebarMenuOpen = false;
         let fileNodesByPath = new Map();
         let fileElementsByPath = new Map();
         let folderControllers = new Map();
@@ -403,8 +419,16 @@
             );
             sourceControlToggle.classList.toggle('selected', sidebarOpen && sourceControlActive);
 
+            if (!sidebarOpen) {
+                sidebarMenuOpen = false;
+                sidebarViewMenu.hidden = true;
+                sidebarViewActions.setAttribute('aria-expanded', 'false');
+            }
+
             if (!sidebarOpen || !sourceControlActive) {
                 sourceControlController?.hideTooltip();
+            } else {
+                sourceControlController?.ensureSelection();
             }
 
             if (monacoEditor) {
@@ -454,6 +478,36 @@
             toggleSidebarView('source-control');
         });
 
+        const setSidebarMenuOpen = (nextOpen) => {
+            sidebarMenuOpen = nextOpen;
+            sidebarViewMenu.hidden = !sidebarMenuOpen;
+            sidebarViewActions.setAttribute('aria-expanded', String(sidebarMenuOpen));
+        };
+
+        sidebarViewActions.addEventListener('click', () => {
+            setSidebarMenuOpen(!sidebarMenuOpen);
+        });
+        sidebarCollapseAll.addEventListener('click', () => {
+            if (activeSidebarView === 'source-control') {
+                sourceControlController?.collapseAll();
+            } else {
+                folderControllers.forEach((controller) => controller.setOpen(false));
+            }
+            setSidebarMenuOpen(false);
+        });
+        sidebarRefresh.addEventListener('click', () => {
+            setSidebarMenuOpen(false);
+            if (activeSidebarView === 'source-control') {
+                void buildSourceControlView();
+            } else {
+                void buildFileTree();
+            }
+        });
+        document.addEventListener('pointerdown', (event) => {
+            if (!sidebarMenuOpen || event.target.closest('.sidebar-header-actions')) return;
+            setSidebarMenuOpen(false);
+        });
+
         sidebarClose.addEventListener('click', closeMobileSidebar);
         sidebarScrim.addEventListener('click', closeMobileSidebar);
         mobileQuery.addEventListener('change', () => {
@@ -465,7 +519,13 @@
         });
 
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') closeMobileSidebar();
+            if (event.key !== 'Escape') return;
+            if (sidebarMenuOpen) {
+                setSidebarMenuOpen(false);
+                sidebarViewActions.focus();
+                return;
+            }
+            closeMobileSidebar();
         });
 
         const createTreeFromEntries = (entries) => {
@@ -676,7 +736,7 @@
                 path: `source-control/change/${contextId}/${itemId}`,
                 name: fileName,
                 tabLabel: fileName,
-                tabIcon: change.status === 'A'
+                tabIcon: change.status === 'A' || change.status === 'U'
                     ? 'diff-added'
                     : change.status === 'D'
                         ? 'diff-removed'
@@ -1218,6 +1278,8 @@
                     throw new Error('The Source Control interface did not load.');
                 }
 
+                sourceControlController?.destroy();
+                sourceControlController = null;
                 sourceControlController = await window.SourceControlView.create({
                     container: sourceControlView,
                     dataUrl: sourceControlDataPath,
