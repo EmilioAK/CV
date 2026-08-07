@@ -832,8 +832,15 @@
                     file.status
                 );
                 row.type = 'button';
+                row.title = file.openMode === 'file'
+                    ? `Open ${file.path}`
+                    : `Open changes in ${file.path}`;
                 row.append(status, createElement('span', '', file.path), createIcon('chevron-right'));
                 row.addEventListener('click', () => {
+                    if (file.openMode === 'file'
+                        && openFileByPath(file.path, 'push', `commit:${commit.hash}`)) {
+                        return;
+                    }
                     openSourceControlChange(file, { commit });
                 });
                 filesSection.appendChild(row);
@@ -1065,10 +1072,15 @@
             showMedia();
         };
 
-        const openFileInEditor = async (node, fileElement, historyMode = 'push') => {
+        const openFileInEditor = async (
+            node,
+            fileElement,
+            historyMode = 'push',
+            sourceControlSelectionKey = null
+        ) => {
             revealFilePath(node.path);
-            sourceControlController?.select(null);
             setSelectedFileElement(fileElement);
+            sourceControlController?.select(sourceControlSelectionKey);
             ensureTabForNode(node);
             setActiveTab(node.path);
             activeFilePath = node.path;
@@ -1102,12 +1114,21 @@
             }
         };
 
-        const openFileByPath = (filePath, historyMode = 'push') => {
+        const openFileByPath = (
+            filePath,
+            historyMode = 'push',
+            sourceControlSelectionKey = null
+        ) => {
             const node = fileNodesByPath.get(filePath);
             const fileElement = fileElementsByPath.get(filePath);
 
             if (node && fileElement) {
-                void openFileInEditor(node, fileElement, historyMode);
+                void openFileInEditor(
+                    node,
+                    fileElement,
+                    historyMode,
+                    sourceControlSelectionKey
+                );
                 return true;
             }
 

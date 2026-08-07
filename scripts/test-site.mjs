@@ -148,6 +148,7 @@ for (const requiredText of [
     'buildSourceControlView',
     'openSourceControlCommit',
     'openSourceControlChange',
+    "file.openMode === 'file'",
 ]) {
     if (!indexHtml.includes(requiredText)) {
         fail(`index.html is missing ${requiredText}.`);
@@ -173,31 +174,31 @@ if (sourceControlData.staged.length !== 4 || sourceControlData.changes.length !=
 }
 
 const expectedStagedChanges = [
-    ['chapters/collaboration.md', 'R'],
-    ['drafts/next-chapter.md', 'A'],
-    ['notes/current-focus.md', 'M'],
-    ['notes/old-plan.md', 'D'],
+    ['life/teaching/computer-science.md', 'R'],
+    ['life/next.md', 'A'],
+    ['CV/about.md', 'M'],
+    ['life/old-direction.md', 'D'],
 ];
 const expectedWorkingChanges = [
-    ['profile.md', 'M'],
-    ['ideas/untracked-extension-view.md', 'U'],
-    ['notes/current-focus.md', 'M'],
+    ['life/projects/macsights.md', 'M'],
+    ['life/next.md', 'U'],
+    ['life/now.md', 'M'],
 ];
 const expectedCommitMessages = [
-    'docs: add the VS Code inspection guide',
-    'docs(profile): summarize the combined story',
-    'merge: connect projects with the main story',
-    'feat(projects): explore native capture systems',
-    'feat(projects): create an interactive portfolio',
+    'docs(story): connect the current chapters',
+    'feat(work): build production software at Capisoft',
+    'merge: connect independent projects with the main story',
+    'feat(projects): build a native capture system',
+    'feat(projects): make the portfolio its own workspace',
+    'merge: connect cloud architecture with the main story',
+    'feat(work): ship a reusable cloud agent integration',
     'merge: connect teaching with the main story',
-    'feat(community): begin teaching computer science',
-    'merge: integrate the career chapter',
-    'feat(career): connect architecture with communication',
-    'feat(career): start a cloud architecture role',
-    'merge: integrate the education chapter',
+    'feat(teaching): improve systems explanations and setup',
+    'feat(teaching): begin teaching computer science',
+    'merge: connect education with the main story',
     'feat(education): focus on systems and infrastructure',
-    'feat(education): begin computer science studies',
-    'chore(repo): initialize the life repository',
+    'feat(education): study computer science in Amsterdam',
+    'chore(story): begin learning to program',
 ];
 
 for (const [items, expected, label] of [
@@ -234,6 +235,13 @@ for (const commit of sourceControlData.commits) {
 
     if (!Array.isArray(commit.files) || commit.files.length === 0) {
         fail(`Commit ${commit.hash} must include at least one changed file.`);
+    }
+
+    for (const file of commit.files) {
+        if (file.openMode === 'file'
+            && !manifest.files.some((entry) => entry.path === file.path)) {
+            fail(`Commit ${commit.hash} links to missing story file ${file.path}.`);
+        }
     }
 
     for (const edge of commit.edges) {
@@ -281,6 +289,11 @@ if (indexHtml.includes('id="resume-download"')) {
 
 if (!readme.includes('[Download my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
     fail('README.md must keep the direct resume download link.');
+}
+
+if (!readme.includes('Software Engineer at Capisoft')
+    || !readme.includes('[Explore the life repository](life/README.md)')) {
+    fail('README.md must identify the current role and link to the life repository.');
 }
 
 const resumeEntry = manifest.files.find((entry) => {

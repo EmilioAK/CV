@@ -1,24 +1,32 @@
-# README
+# Emilio Alvarez
 
-Hi, I'm **Emilio Alvarez**, a Computer Science student at VU Amsterdam and a Cloud Solution Architect Intern at Microsoft.
+I am a Software Engineer at Capisoft and a Computer Science student at Vrije Universiteit Amsterdam.
 
-This repository contains the source for my interactive portfolio site, designed to feel like VSCode.  
-On the website, the file explorer you see is generated from this project's real structure! So if you're reading this on GitHub, you're literally looking at the same workspace the site is built around.
+This repository is the source for my interactive CV. The site uses its real files as a VS Code-shaped interface.
 
-The site is still under development, but more activity bar buttons will become functional soon, with my own twist on what I think should be there :)
+The Explorer comes from the repository structure. Monaco displays the source. The Source Control graph presents my path as a series of connected chapters.
 
-You'll find more about me in the `CV/` folder. If you're curious about how everything is wired, the site data lives in the `page-data/` folder. But if you're short on time:
+## Start here
 
-## TL;DR
-- BSc Computer Science @ Vrije Universiteit Amsterdam.
-- Cloud Solution Architect Intern @ Microsoft
-- Teaching Assistant: Web Technology, Operating Systems, Systems Programming Project & Introduction to Programming.
-- Interests: systems, cloud architecture, developer tooling, security-minded engineering. 
+- [Read the short profile](CV/about.md)
+- [Explore the life repository](life/README.md)
+- [See the current chapter](life/now.md)
+- [Browse independent projects](life/projects/README.md)
+
+## Current snapshot
+
+- Software Engineer at Capisoft
+- B.Sc. Computer Science in progress at Vrije Universiteit Amsterdam
+- Former Cloud Solution Architect Intern at Microsoft
+- Former Teaching Assistant for Operating Systems, Web Technology, and Systems Programming
+- Interests in systems, reliability, cloud architecture, developer tools, and native software
 
 ## Resume
+
 - [Download my resume](CV/Emilio_Alvarez_Resume.pdf)
 
 ## Contact
+
 - Email: me@emilioak.dev
 - LinkedIn: linkedin.com/in/EmilioAK
 - GitHub: github.com/EmilioAK
