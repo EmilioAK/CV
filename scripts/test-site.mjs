@@ -172,6 +172,49 @@ if (sourceControlData.staged.length !== 4 || sourceControlData.changes.length !=
     fail('The Source Control view must keep the VS Code 4 staged and 3 changed file composition.');
 }
 
+const expectedStagedChanges = [
+    ['chapters/collaboration.md', 'R'],
+    ['drafts/next-chapter.md', 'A'],
+    ['notes/current-focus.md', 'M'],
+    ['notes/old-plan.md', 'D'],
+];
+const expectedWorkingChanges = [
+    ['profile.md', 'M'],
+    ['ideas/untracked-extension-view.md', 'U'],
+    ['notes/current-focus.md', 'M'],
+];
+const expectedCommitMessages = [
+    'docs: add the VS Code inspection guide',
+    'docs(profile): summarize the combined story',
+    'merge: connect projects with the main story',
+    'feat(projects): explore native capture systems',
+    'feat(projects): create an interactive portfolio',
+    'merge: connect teaching with the main story',
+    'feat(community): begin teaching computer science',
+    'merge: integrate the career chapter',
+    'feat(career): connect architecture with communication',
+    'feat(career): start a cloud architecture role',
+    'merge: integrate the education chapter',
+    'feat(education): focus on systems and infrastructure',
+    'feat(education): begin computer science studies',
+    'chore(repo): initialize the life repository',
+];
+
+for (const [items, expected, label] of [
+    [sourceControlData.staged, expectedStagedChanges, 'staged'],
+    [sourceControlData.changes, expectedWorkingChanges, 'working'],
+]) {
+    const actual = items.map((item) => [item.path, item.status]);
+    if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+        fail(`The ${label} changes must match the inspected VS Code repository.`);
+    }
+}
+
+if (JSON.stringify(sourceControlData.commits.map((commit) => commit.message))
+    !== JSON.stringify(expectedCommitMessages)) {
+    fail('The Source Control graph must match the inspected VS Code history.');
+}
+
 const laneIds = new Set(sourceControlData.lanes.map((lane) => lane.id));
 const commitHashes = new Set();
 
@@ -183,6 +226,10 @@ for (const commit of sourceControlData.commits) {
 
     if (!laneIds.has(commit.lane)) {
         fail(`Commit ${commit.hash} uses an unknown lane.`);
+    }
+
+    if (!Number.isInteger(commit.graphColumns) || commit.graphColumns < 1) {
+        fail(`Commit ${commit.hash} must declare its visible graph columns.`);
     }
 
     if (!Array.isArray(commit.files) || commit.files.length === 0) {

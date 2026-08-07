@@ -46,10 +46,6 @@ body {
     font-size: 13px;
 }
 
-body.source-control-active {
-    --sidebar-width: 340px;
-}
-
 button,
 a {
     font: inherit;
@@ -162,7 +158,7 @@ body.sidebar-collapsed .sidebar {
 }
 
 .sidebar-view-actions {
-    display: grid;
+    display: none;
     width: 28px;
     height: 28px;
     padding: 0;
@@ -171,6 +167,10 @@ body.sidebar-collapsed .sidebar {
     background: transparent;
     color: #858585;
     cursor: pointer;
+}
+
+body.source-control-active .sidebar-view-actions {
+    display: grid;
 }
 
 .sidebar-view-actions:hover,
@@ -402,7 +402,7 @@ body.sidebar-collapsed .sidebar {
 .scm-graph-header {
     display: flex;
     min-width: 0;
-    height: 26px;
+    height: 22px;
     padding: 0 8px 0 6px;
     align-items: center;
     justify-content: space-between;
@@ -452,16 +452,17 @@ body.sidebar-collapsed .sidebar {
 
 .scm-commit-composer {
     min-width: 0;
-    padding: 0 10px 7px 21px;
+    padding: 0 10px 6px 20px;
 }
 
 .scm-commit-input-wrap {
     position: relative;
     display: flex;
     min-width: 0;
-    height: 30px;
+    height: 26px;
     align-items: center;
     border: 1px solid #3c3c3c;
+    border-radius: 6px;
     background: #181818;
 }
 
@@ -496,10 +497,9 @@ body.sidebar-collapsed .sidebar {
 .scm-commit-actions {
     position: relative;
     display: grid;
-    height: 30px;
+    height: 26px;
     margin-top: 8px;
-    grid-template-columns: minmax(0, 1fr) 29px;
-    gap: 1px;
+    grid-template-columns: minmax(0, 1fr) 26px;
 }
 
 .scm-commit-primary,
@@ -510,19 +510,25 @@ body.sidebar-collapsed .sidebar {
     align-items: center;
     justify-content: center;
     border: 0;
-    background: #0e639c;
+    background: #2e8bac;
     color: #ffffff;
     cursor: pointer;
 }
 
 .scm-commit-primary {
     gap: 6px;
+    border-radius: 6px 0 0 6px;
     font-weight: 600;
+}
+
+.scm-commit-menu-toggle {
+    border-left: 1px solid rgb(255 255 255 / 48%);
+    border-radius: 0 6px 6px 0;
 }
 
 .scm-commit-primary:hover,
 .scm-commit-menu-toggle:hover {
-    background: #1177bb;
+    background: #3796b9;
 }
 
 .scm-commit-primary .codicon,
@@ -568,8 +574,8 @@ body.sidebar-collapsed .sidebar {
 .scm-group-header {
     display: grid;
     width: 100%;
-    height: 24px;
-    padding: 0 8px 0 6px;
+    height: 22px;
+    padding: 0 10px;
     grid-template-columns: 16px minmax(0, 1fr) auto;
     align-items: center;
     border: 0;
@@ -600,7 +606,7 @@ body.sidebar-collapsed .sidebar {
     padding: 0 5px;
     place-items: center;
     border-radius: 9px;
-    background: #3794ff;
+    background: #2e89a8;
     color: #ffffff;
     font-size: 11px;
 }
@@ -612,8 +618,8 @@ body.sidebar-collapsed .sidebar {
 .scm-file-row {
     display: grid;
     width: 100%;
-    height: 24px;
-    padding: 0 10px 0 21px;
+    height: 22px;
+    padding: 0 10px 0 20px;
     grid-template-columns: 16px auto minmax(0, 1fr) 18px;
     align-items: center;
     gap: 5px;
@@ -635,7 +641,7 @@ body.sidebar-collapsed .sidebar {
 }
 
 .scm-change-icon {
-    color: #75beff;
+    color: #4fa6c8;
     font-size: 16px;
 }
 
@@ -653,7 +659,7 @@ body.sidebar-collapsed .sidebar {
 }
 
 .scm-file-directory {
-    color: #858585;
+    color: #969696;
     font-size: 11px;
 }
 
@@ -664,20 +670,11 @@ body.sidebar-collapsed .sidebar {
 }
 
 .status-a,
-.status-u {
-    color: #73c991;
-}
-
-.status-m {
-    color: #e2c08d;
-}
-
-.status-d {
-    color: #f48771;
-}
-
+.status-u,
+.status-m,
+.status-d,
 .status-r {
-    color: #75beff;
+    color: #a6a6a6;
 }
 
 .scm-resizer {
@@ -698,7 +695,7 @@ body.sidebar-collapsed .sidebar {
 
 .scm-graph-pane {
     display: grid;
-    grid-template-rows: 26px minmax(0, 1fr);
+    grid-template-rows: 22px minmax(0, 1fr);
     overflow: hidden;
 }
 
@@ -738,7 +735,7 @@ body.sidebar-collapsed .sidebar {
 
 .scm-graph-action {
     display: inline-flex;
-    min-width: 22px;
+    min-width: 24px;
     height: 22px;
     padding: 0 3px;
     align-items: center;
@@ -752,7 +749,7 @@ body.sidebar-collapsed .sidebar {
 
 .scm-graph-action:hover:not(:disabled),
 .scm-graph-action.active {
-    color: #cccccc;
+    color: #969696;
 }
 
 .scm-graph-action:hover:not(:disabled) {
@@ -784,7 +781,7 @@ body.sidebar-collapsed .sidebar {
 
 .scm-graph-svg {
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     top: 0;
     left: 0;
     overflow: visible;
@@ -793,19 +790,21 @@ body.sidebar-collapsed .sidebar {
 
 .scm-graph-edge {
     fill: none;
-    stroke-width: 1.6;
+    stroke-width: 1.25;
     vector-effect: non-scaling-stroke;
 }
 
 .scm-graph-node {
-    stroke-width: 1.6;
+    stroke-width: 1.4;
     vector-effect: non-scaling-stroke;
 }
 
-.scm-graph-node.selected {
+.scm-graph-node.selected,
+.scm-graph-node.hovered {
+    r: 6px;
     fill: #3794ff;
-    stroke: #ffffff;
-    stroke-width: 2;
+    stroke: #75beff;
+    stroke-width: 3;
 }
 
 .scm-graph-rows {
@@ -819,8 +818,8 @@ body.sidebar-collapsed .sidebar {
     display: flex;
     width: 100%;
     min-width: 0;
-    height: 25px;
-    padding: 0 5px 0 48px;
+    height: 22px;
+    padding: 0 5px 0 var(--scm-graph-indent, 44px);
     align-items: center;
     gap: 5px;
     border: 0;
@@ -836,14 +835,14 @@ body.sidebar-collapsed .sidebar {
 }
 
 .scm-commit-row.selected {
-    background: #2a2d2e;
+    background: #37373d;
     box-shadow: inset 0 0 0 1px #007fd4;
     color: #ffffff;
 }
 
 .scm-commit-message {
     min-width: 0;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -851,7 +850,8 @@ body.sidebar-collapsed .sidebar {
 
 .scm-commit-author {
     min-width: 0;
-    flex: 1 1 auto;
+    max-width: 82px;
+    flex: 0 20 auto;
     overflow: hidden;
     color: #858585;
     font-size: 11px;
@@ -861,10 +861,15 @@ body.sidebar-collapsed .sidebar {
 
 .scm-branch-label {
     flex: 0 0 auto;
-    padding: 1px 4px;
-    border: 1px solid #0e639c;
-    border-radius: 2px;
-    background: #04395e;
+    padding: 1px 5px;
+    border: 0;
+    border-radius: 9px;
+    background: #3794ff;
+    color: #181818;
+}
+
+.scm-commit-row.selected .scm-commit-message {
+    font-weight: 600;
 }
 
 .scm-commit-open {
@@ -1446,10 +1451,6 @@ body.sidebar-collapsed .sidebar {
 
     body.sidebar-open .sidebar {
         transform: translateX(0);
-    }
-
-    body.source-control-active .sidebar {
-        width: min(calc(100vw - var(--activity-width)), 360px);
     }
 
     .sidebar-close {

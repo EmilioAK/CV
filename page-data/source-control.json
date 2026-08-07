@@ -5,133 +5,115 @@
   "lanes": [
     {
       "id": "main",
+      "column": 0,
       "color": "#3794ff"
     },
     {
       "id": "projects",
-      "color": "#cca700"
+      "column": 1,
+      "color": "#f2c811"
     },
     {
       "id": "teaching",
+      "column": 2,
       "color": "#d64b8c"
     },
     {
       "id": "career",
+      "column": 1,
       "color": "#c26712"
     },
     {
       "id": "education",
+      "column": 2,
       "color": "#4ec9b0"
     }
   ],
   "staged": [
     {
-      "id": "about-story",
-      "path": "CV/about.md",
-      "status": "M",
-      "summary": "A fuller personal introduction is ready for the public story.",
+      "id": "collaboration-rename",
+      "path": "chapters/collaboration.md",
+      "status": "R",
+      "summary": "Community notes are renamed as collaboration notes.",
       "language": "markdown",
-      "before": "# My Story\n",
-      "after": "# My Story\n\nI moved from Sweden to Amsterdam to study computer science.\nI now build software across systems, cloud architecture, and developer tools.\n"
+      "before": "# Community\n\n## Begin teaching\n\nExplain technical concepts and learn from other students.\n\n## Improve the method\n\nUse concrete traces, small examples, and direct feedback.\n",
+      "after": "# Community\n\n## Begin teaching\n\nExplain technical concepts and learn from other students.\n\n## Improve the method\n\nUse concrete traces, small examples, and direct feedback.\n"
     },
     {
-      "id": "source-control-view",
-      "path": "projects/source-control.md",
+      "id": "next-chapter",
+      "path": "drafts/next-chapter.md",
       "status": "A",
-      "summary": "The Source Control view turns the career timeline into a visual commit graph.",
+      "summary": "The next chapter turns the Source Control idea into a public story.",
       "language": "markdown",
       "before": "",
-      "after": "# Source Control Story\n\nCommits represent events.\nBranches represent parallel parts of the story.\nThe editor contains the evidence behind each change.\n"
+      "after": "# Next Chapter\n\nTurn the source-control idea into a clear public story.\n"
     },
     {
-      "id": "current-focus",
+      "id": "current-focus-staged",
       "path": "notes/current-focus.md",
       "status": "M",
-      "summary": "The current focus now connects production work with deeper systems study.",
+      "summary": "The staged focus connects career events to evidence.",
       "language": "markdown",
-      "before": "# Current Focus\n\nBuild production software.\n",
-      "after": "# Current Focus\n\nBuild production software and deepen systems knowledge.\n"
+      "before": "# Current Focus\n\n- Learn the fundamentals.\n- Build small projects.\n",
+      "after": "# Current Focus\n\n- Learn the fundamentals.\n- Build small projects.\n- Connect career events to evidence.\n"
     },
     {
       "id": "old-plan",
       "path": "notes/old-plan.md",
       "status": "D",
-      "summary": "An old plan no longer reflects the current direction.",
+      "summary": "The old open-ended plan is removed.",
       "language": "markdown",
-      "before": "# Old Plan\n\nFollow the first career plan without revision.\n",
+      "before": "# Old Plan\n\nKeep every possible direction open.\n",
       "after": ""
     }
   ],
   "changes": [
     {
-      "id": "macsights-project",
-      "path": "projects/macsights.md",
+      "id": "profile-working",
+      "path": "profile.md",
       "status": "M",
-      "summary": "Native capture, playback, and storage work continues.",
+      "summary": "The profile contains an unstaged sentence for the diff editor.",
       "language": "markdown",
-      "before": "# Macsights\n\nExplore native screen recording.\n",
-      "after": "# Macsights\n\nBuild reliable capture, playback, storage, and export workflows.\n"
+      "before": "# Profile\n\n- Location: Europe\n- Focus: systems, cloud architecture, and developer tools\n- Current chapter: build useful products and explain them clearly\n",
+      "after": "# Profile\n\n- Location: Europe\n- Focus: systems, cloud architecture, and developer tools\n- Current chapter: build useful products and explain them clearly\n\nThis sentence is an unstaged profile change for the VS Code diff editor.\n"
     },
     {
-      "id": "systems-depth",
-      "path": "skills/systems.md",
-      "status": "M",
-      "summary": "Systems knowledge remains an active area of study.",
-      "language": "markdown",
-      "before": "# Systems\n\nOperating systems and C.\n",
-      "after": "# Systems\n\nOperating systems, C, distributed services, and production recovery.\n"
-    },
-    {
-      "id": "next-chapter",
-      "path": "ideas/next-chapter.md",
+      "id": "untracked-extension-view",
+      "path": "ideas/untracked-extension-view.md",
       "status": "U",
-      "summary": "The next chapter remains open for new work and study.",
+      "summary": "An untracked idea presents skills as installed extensions.",
       "language": "markdown",
       "before": "",
-      "after": "# Next Chapter\n\nKeep room for the next useful problem.\n"
+      "after": "# Untracked Extension View\n\nPresent skills as installed extensions with concise evidence and dates.\n"
+    },
+    {
+      "id": "current-focus-working",
+      "path": "notes/current-focus.md",
+      "status": "M",
+      "summary": "The working focus asks which Git metaphors belong in the CV.",
+      "language": "markdown",
+      "before": "# Current Focus\n\n- Learn the fundamentals.\n- Build small projects.\n- Connect career events to evidence.\n",
+      "after": "# Current Focus\n\n- Learn the fundamentals.\n- Build small projects.\n- Connect career events to evidence.\n- Decide which Git metaphors deserve a place in the CV site.\n"
     }
   ],
   "commits": [
     {
-      "hash": "ad4c210",
-      "message": "docs: add the VS Code inspection notes",
-      "author": "Emilio Alvarez",
+      "hash": "3b07401",
+      "message": "docs: add the VS Code inspection guide",
+      "author": "Emilio Alvarez (demo)",
       "date": "2026",
       "lane": "main",
       "branch": "main",
       "kind": "commit",
-      "summary": "The portfolio records the visual details that make the Source Control view feel native.",
+      "graphColumns": 1,
+      "summary": "The repository records how VS Code presents the Source Control story.",
       "files": [
         {
-          "path": "notes/vscode-source-control.md",
-          "status": "A",
-          "language": "markdown",
-          "before": "",
-          "after": "# VS Code Source Control\n\nMatch the native controls, spacing, graph, and selection states.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        }
-      ]
-    },
-    {
-      "hash": "7f4c9d2",
-      "message": "docs(profile): connect systems, cloud, and developer tooling",
-      "author": "Emilio Alvarez",
-      "date": "2026",
-      "lane": "main",
-      "kind": "commit",
-      "summary": "The current profile connects technical systems work with communication and product judgment.",
-      "files": [
-        {
-          "path": "profile/focus.md",
+          "path": "README.md",
           "status": "M",
           "language": "markdown",
-          "before": "# Focus\n\nComputer science and cloud architecture.\n",
-          "after": "# Focus\n\nSystems, cloud architecture, developer tooling, and security-minded engineering.\n"
+          "before": "# Life Repository\n",
+          "after": "# Life Repository\n\nInspect this repository in VS Code.\n"
         }
       ],
       "edges": [
@@ -142,104 +124,53 @@
       ]
     },
     {
-      "hash": "58b10fa",
-      "message": "merge: connect the career chapter",
-      "author": "Emilio Alvarez",
-      "date": "2026",
-      "lane": "main",
-      "kind": "merge",
-      "summary": "Professional software work becomes part of the main public story.",
-      "files": [
-        {
-          "path": "experience/README.md",
-          "status": "M",
-          "language": "markdown",
-          "before": "# Experience\n\nCloud architecture internship.\n",
-          "after": "# Experience\n\nCloud architecture and production software engineering.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        },
-        {
-          "from": "main",
-          "to": "career"
-        }
-      ]
-    },
-    {
-      "hash": "c4016be",
-      "message": "feat(career): build production software at Capisoft",
-      "author": "Emilio Alvarez",
-      "date": "2026",
-      "lane": "career",
-      "kind": "commit",
-      "summary": "The work spans backend systems, integrations, recovery tools, and production delivery.",
-      "files": [
-        {
-          "path": "experience/capisoft.md",
-          "status": "A",
-          "language": "markdown",
-          "before": "",
-          "after": "# Capisoft\n\nBuild production software for legal workflows, accounting, and email delivery.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        },
-        {
-          "from": "career",
-          "to": "career"
-        }
-      ]
-    },
-    {
-      "hash": "a912e75",
-      "message": "feat(career): work as a cloud solution architect intern",
-      "author": "Emilio Alvarez",
-      "date": "2025-2026",
-      "lane": "career",
-      "kind": "commit",
-      "summary": "Customer work connects architecture, implementation, and technical communication.",
-      "files": [
-        {
-          "path": "experience/microsoft.md",
-          "status": "A",
-          "language": "markdown",
-          "before": "",
-          "after": "# Microsoft\n\nCloud Solution Architect Intern.\nWork across architecture, implementation, and customer communication.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        },
-        {
-          "from": "career",
-          "to": "main"
-        }
-      ]
-    },
-    {
-      "hash": "9a2f406",
-      "message": "merge: connect independent projects",
-      "author": "Emilio Alvarez",
+      "hash": "a103354",
+      "message": "docs(profile): summarize the combined story",
+      "author": "Emilio Alvarez (demo)",
       "date": "2025",
       "lane": "main",
-      "kind": "merge",
-      "summary": "Independent software projects become evidence in the main profile.",
+      "kind": "commit",
+      "graphColumns": 1,
+      "summary": "The profile summarizes the connected education, career, teaching, and project chapters.",
       "files": [
         {
-          "path": "projects/README.md",
+          "path": "profile.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Profile\n",
+          "after": "# Profile\n\nSystems, cloud architecture, and developer tools.\n"
+        },
+        {
+          "path": "timeline.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Timeline\n",
+          "after": "# Timeline\n\nThe combined story is ready.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "7a41756",
+      "message": "merge: connect projects with the main story",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2024",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 2,
+      "summary": "Independent projects connect to the main public story.",
+      "files": [
+        {
+          "path": "chapters/projects.md",
           "status": "M",
           "language": "markdown",
           "before": "# Projects\n",
-          "after": "# Projects\n\nInteractive web tools and native macOS software.\n"
+          "after": "# Projects\n\nNative tools and an interactive portfolio.\n"
         }
       ],
       "edges": [
@@ -254,20 +185,50 @@
       ]
     },
     {
-      "hash": "e03d6a1",
-      "message": "feat(projects): build a self-exploring CV site",
-      "author": "Emilio Alvarez",
-      "date": "2025",
+      "hash": "b5a5a1e",
+      "message": "feat(projects): explore native capture systems",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2024",
       "lane": "projects",
       "kind": "commit",
-      "summary": "The portfolio uses its real repository as the content and interface.",
+      "graphColumns": 2,
+      "summary": "The capture project explores reliable native recording systems.",
+      "files": [
+        {
+          "path": "projects/capture-tool.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Capture Tool\n\nExplore reliable native recording.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "6f7dfaa",
+      "message": "feat(projects): create an interactive portfolio",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2023",
+      "lane": "projects",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "The portfolio turns its repository into the interface.",
       "files": [
         {
           "path": "projects/cv-site.md",
           "status": "A",
           "language": "markdown",
           "before": "",
-          "after": "# Interactive CV\n\nRender the real repository through a VS Code-inspired interface.\n"
+          "after": "# Interactive Portfolio\n\nUse the real repository as the interface.\n"
         }
       ],
       "edges": [
@@ -282,48 +243,21 @@
       ]
     },
     {
-      "hash": "4df27c8",
-      "message": "feat(projects): explore reliable native capture",
-      "author": "Emilio Alvarez",
-      "date": "2024-2026",
-      "lane": "projects",
-      "kind": "commit",
-      "summary": "A native macOS project explores recording integrity, playback, storage, and export.",
-      "files": [
-        {
-          "path": "projects/macsights.md",
-          "status": "A",
-          "language": "markdown",
-          "before": "",
-          "after": "# Macsights\n\nExplore reliable native capture, playback, storage, and export.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        },
-        {
-          "from": "projects",
-          "to": "main"
-        }
-      ]
-    },
-    {
-      "hash": "671d4bb",
-      "message": "merge: connect the teaching chapter",
-      "author": "Emilio Alvarez",
-      "date": "2025",
+      "hash": "44243aa",
+      "message": "merge: connect teaching with the main story",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2023",
       "lane": "main",
       "kind": "merge",
-      "summary": "Teaching experience joins the main technical story.",
+      "graphColumns": 3,
+      "summary": "Teaching connects to the main technical story.",
       "files": [
         {
-          "path": "experience/teaching.md",
+          "path": "chapters/community.md",
           "status": "M",
           "language": "markdown",
-          "before": "# Teaching\n",
-          "after": "# Teaching\n\nTeach systems, web technology, and programming.\n"
+          "before": "# Community\n",
+          "after": "# Community\n\nTeaching becomes part of the main story.\n"
         }
       ],
       "edges": [
@@ -334,29 +268,38 @@
         {
           "from": "main",
           "to": "teaching"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
         }
       ]
     },
     {
-      "hash": "28ca7e0",
-      "message": "feat(teaching): teach computer science",
-      "author": "Emilio Alvarez",
-      "date": "2024-2025",
+      "hash": "8c8ba16",
+      "message": "feat(community): begin teaching computer science",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2022",
       "lane": "teaching",
       "kind": "commit",
-      "summary": "Teaching strengthens technical communication across systems and web courses.",
+      "graphColumns": 3,
+      "summary": "Teaching develops technical communication through concrete examples.",
       "files": [
         {
-          "path": "experience/teaching.md",
-          "status": "A",
+          "path": "chapters/community.md",
+          "status": "M",
           "language": "markdown",
-          "before": "",
-          "after": "# Teaching\n\nExplain operating systems, web technology, and programming to other students.\n"
+          "before": "# Community\n",
+          "after": "# Community\n\nBegin teaching computer science.\n"
         }
       ],
       "edges": [
         {
           "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
           "to": "main"
         },
         {
@@ -366,20 +309,21 @@
       ]
     },
     {
-      "hash": "43a18d9",
-      "message": "merge: connect the education chapter",
-      "author": "Emilio Alvarez",
-      "date": "2023",
+      "hash": "26b652e",
+      "message": "merge: integrate the career chapter",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2022",
       "lane": "main",
       "kind": "merge",
-      "summary": "Education provides the foundation for the later projects, teaching, and professional work.",
+      "graphColumns": 3,
+      "summary": "The career chapter becomes part of the main story.",
       "files": [
         {
-          "path": "education/README.md",
+          "path": "chapters/career.md",
           "status": "M",
           "language": "markdown",
-          "before": "# Education\n",
-          "after": "# Education\n\nComputer science, systems, and infrastructure.\n"
+          "before": "# Career\n",
+          "after": "# Career\n\nArchitecture and communication connect.\n"
         }
       ],
       "edges": [
@@ -389,56 +333,161 @@
         },
         {
           "from": "main",
-          "to": "education"
+          "to": "career"
         }
       ]
     },
     {
-      "hash": "d7e20c4",
-      "message": "feat(education): focus on systems and infrastructure",
-      "author": "Emilio Alvarez",
-      "date": "2023",
-      "lane": "education",
-      "kind": "commit",
-      "summary": "Operating systems and infrastructure become central technical interests.",
-      "files": [
-        {
-          "path": "education/focus.md",
-          "status": "M",
-          "language": "markdown",
-          "before": "# Focus\n\nComputer science.\n",
-          "after": "# Focus\n\nOperating systems, infrastructure, and developer tooling.\n"
-        }
-      ],
-      "edges": [
-        {
-          "from": "main",
-          "to": "main"
-        },
-        {
-          "from": "education",
-          "to": "education"
-        }
-      ]
-    },
-    {
-      "hash": "b22022c",
-      "message": "feat(education): begin computer science at VU Amsterdam",
-      "author": "Emilio Alvarez",
+      "hash": "8628238",
+      "message": "feat(career): connect architecture with communication",
+      "author": "Emilio Alvarez (demo)",
       "date": "2022",
-      "lane": "education",
+      "lane": "career",
       "kind": "commit",
-      "summary": "Computer science study provides the foundation for later teaching, projects, and professional work.",
+      "graphColumns": 2,
+      "summary": "Cloud architecture work connects technical design with communication.",
       "files": [
         {
-          "path": "education/vu-amsterdam.md",
+          "path": "chapters/cloud.md",
           "status": "A",
           "language": "markdown",
           "before": "",
-          "after": "# Vrije Universiteit Amsterdam\n\nBSc Computer Science.\n"
+          "after": "# Cloud\n\nConnect architecture with communication.\n"
         }
       ],
       "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "career"
+        }
+      ]
+    },
+    {
+      "hash": "8f41b00",
+      "message": "feat(career): start a cloud architecture role",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2021",
+      "lane": "career",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "The first cloud architecture role starts the professional chapter.",
+      "files": [
+        {
+          "path": "chapters/career.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Career\n",
+          "after": "# Career\n\nStart a cloud architecture role.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "career"
+        }
+      ]
+    },
+    {
+      "hash": "6eefbfa",
+      "message": "merge: integrate the education chapter",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2022",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 3,
+      "summary": "The education chapter provides the foundation for the story.",
+      "files": [
+        {
+          "path": "chapters/education.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Education\n",
+          "after": "# Education\n\nSystems and infrastructure form the foundation.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "education"
+        },
+        {
+          "from": "career",
+          "to": "career"
+        }
+      ]
+    },
+    {
+      "hash": "ab2b48e",
+      "message": "feat(education): focus on systems and infrastructure",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2020",
+      "lane": "education",
+      "kind": "commit",
+      "graphColumns": 3,
+      "summary": "Systems and infrastructure become central technical interests.",
+      "files": [
+        {
+          "path": "chapters/systems.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Systems\n\nFocus on systems and infrastructure.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "career"
+        },
+        {
+          "from": "education",
+          "to": "education"
+        }
+      ]
+    },
+    {
+      "hash": "521cb07",
+      "message": "feat(education): begin computer science studies",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2019",
+      "lane": "education",
+      "kind": "commit",
+      "graphColumns": 3,
+      "summary": "Computer science studies start the education chapter.",
+      "files": [
+        {
+          "path": "chapters/education.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Education\n",
+          "after": "# Education\n\nBegin computer science studies.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "main"
+        },
         {
           "from": "education",
           "to": "main"
@@ -446,20 +495,21 @@
       ]
     },
     {
-      "hash": "1b6c0de",
+      "hash": "9b7d5b4",
       "message": "chore(repo): initialize the life repository",
-      "author": "Emilio Alvarez",
-      "date": "2022",
+      "author": "Emilio Alvarez (demo)",
+      "date": "2018",
       "lane": "main",
       "kind": "commit",
-      "summary": "The first commit starts the public story.",
+      "graphColumns": 3,
+      "summary": "The first commit initializes the life repository.",
       "files": [
         {
           "path": "README.md",
           "status": "A",
           "language": "markdown",
           "before": "",
-          "after": "# Emilio Alvarez\n"
+          "after": "# Life Repository\n"
         }
       ],
       "edges": []

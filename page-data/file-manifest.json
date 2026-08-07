@@ -119,8 +119,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 26167,
-      "sha256": "579c823748c77e165252f0f2ef208f85277e9e9df910d37f24713e52d5d8ca47"
+      "size": 26984,
+      "sha256": "920bde9fef0e33ee4773b5e6bd0c50c965f3ba50fa932b3201270b6cb8d252e5"
     },
     {
       "path": "page-data/source-control.json",
@@ -129,8 +129,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 13242,
-      "sha256": "314cf92506eca4f8a00f83ec741424801ff85f464a6bd16a7fc1ddcc8bde3bc8"
+      "size": 14444,
+      "sha256": "49e83cbf72d974f4348b3a4c93deb7e12a8cdda231ef145721abf1b1c062c578"
     },
     {
       "path": "page-data/style.css",
@@ -139,8 +139,8 @@
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 27819,
-      "sha256": "c4cb5021b38c0c65d0022042cefae82995f3ef78be3d2e1a2396ec65afdc9f6d"
+      "size": 27957,
+      "sha256": "1b48c47530be5d3787b34d4ed841306058579fd067d76daf734efc9b018cde51"
     },
     {
       "path": "README.md",
@@ -169,8 +169,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 9728,
-      "sha256": "680365d1caa83a6535699de9788ebce2e2e6ae8c56b5ba963764b94e606cfd6f"
+      "size": 11599,
+      "sha256": "4491c96e3bd1ddd5723b4c7717550056b1ae04626a9d031fce9b17d595b39c43"
     }
   ]
 }

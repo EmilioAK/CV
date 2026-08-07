@@ -1,7 +1,9 @@
 (() => {
     const svgNamespace = 'http://www.w3.org/2000/svg';
-    const graphRowHeight = 25;
-    const graphWidth = 48;
+    const graphRowHeight = 22;
+    const graphLaneStart = 10;
+    const graphLaneGap = 11;
+    const graphWidth = 44;
 
     const createElement = (tagName, className, text) => {
         const element = document.createElement(tagName);
@@ -58,6 +60,9 @@
             if (!Array.isArray(commit.files) || !Array.isArray(commit.edges)) {
                 throw new Error(`Commit ${commit.hash} is missing graph data.`);
             }
+            if (!Number.isInteger(commit.graphColumns) || commit.graphColumns < 1) {
+                throw new Error(`Commit ${commit.hash} is missing its graph width.`);
+            }
             commitHashes.add(commit.hash);
         });
     };
@@ -65,7 +70,7 @@
     const renderGraphSvg = (commits, lanes) => {
         const laneMap = new Map(lanes.map((lane, index) => [lane.id, {
             ...lane,
-            x: 10 + (index * 8),
+            x: graphLaneStart + ((lane.column ?? index) * graphLaneGap),
         }]));
         const height = commits.length * graphRowHeight;
         const svg = document.createElementNS(svgNamespace, 'svg');
@@ -400,9 +405,9 @@
         const graphToolbar = createElement('div', 'scm-graph-toolbar');
         const autoButton = createElement('button', 'scm-graph-action scm-auto-action');
         const locateButton = createToolbarButton('target', 'Locate Current Commit');
-        const fetchButton = createToolbarButton('arrow-down', 'Fetch is unavailable in this portfolio.', true);
-        const pushButton = createToolbarButton('arrow-up', 'Push is unavailable in this portfolio.', true);
-        const syncButton = createToolbarButton('cloud-download', 'Remote sync is unavailable in this portfolio.', true);
+        const fetchButton = createToolbarButton('repo-fetch', 'Fetch is unavailable in this portfolio.', true);
+        const pushButton = createToolbarButton('repo-pull', 'Pull is unavailable in this portfolio.', true);
+        const syncButton = createToolbarButton('cloud-upload', 'Remote sync is unavailable in this portfolio.', true);
         const refreshButton = createToolbarButton('refresh', 'Refresh Current Commit');
         const moreButton = createToolbarButton('more', 'More graph actions are unavailable.', true);
         const graphList = createElement('div', 'scm-graph-list');
@@ -454,30 +459,42 @@
             row.setAttribute('aria-selected', 'false');
             row.setAttribute('aria-describedby', tooltip.id);
             row.setAttribute('aria-label', `${commit.message}, ${commit.author}, ${commit.date}`);
+            row.style.setProperty(
+                '--scm-graph-indent',
+                `${graphLaneStart + (commit.graphColumns * graphLaneGap)}px`
+            );
             row.appendChild(message);
 
             if (commit.branch) {
                 const branchLabel = createElement('span', 'scm-branch-label');
-                branchLabel.append(createIcon('git-branch'), createElement('span', '', commit.branch));
+                branchLabel.append(createIcon('target'), createElement('span', '', commit.branch));
                 row.appendChild(branchLabel);
             }
 
             row.append(author, action);
 
             const showTooltip = () => {
+                container.querySelector(`.scm-graph-node[data-hash="${commit.hash}"]`)
+                    ?.classList.add('hovered');
                 if (window.innerWidth <= 767) return;
                 populateTooltip(tooltip, commit);
                 tooltip.hidden = false;
                 positionTooltip(tooltip, row, sidebar);
             };
 
+            const hideRowTooltip = () => {
+                container.querySelector(`.scm-graph-node[data-hash="${commit.hash}"]`)
+                    ?.classList.remove('hovered');
+                hideTooltip();
+            };
+
             row.addEventListener('mouseenter', showTooltip);
-            row.addEventListener('mouseleave', hideTooltip);
+            row.addEventListener('mouseleave', hideRowTooltip);
             row.addEventListener('focus', showTooltip);
-            row.addEventListener('blur', hideTooltip);
+            row.addEventListener('blur', hideRowTooltip);
             row.addEventListener('click', () => {
                 select(key);
-                hideTooltip();
+                hideRowTooltip();
                 onOpenCommit(commit);
             });
             itemButtons.set(key, row);
