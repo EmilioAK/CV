@@ -40,8 +40,8 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 36481,
-      "sha256": "6b101675b38c8a77ef28d551ca7908b374dc09d1cfddf47f21d3e8a8889c6628"
+      "size": 52007,
+      "sha256": "ae069561630b18bd5b9687d95a144940f908725b1d550b243df5592ea9ee017a"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -113,14 +113,34 @@
       "sha256": "bf58a2ab0ea0b48010ce979958ac4dbdfd917dd0cf28008d840f6708e8a20b01"
     },
     {
+      "path": "page-data/source-control.js",
+      "sourceUrl": "page-data/source-control.js",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/source-control.js",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 17425,
+      "sha256": "5298bdd584611911cad6a39e9d4b2c22510881b446fb3bb9355a581644fc4659"
+    },
+    {
+      "path": "page-data/source-control.json",
+      "sourceUrl": "page-data/source-control.json",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/source-control.json",
+      "kind": "text",
+      "mediaType": "application/json",
+      "language": "json",
+      "size": 10096,
+      "sha256": "e4384d4ccfbcbb9ebf5a399473fe7424e5fbca3caa878fa880e1eceb747eef59"
+    },
+    {
       "path": "page-data/style.css",
       "sourceUrl": "page-data/style.css",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/style.css",
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 13730,
-      "sha256": "6468cfc17e621b2ae48823c8746e2844c523c4e995456b64b1bc4da1befd47fb"
+      "size": 23226,
+      "sha256": "1895c2f158e28ef9d2782ccd0f3f39ef7ce8c2c0589b2dd8fc57fa09438fa871"
     },
     {
       "path": "README.md",
@@ -149,8 +169,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 6966,
-      "sha256": "4db63250f278d202bc68bf9d7dbf8a93f001a2023b596e8351e13c89d65793cd"
+      "size": 9432,
+      "sha256": "3a4c103dd1a235fddb34fead6de7719b7cd1b23b166dfafdd36ad62972e20d98"
     }
   ]
 }

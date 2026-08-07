@@ -59,6 +59,8 @@ for (const requiredPath of [
     'README.md',
     'index.html',
     'page-data/file-manifest.json',
+    'page-data/source-control.js',
+    'page-data/source-control.json',
     'page-data/style.css',
     'scripts/generate-manifest.mjs',
     'scripts/test-site.mjs',
@@ -120,6 +122,14 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
 const styleCss = await readFile(path.join(repositoryRoot, 'page-data', 'style.css'), 'utf8');
+const sourceControlScript = await readFile(
+    path.join(repositoryRoot, 'page-data', 'source-control.js'),
+    'utf8'
+);
+const sourceControlData = JSON.parse(await readFile(
+    path.join(repositoryRoot, 'page-data', 'source-control.json'),
+    'utf8'
+));
 
 for (const requiredText of [
     'name="viewport"',
@@ -131,9 +141,82 @@ for (const requiredText of [
     'renderPdfFile',
     "node.mediaType === 'application/pdf'",
     'node.rawUrl',
+    'id="source-control-toggle"',
+    'id="source-control-view"',
+    'id="scm-detail-viewer"',
+    'id="scm-diff-editor"',
+    'buildSourceControlView',
+    'openSourceControlCommit',
+    'openSourceControlChange',
 ]) {
     if (!indexHtml.includes(requiredText)) {
         fail(`index.html is missing ${requiredText}.`);
+    }
+}
+
+if (sourceControlData.schemaVersion !== 1) {
+    fail('The Source Control data schema is not version 1.');
+}
+
+for (const key of ['lanes', 'staged', 'changes', 'commits']) {
+    if (!Array.isArray(sourceControlData[key]) || sourceControlData[key].length === 0) {
+        fail(`The Source Control data must include ${key}.`);
+    }
+}
+
+if (sourceControlData.branch !== 'main') {
+    fail('The Source Control story must identify the main branch.');
+}
+
+const laneIds = new Set(sourceControlData.lanes.map((lane) => lane.id));
+const commitHashes = new Set();
+
+for (const commit of sourceControlData.commits) {
+    if (!commit.hash || commitHashes.has(commit.hash)) {
+        fail('Each Source Control commit must have a unique hash.');
+    }
+    commitHashes.add(commit.hash);
+
+    if (!laneIds.has(commit.lane)) {
+        fail(`Commit ${commit.hash} uses an unknown lane.`);
+    }
+
+    if (!Array.isArray(commit.files) || commit.files.length === 0) {
+        fail(`Commit ${commit.hash} must include at least one changed file.`);
+    }
+
+    for (const edge of commit.edges) {
+        if (!laneIds.has(edge.from) || !laneIds.has(edge.to)) {
+            fail(`Commit ${commit.hash} contains an invalid graph edge.`);
+        }
+    }
+}
+
+if (/[–—]/.test(JSON.stringify(sourceControlData))) {
+    fail('The Source Control story must use plain punctuation.');
+}
+
+for (const requiredText of [
+    'window.SourceControlView',
+    'scm-graph-svg',
+    'scm-commit-tooltip',
+    'role',
+    'separator',
+]) {
+    if (!sourceControlScript.includes(requiredText)) {
+        fail(`The Source Control script is missing ${requiredText}.`);
+    }
+}
+
+for (const requiredSelector of [
+    '.source-control-view',
+    '.scm-graph-svg',
+    '.scm-commit-row',
+    '.scm-detail-viewer',
+    '.scm-detail-file',
+]) {
+    if (!styleCss.includes(requiredSelector)) {
+        fail(`The site stylesheet is missing ${requiredSelector}.`);
     }
 }
 

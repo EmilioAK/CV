@@ -46,6 +46,10 @@ body {
     font-size: 13px;
 }
 
+body.source-control-active {
+    --sidebar-width: 330px;
+}
+
 button,
 a {
     font: inherit;
@@ -101,6 +105,22 @@ a:focus-visible {
 
 .activity-bar .activity-button .codicon {
     font-size: 24px;
+}
+
+.activity-badge {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    place-items: center;
+    border-radius: 9px;
+    background: #0078d4;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 18px;
 }
 
 .sidebar {
@@ -162,6 +182,11 @@ body.sidebar-collapsed .sidebar {
     overflow: auto;
     scrollbar-color: #424242 transparent;
     scrollbar-width: thin;
+}
+
+.sidebar-view {
+    min-width: 0;
+    min-height: 0;
 }
 
 #file-tree {
@@ -291,6 +316,363 @@ body.sidebar-collapsed .sidebar {
     justify-content: center;
 }
 
+.source-control-view {
+    --scm-changes-height: 250px;
+    display: grid;
+    grid-template-rows: minmax(120px, var(--scm-changes-height)) 4px minmax(0, 1fr);
+    overflow: hidden;
+}
+
+.scm-loading {
+    display: flex;
+    padding: 12px 20px;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.scm-changes-pane,
+.scm-graph-pane {
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-color: #424242 transparent;
+    scrollbar-width: thin;
+}
+
+.scm-repository-header,
+.scm-graph-header {
+    display: flex;
+    min-width: 0;
+    height: 26px;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    color: #bbbbbb;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    user-select: none;
+}
+
+.scm-repository-header strong,
+.scm-graph-header strong {
+    font-weight: 600;
+}
+
+.scm-repository-header span {
+    min-width: 0;
+    overflow: hidden;
+    color: #858585;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scm-group {
+    min-width: 0;
+}
+
+.scm-group-header {
+    display: grid;
+    width: 100%;
+    height: 24px;
+    padding: 0 8px;
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    color: #cccccc;
+    text-align: left;
+    cursor: pointer;
+}
+
+.scm-group-header:hover {
+    background: var(--hover-color);
+}
+
+.scm-group-header .codicon {
+    font-size: 16px;
+}
+
+.scm-group-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scm-count {
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    place-items: center;
+    border-radius: 9px;
+    background: #3c3c3c;
+    color: #d4d4d4;
+    font-size: 11px;
+}
+
+.scm-file-list {
+    min-width: 0;
+}
+
+.scm-file-row {
+    display: grid;
+    width: 100%;
+    height: 24px;
+    padding: 0 10px 0 16px;
+    grid-template-columns: 16px auto minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 5px;
+    border: 0;
+    background: transparent;
+    color: #cccccc;
+    text-align: left;
+    cursor: pointer;
+}
+
+.scm-file-row:hover {
+    background: var(--hover-color);
+    color: #ffffff;
+}
+
+.scm-file-row.selected {
+    background: var(--selected-color);
+    color: #ffffff;
+}
+
+.scm-change-icon {
+    color: #73c991;
+    font-size: 14px;
+}
+
+.scm-change-icon.staged {
+    color: #75beff;
+}
+
+.scm-file-name,
+.scm-file-directory {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scm-file-directory {
+    color: #858585;
+    font-size: 11px;
+}
+
+.scm-status {
+    justify-self: end;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 11px;
+}
+
+.status-a,
+.status-u {
+    color: #73c991;
+}
+
+.status-m {
+    color: #e2c08d;
+}
+
+.status-d {
+    color: #f48771;
+}
+
+.status-r {
+    color: #75beff;
+}
+
+.scm-resizer {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid transparent;
+    cursor: row-resize;
+    touch-action: none;
+}
+
+.scm-resizer:hover,
+.scm-resizer.dragging,
+.scm-resizer:focus-visible {
+    border-top-color: var(--accent-color);
+}
+
+.scm-graph-pane {
+    display: grid;
+    grid-template-rows: 28px minmax(0, 1fr);
+    overflow: hidden;
+}
+
+.scm-current-branch,
+.scm-detail-branch,
+.scm-branch-label {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 3px;
+    color: #9cdcfe;
+    font-size: 11px;
+}
+
+.scm-current-branch .codicon,
+.scm-detail-branch .codicon,
+.scm-branch-label .codicon {
+    font-size: 13px;
+}
+
+.scm-graph-list {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-color: #424242 transparent;
+    scrollbar-width: thin;
+}
+
+.scm-graph-svg {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.scm-graph-edge {
+    fill: none;
+    stroke-width: 1.6;
+    vector-effect: non-scaling-stroke;
+}
+
+.scm-graph-node {
+    stroke-width: 1.6;
+    vector-effect: non-scaling-stroke;
+}
+
+.scm-graph-node.selected {
+    fill: #ffffff;
+    stroke: #ffffff;
+}
+
+.scm-graph-rows {
+    position: relative;
+    z-index: 1;
+    min-width: max-content;
+}
+
+.scm-commit-row {
+    display: flex;
+    width: 100%;
+    min-width: 315px;
+    height: 28px;
+    padding: 0 8px 0 68px;
+    align-items: center;
+    gap: 7px;
+    border: 0;
+    background: transparent;
+    color: #cccccc;
+    text-align: left;
+    cursor: pointer;
+}
+
+.scm-commit-row:hover {
+    background: var(--hover-color);
+    color: #ffffff;
+}
+
+.scm-commit-row.selected {
+    background: #04395e;
+    color: #ffffff;
+}
+
+.scm-commit-message {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scm-commit-date {
+    flex: 0 0 auto;
+    color: #858585;
+    font-size: 11px;
+}
+
+.scm-branch-label {
+    flex: 0 0 auto;
+    padding: 1px 4px;
+    border: 1px solid #174f78;
+    border-radius: 3px;
+    background: #0c2f49;
+}
+
+.scm-commit-tooltip {
+    position: fixed;
+    z-index: 50;
+    width: min(324px, calc(100vw - 16px));
+    padding: 10px 12px;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    background: #252526;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 42%);
+    color: #cccccc;
+    line-height: 1.45;
+    pointer-events: none;
+}
+
+.scm-tooltip-author,
+.scm-tooltip-stats,
+.scm-tooltip-hash {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.scm-tooltip-author {
+    color: #9cdcfe;
+}
+
+.scm-tooltip-author strong {
+    font-weight: 600;
+}
+
+.scm-tooltip-author span {
+    color: #a5a5a5;
+}
+
+.scm-tooltip-message {
+    margin-top: 8px;
+    color: #f1f1f1;
+}
+
+.scm-tooltip-stats {
+    margin-top: 9px;
+    padding-top: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid #3c3c3c;
+    color: #a5a5a5;
+    font-size: 12px;
+}
+
+.insertions {
+    color: #73c991;
+}
+
+.deletions {
+    color: #f48771;
+}
+
+.scm-tooltip-hash {
+    margin-top: 7px;
+    color: #4fc1ff;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+}
+
 .workspace {
     grid-area: workspace;
     display: grid;
@@ -409,6 +791,141 @@ body.sidebar-collapsed .sidebar {
 .editor {
     position: absolute;
     inset: 0;
+}
+
+.scm-detail-viewer {
+    position: absolute;
+    inset: 0;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    background: var(--editor-color);
+    scrollbar-color: #424242 transparent;
+    scrollbar-width: thin;
+}
+
+.scm-detail-content {
+    width: min(900px, 100%);
+    min-height: 100%;
+    margin: 0 auto;
+    padding: clamp(36px, 6vw, 72px) clamp(28px, 7vw, 84px);
+    color: #cccccc;
+    line-height: 1.55;
+}
+
+.scm-detail-header {
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.scm-detail-identity {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.scm-detail-hash {
+    color: #4fc1ff;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+}
+
+.scm-detail-header h1 {
+    max-width: 760px;
+    margin: 12px 0 0;
+    color: #f1f1f1;
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.scm-detail-metadata {
+    display: grid;
+    margin: 22px 0 0;
+    grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+    gap: 6px 14px;
+}
+
+.scm-detail-metadata dt {
+    color: #858585;
+}
+
+.scm-detail-metadata dd {
+    min-width: 0;
+    margin: 0;
+    color: #d4d4d4;
+}
+
+.scm-detail-summary {
+    max-width: 720px;
+    margin: 26px 0 0;
+    color: #cccccc;
+    font-size: 15px;
+}
+
+.scm-detail-stats {
+    display: flex;
+    margin-top: 18px;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    color: #a5a5a5;
+    font-size: 12px;
+}
+
+.scm-detail-files {
+    margin-top: 42px;
+}
+
+.scm-detail-files h2 {
+    margin: 0 0 8px;
+    color: #d4d4d4;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.scm-detail-file {
+    display: grid;
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 8px;
+    grid-template-columns: 18px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    background: transparent;
+    color: #cccccc;
+    text-align: left;
+    cursor: pointer;
+}
+
+.scm-detail-file:last-child {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.scm-detail-file:hover {
+    background: var(--hover-color);
+    color: #ffffff;
+}
+
+.scm-detail-file > span:nth-child(2) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scm-detail-file > .codicon {
+    color: #858585;
+    font-size: 14px;
+}
+
+.tab-icon.codicon {
+    color: #75beff;
+    font-size: 16px;
 }
 
 .editor-state {
@@ -662,6 +1179,10 @@ body.sidebar-collapsed .sidebar {
         transform: translateX(0);
     }
 
+    body.source-control-active .sidebar {
+        width: min(calc(100vw - var(--activity-width)), 360px);
+    }
+
     .sidebar-close {
         display: grid;
         width: 40px;
@@ -697,6 +1218,20 @@ body.sidebar-collapsed .sidebar {
         line-height: 32px;
     }
 
+    .scm-group-header,
+    .scm-file-row,
+    .scm-commit-row {
+        min-height: 32px;
+    }
+
+    .scm-commit-row {
+        min-width: 310px;
+    }
+
+    .scm-commit-tooltip {
+        display: none;
+    }
+
     .tab-close {
         width: 32px;
         min-width: 32px;
@@ -709,6 +1244,18 @@ body.sidebar-collapsed .sidebar {
 
     .editor-skeleton {
         width: 92%;
+    }
+
+    .scm-detail-content {
+        padding: 30px 22px 48px;
+    }
+
+    .scm-detail-metadata {
+        grid-template-columns: max-content minmax(0, 1fr);
+    }
+
+    .scm-detail-files {
+        margin-top: 32px;
     }
 
     .media-viewer {

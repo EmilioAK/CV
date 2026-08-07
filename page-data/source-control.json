@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "repository": "emilio/life",
+  "branch": "main",
+  "lanes": [
+    {
+      "id": "main",
+      "color": "#3794ff"
+    },
+    {
+      "id": "career",
+      "color": "#c586c0"
+    },
+    {
+      "id": "projects",
+      "color": "#cca700"
+    },
+    {
+      "id": "teaching",
+      "color": "#4ec9b0"
+    }
+  ],
+  "staged": [
+    {
+      "id": "about-story",
+      "path": "CV/about.md",
+      "status": "M",
+      "summary": "A fuller personal introduction is ready for the public story.",
+      "language": "markdown",
+      "before": "# My Story\n",
+      "after": "# My Story\n\nI moved from Sweden to Amsterdam to study computer science.\nI now build software across systems, cloud architecture, and developer tools.\n"
+    },
+    {
+      "id": "source-control-view",
+      "path": "projects/source-control.md",
+      "status": "A",
+      "summary": "The Source Control view turns the career timeline into a visual commit graph.",
+      "language": "markdown",
+      "before": "",
+      "after": "# Source Control Story\n\nCommits represent events.\nBranches represent parallel parts of the story.\nThe editor contains the evidence behind each change.\n"
+    }
+  ],
+  "changes": [
+    {
+      "id": "macsights-project",
+      "path": "projects/macsights.md",
+      "status": "M",
+      "summary": "Native capture, playback, and storage work continues.",
+      "language": "markdown",
+      "before": "# Macsights\n\nExplore native screen recording.\n",
+      "after": "# Macsights\n\nBuild reliable capture, playback, storage, and export workflows.\n"
+    },
+    {
+      "id": "systems-depth",
+      "path": "skills/systems.md",
+      "status": "M",
+      "summary": "Systems knowledge remains an active area of study.",
+      "language": "markdown",
+      "before": "# Systems\n\nOperating systems and C.\n",
+      "after": "# Systems\n\nOperating systems, C, distributed services, and production recovery.\n"
+    }
+  ],
+  "commits": [
+    {
+      "hash": "7f4c9d2",
+      "message": "docs(profile): connect systems, cloud, and developer tooling",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "main",
+      "branch": "main",
+      "kind": "commit",
+      "summary": "The current profile connects technical systems work with communication and product judgment.",
+      "files": [
+        {
+          "path": "profile/focus.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Focus\n\nComputer science and cloud architecture.\n",
+          "after": "# Focus\n\nSystems, cloud architecture, developer tooling, and security-minded engineering.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "58b10fa",
+      "message": "merge: connect the career chapter",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "main",
+      "kind": "merge",
+      "summary": "Professional software work becomes part of the main public story.",
+      "files": [
+        {
+          "path": "experience/README.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Experience\n\nCloud architecture internship.\n",
+          "after": "# Experience\n\nCloud architecture and production software engineering.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "career"
+        }
+      ]
+    },
+    {
+      "hash": "c4016be",
+      "message": "feat(career): build production software at Capisoft",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "career",
+      "kind": "commit",
+      "summary": "The work spans backend systems, integrations, recovery tools, and production delivery.",
+      "files": [
+        {
+          "path": "experience/capisoft.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Capisoft\n\nBuild production software for legal workflows, accounting, and email delivery.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "career"
+        }
+      ]
+    },
+    {
+      "hash": "a912e75",
+      "message": "feat(career): work as a cloud solution architect intern",
+      "author": "Emilio Alvarez",
+      "date": "2025-2026",
+      "lane": "career",
+      "kind": "commit",
+      "summary": "Customer work connects architecture, implementation, and technical communication.",
+      "files": [
+        {
+          "path": "experience/microsoft.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Microsoft\n\nCloud Solution Architect Intern.\nWork across architecture, implementation, and customer communication.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "career",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "9a2f406",
+      "message": "merge: connect independent projects",
+      "author": "Emilio Alvarez",
+      "date": "2025",
+      "lane": "main",
+      "kind": "merge",
+      "summary": "Independent software projects become evidence in the main profile.",
+      "files": [
+        {
+          "path": "projects/README.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Projects\n",
+          "after": "# Projects\n\nInteractive web tools and native macOS software.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "e03d6a1",
+      "message": "feat(projects): build a self-exploring CV site",
+      "author": "Emilio Alvarez",
+      "date": "2025",
+      "lane": "projects",
+      "kind": "commit",
+      "summary": "The portfolio uses its real repository as the content and interface.",
+      "files": [
+        {
+          "path": "projects/cv-site.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Interactive CV\n\nRender the real repository through a VS Code-inspired interface.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "4df27c8",
+      "message": "feat(projects): explore reliable native capture",
+      "author": "Emilio Alvarez",
+      "date": "2024-2026",
+      "lane": "projects",
+      "kind": "commit",
+      "summary": "A native macOS project explores recording integrity, playback, storage, and export.",
+      "files": [
+        {
+          "path": "projects/macsights.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Macsights\n\nExplore reliable native capture, playback, storage, and export.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "671d4bb",
+      "message": "merge: connect the teaching chapter",
+      "author": "Emilio Alvarez",
+      "date": "2025",
+      "lane": "main",
+      "kind": "merge",
+      "summary": "Teaching experience joins the main technical story.",
+      "files": [
+        {
+          "path": "experience/teaching.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Teaching\n",
+          "after": "# Teaching\n\nTeach systems, web technology, and programming.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "teaching"
+        }
+      ]
+    },
+    {
+      "hash": "28ca7e0",
+      "message": "feat(teaching): teach computer science",
+      "author": "Emilio Alvarez",
+      "date": "2024-2025",
+      "lane": "teaching",
+      "kind": "commit",
+      "summary": "Teaching strengthens technical communication across systems and web courses.",
+      "files": [
+        {
+          "path": "experience/teaching.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Teaching\n\nExplain operating systems, web technology, and programming to other students.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "teaching",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "d7e20c4",
+      "message": "feat(education): focus on systems and infrastructure",
+      "author": "Emilio Alvarez",
+      "date": "2023",
+      "lane": "main",
+      "kind": "commit",
+      "summary": "Operating systems and infrastructure become central technical interests.",
+      "files": [
+        {
+          "path": "education/focus.md",
+          "status": "M",
+          "language": "markdown",
+          "before": "# Focus\n\nComputer science.\n",
+          "after": "# Focus\n\nOperating systems, infrastructure, and developer tooling.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "b22022c",
+      "message": "feat(education): begin computer science at VU Amsterdam",
+      "author": "Emilio Alvarez",
+      "date": "2022",
+      "lane": "main",
+      "kind": "commit",
+      "summary": "Computer science study provides the foundation for later teaching, projects, and professional work.",
+      "files": [
+        {
+          "path": "education/vu-amsterdam.md",
+          "status": "A",
+          "language": "markdown",
+          "before": "",
+          "after": "# Vrije Universiteit Amsterdam\n\nBSc Computer Science.\n"
+        }
+      ],
+      "edges": []
+    }
+  ]
+}
