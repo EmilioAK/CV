@@ -795,16 +795,16 @@ body.source-control-active .sidebar-view-actions {
 }
 
 .scm-graph-node {
-    stroke-width: 1.4;
+    stroke-width: 1.25;
     vector-effect: non-scaling-stroke;
 }
 
 .scm-graph-node.selected,
 .scm-graph-node.hovered {
-    r: 6px;
+    r: 5.5px;
     fill: #3794ff;
     stroke: #75beff;
-    stroke-width: 3;
+    stroke-width: 2.5;
 }
 
 .scm-graph-rows {

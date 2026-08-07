@@ -112,7 +112,7 @@
             const node = document.createElementNS(svgNamespace, 'circle');
             node.setAttribute('cx', String(lane.x));
             node.setAttribute('cy', String((index * graphRowHeight) + (graphRowHeight / 2)));
-            node.setAttribute('r', commit.kind === 'merge' ? '4' : '3.5');
+            node.setAttribute('r', commit.kind === 'merge' ? '3.75' : '3.25');
             node.setAttribute('stroke', lane.color);
             node.setAttribute('fill', commit.kind === 'merge' ? '#181818' : lane.color);
             node.setAttribute('class', `scm-graph-node ${commit.kind === 'merge' ? 'merge' : ''}`.trim());
