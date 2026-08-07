@@ -28,6 +28,12 @@
             aria-keyshortcuts="Control+Shift+F Meta+Shift+F" aria-expanded="false">
             <i class="codicon codicon-search" aria-hidden="true"></i>
         </button>
+        <button id="source-control-toggle" class="activity-button" type="button"
+            title="Source Control" aria-label="Open Source Control"
+            aria-controls="source-control-sidebar-view" aria-expanded="false">
+            <i class="codicon codicon-source-control" aria-hidden="true"></i>
+            <span id="source-control-badge" class="activity-badge" aria-hidden="true" hidden></span>
+        </button>
         <button id="extensions-toggle" class="activity-button" type="button"
             title="Extensions" aria-label="Extensions" aria-controls="extensions-sidebar-view"
             aria-expanded="false">
@@ -135,6 +141,33 @@
             </div>
         </section>
 
+        <section id="source-control-sidebar-view"
+            class="sidebar-view source-control-sidebar-view"
+            aria-labelledby="source-control-view-title" hidden>
+            <div class="sidebar-header">
+                <span id="source-control-view-title">SOURCE CONTROL</span>
+                <div class="sidebar-header-actions">
+                    <button id="source-control-actions" class="sidebar-view-actions" type="button"
+                        title="More Actions" aria-label="More Actions" aria-haspopup="menu"
+                        aria-expanded="false">
+                        <i class="codicon codicon-more" aria-hidden="true"></i>
+                    </button>
+                    <div id="source-control-view-menu" class="sidebar-view-menu" role="menu" hidden>
+                        <button id="source-control-refresh" type="button" role="menuitem">Refresh</button>
+                        <button id="source-control-collapse-all" type="button" role="menuitem">
+                            Collapse All
+                        </button>
+                    </div>
+                    <button class="sidebar-close" type="button"
+                        title="Close Source Control" aria-label="Close Source Control">
+                        <i class="codicon codicon-close" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="source-control-view" class="sidebar-content source-control-view"
+                aria-label="Source Control"></div>
+        </section>
+
         <section id="extensions-sidebar-view" class="sidebar-view extensions-sidebar-view"
             aria-labelledby="extensions-view-title" hidden>
             <div class="sidebar-header">
@@ -184,12 +217,12 @@
         aria-label="Close sidebar" tabindex="-1"></button>
 
     <main class="workspace" aria-label="Source browser">
-        <div class="tab-bar" role="toolbar" aria-label="Open files"></div>
+        <div class="tab-bar" role="tablist" aria-label="Open files"></div>
 
         <template id="tab-template">
-            <div class="tab">
-                <button class="tab-select" type="button"
-                    aria-pressed="false" tabindex="-1">
+            <div class="tab" role="presentation">
+                <button class="tab-select" type="button" role="tab"
+                    aria-selected="false" tabindex="-1">
                     <span class="icon file-icon tab-icon" aria-hidden="true"></span>
                     <span class="tab-label"></span>
                 </button>
@@ -200,8 +233,7 @@
             </div>
         </template>
 
-        <div id="source-panel" class="editor-stage" role="region"
-            aria-label="File preview">
+        <div id="source-panel" class="editor-stage" role="tabpanel">
             <div id="editor-state" class="editor-state" role="status" aria-live="polite">
                 <div class="state-copy">
                     <strong id="state-title">Loading site</strong>
@@ -309,12 +341,18 @@
                     </aside>
                 </div>
             </section>
+
+            <section id="scm-detail-viewer" class="scm-detail-viewer"
+                aria-label="Commit details" hidden></section>
+
+            <div id="scm-diff-editor" class="editor" aria-label="Source Control diff" hidden></div>
         </div>
     </main>
 
     <script id="monaco-loader"
         src="https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js"
         crossorigin="anonymous"></script>
+    <script src="page-data/source-control.js"></script>
 
     <script type="module">
         import {
@@ -327,16 +365,25 @@
 
         const manifestPath = 'page-data/file-manifest.json';
         const extensionsManifestPath = 'page-data/extensions.json';
+        const sourceControlDataPath = 'page-data/source-control.json';
         const defaultFilePath = 'README.md';
         const mobileQuery = window.matchMedia('(max-width: 767px)');
 
         const body = document.body;
         const explorerToggle = document.getElementById('explorer-toggle');
         const searchToggle = document.getElementById('search-toggle');
+        const sourceControlToggle = document.getElementById('source-control-toggle');
+        const sourceControlBadge = document.getElementById('source-control-badge');
         const extensionsToggle = document.getElementById('extensions-toggle');
         const sidebar = document.getElementById('workspace-sidebar');
         const explorerView = document.getElementById('explorer-view');
         const searchView = document.getElementById('search-view');
+        const sourceControlSidebarView = document.getElementById('source-control-sidebar-view');
+        const sourceControlView = document.getElementById('source-control-view');
+        const sourceControlActions = document.getElementById('source-control-actions');
+        const sourceControlViewMenu = document.getElementById('source-control-view-menu');
+        const sourceControlRefresh = document.getElementById('source-control-refresh');
+        const sourceControlCollapseAll = document.getElementById('source-control-collapse-all');
         const extensionsSidebarView = document.getElementById('extensions-sidebar-view');
         const sidebarCloseButtons = document.querySelectorAll('.sidebar-close');
         const sidebarScrim = document.getElementById('sidebar-scrim');
@@ -382,6 +429,8 @@
         const extensionIdentifier = document.getElementById('extension-identifier');
         const extensionDocumentCount = document.getElementById('extension-document-count');
         const extensionCategories = document.getElementById('extension-categories');
+        const sourceControlDetailViewer = document.getElementById('scm-detail-viewer');
+        const sourceControlDiffContainer = document.getElementById('scm-diff-editor');
 
         const setiExtensionMap = {
             md: 'seti-markdown',
@@ -416,6 +465,11 @@
         let extensionsById = new Map();
         let extensionElementsById = new Map();
         const openTabs = new Map();
+        const sourceControlTabNodes = new Map();
+        let sourceControlController = null;
+        let monacoDiffEditor = null;
+        let diffModels = [];
+        let sourceControlMenuOpen = false;
         let resolveManifestReady;
         let rejectManifestReady;
         const manifestReady = new Promise((resolve, reject) => {
@@ -435,6 +489,11 @@
                 button: searchToggle,
                 view: searchView,
                 label: 'Search',
+            }],
+            ['source-control', {
+                button: sourceControlToggle,
+                view: sourceControlSidebarView,
+                label: 'Source Control',
             }],
             ['extensions', {
                 button: extensionsToggle,
@@ -536,12 +595,27 @@
             }
         };
 
-        const showState = (type, title, detail) => {
-            clearObjectUrl();
-            clearSearchDecorations();
+        const disposeDiffModels = () => {
+            const modelsToDispose = diffModels;
+            diffModels = [];
+            monacoDiffEditor?.setModel(null);
+            modelsToDispose.forEach((model) => model.dispose());
+        };
+
+        const hideEditorSurfaces = () => {
             editorContainer.hidden = true;
             mediaViewer.hidden = true;
             extensionViewer.hidden = true;
+            editorState.hidden = true;
+            sourceControlDetailViewer.hidden = true;
+            sourceControlDiffContainer.hidden = true;
+        };
+
+        const showState = (type, title, detail) => {
+            clearObjectUrl();
+            clearSearchDecorations();
+            disposeDiffModels();
+            hideEditorSurfaces();
             editorState.hidden = false;
             editorState.dataset.type = type;
             editorState.setAttribute('role', type === 'error' ? 'alert' : 'status');
@@ -552,28 +626,42 @@
 
         const showEditor = () => {
             clearObjectUrl();
-            editorState.hidden = true;
-            mediaViewer.hidden = true;
-            extensionViewer.hidden = true;
+            disposeDiffModels();
+            hideEditorSurfaces();
             editorContainer.hidden = false;
             requestAnimationFrame(() => monacoEditor?.layout());
         };
 
         const showMedia = () => {
             clearSearchDecorations();
-            editorState.hidden = true;
-            editorContainer.hidden = true;
-            extensionViewer.hidden = true;
+            disposeDiffModels();
+            hideEditorSurfaces();
             mediaViewer.hidden = false;
         };
 
         const showExtension = () => {
             clearObjectUrl();
-            editorState.hidden = true;
-            editorContainer.hidden = true;
-            mediaViewer.hidden = true;
+            clearSearchDecorations();
+            disposeDiffModels();
+            hideEditorSurfaces();
             extensionViewer.hidden = false;
             extensionViewer.scrollTop = 0;
+        };
+
+        const showSourceControlDetail = () => {
+            clearObjectUrl();
+            clearSearchDecorations();
+            disposeDiffModels();
+            hideEditorSurfaces();
+            sourceControlDetailViewer.hidden = false;
+        };
+
+        const showSourceControlDiff = () => {
+            clearObjectUrl();
+            clearSearchDecorations();
+            hideEditorSurfaces();
+            sourceControlDiffContainer.hidden = false;
+            requestAnimationFrame(() => monacoDiffEditor?.layout());
         };
 
         const formatBytes = (size) => {
@@ -651,6 +739,7 @@
 
         const syncSidebar = () => {
             const sidebarOpen = isSidebarOpen();
+            const sourceControlActive = activeSidebarView === 'source-control';
 
             sidebarControls.forEach((control, viewName) => {
                 const isActive = activeSidebarView === viewName;
@@ -669,6 +758,16 @@
             sidebar.hidden = !sidebarOpen;
             sidebar.inert = !sidebarOpen;
             sidebar.setAttribute('aria-hidden', String(!sidebarOpen));
+            body.classList.toggle('source-control-active', sourceControlActive);
+
+            if (!sidebarOpen || !sourceControlActive) {
+                sourceControlController?.hideTooltip();
+                sourceControlMenuOpen = false;
+                sourceControlViewMenu.hidden = true;
+                sourceControlActions.setAttribute('aria-expanded', 'false');
+            } else {
+                sourceControlController?.ensureSelection();
+            }
 
             if (mobileQuery.matches) {
                 body.classList.remove('sidebar-collapsed');
@@ -729,6 +828,8 @@
                 requestAnimationFrame(() => searchInput.focus());
             } else if (viewName === 'extensions') {
                 requestAnimationFrame(() => extensionSearch.focus());
+            } else if (viewName === 'source-control') {
+                requestAnimationFrame(() => sourceControlController?.ensureSelection());
             }
         };
 
@@ -740,8 +841,34 @@
             activateSidebarView('search', true);
         });
 
+        sourceControlToggle.addEventListener('click', () => {
+            activateSidebarView('source-control', true);
+        });
+
         extensionsToggle.addEventListener('click', () => {
             activateSidebarView('extensions', true);
+        });
+
+        const setSourceControlMenuOpen = (nextOpen) => {
+            sourceControlMenuOpen = nextOpen;
+            sourceControlViewMenu.hidden = !sourceControlMenuOpen;
+            sourceControlActions.setAttribute('aria-expanded', String(sourceControlMenuOpen));
+        };
+
+        sourceControlActions.addEventListener('click', () => {
+            setSourceControlMenuOpen(!sourceControlMenuOpen);
+        });
+        sourceControlCollapseAll.addEventListener('click', () => {
+            sourceControlController?.collapseAll();
+            setSourceControlMenuOpen(false);
+        });
+        sourceControlRefresh.addEventListener('click', () => {
+            setSourceControlMenuOpen(false);
+            void buildSourceControlView();
+        });
+        document.addEventListener('pointerdown', (event) => {
+            if (!sourceControlMenuOpen || event.target.closest('.sidebar-header-actions')) return;
+            setSourceControlMenuOpen(false);
         });
 
         sidebarCloseButtons.forEach((button) => {
@@ -750,6 +877,9 @@
         sidebarScrim.addEventListener('click', () => closeMobileSidebar());
         mobileQuery.addEventListener('change', () => {
             mobileSidebarOpen = false;
+            monacoDiffEditor?.updateOptions({
+                renderSideBySide: !mobileQuery.matches,
+            });
             syncSidebar();
         });
 
@@ -764,7 +894,13 @@
                 return;
             }
 
-            if (event.key === 'Escape') closeMobileSidebar();
+            if (event.key !== 'Escape') return;
+            if (sourceControlMenuOpen) {
+                setSourceControlMenuOpen(false);
+                sourceControlActions.focus();
+                return;
+            }
+            closeMobileSidebar();
         });
 
         const createTreeFromEntries = (entries) => {
@@ -918,6 +1054,222 @@
             iconElement.classList.add('seti-icon', setiClass);
         };
 
+        const createElement = (tagName, className, text) => {
+            const element = document.createElement(tagName);
+            if (className) element.className = className;
+            if (text !== undefined) element.textContent = text;
+            return element;
+        };
+
+        const createIcon = (name) => {
+            const icon = createElement('i', `codicon codicon-${name}`);
+            icon.setAttribute('aria-hidden', 'true');
+            return icon;
+        };
+
+        const setCodiconForTab = (iconName, iconElement) => {
+            iconElement.className = 'icon file-icon tab-icon codicon';
+            iconElement.classList.add(`codicon-${iconName}`);
+        };
+
+        const getLanguageForPath = (filePath, fallback = 'plaintext') => {
+            const extension = filePath.split('.').pop()?.toLowerCase();
+            const languages = {
+                css: 'css',
+                html: 'html',
+                js: 'javascript',
+                json: 'json',
+                md: 'markdown',
+                mjs: 'javascript',
+                py: 'python',
+                ts: 'typescript',
+                yml: 'yaml',
+                yaml: 'yaml',
+            };
+            return languages[extension] || fallback;
+        };
+
+        const getSourceControlStats = (files) => files.reduce((stats, file) => {
+            const beforeLines = (file.before || '').split('\n').filter(Boolean);
+            const afterLines = (file.after || '').split('\n').filter(Boolean);
+            stats.files += 1;
+            stats.insertions += afterLines.filter((line) => !beforeLines.includes(line)).length;
+            stats.deletions += beforeLines.filter((line) => !afterLines.includes(line)).length;
+            return stats;
+        }, { files: 0, insertions: 0, deletions: 0 });
+
+        const activateSourceControlNode = (node) => {
+            setSelectedFileElement(null);
+            setSelectedExtensionElement(null);
+            ensureTabForSourceControlNode(node);
+            setActiveTab(node.path);
+            activeTabKey = node.path;
+            activeFilePath = node.path;
+            activeExtensionId = null;
+            document.title = `${node.tabLabel} - EmilioAK`;
+            clearRoute('replace');
+            sourceControlController?.select(node.selectionKey);
+
+            if (mobileQuery.matches) closeMobileSidebar(false);
+        };
+
+        const openSourceControlChange = (change, context = {}) => {
+            const fileName = change.path.split('/').pop() || change.path;
+            const contextId = context.commit?.hash || (context.staged ? 'staged' : 'working');
+            const itemId = change.id || change.path.replaceAll('/', '-');
+            const selectionKey = context.commit
+                ? `commit:${context.commit.hash}`
+                : `change:${change.id}`;
+            const node = {
+                path: `source-control/change/${contextId}/${itemId}`,
+                name: fileName,
+                tabLabel: fileName,
+                tabIcon: change.status === 'A' || change.status === 'U'
+                    ? 'diff-added'
+                    : change.status === 'D'
+                        ? 'diff-removed'
+                        : 'diff-modified',
+                virtualKind: 'change',
+                sourceControlItem: change,
+                sourceControlContext: context,
+                selectionKey,
+            };
+
+            activateSourceControlNode(node);
+            showState('loading', `Loading ${fileName}`, 'Preparing the Source Control diff.');
+
+            void (async () => {
+                try {
+                    await monacoReady;
+                    if (activeFilePath !== node.path) return;
+
+                    if (!monacoDiffEditor) {
+                        monacoDiffEditor = monaco.editor.createDiffEditor(
+                            sourceControlDiffContainer,
+                            {
+                                automaticLayout: true,
+                                originalEditable: false,
+                                readOnly: true,
+                                renderSideBySide: !mobileQuery.matches,
+                                scrollBeyondLastLine: false,
+                                minimap: { enabled: false },
+                                accessibilitySupport: 'auto',
+                            }
+                        );
+                    }
+
+                    disposeDiffModels();
+                    const language = change.language || getLanguageForPath(change.path);
+                    const original = monaco.editor.createModel(change.before || '', language);
+                    const modified = monaco.editor.createModel(change.after || '', language);
+                    diffModels = [original, modified];
+                    monacoDiffEditor.setModel({ original, modified });
+                    showSourceControlDiff();
+                } catch (error) {
+                    if (activeFilePath !== node.path) return;
+                    showState(
+                        'error',
+                        `Unable to open ${fileName}`,
+                        error instanceof Error ? error.message : 'The diff did not load.'
+                    );
+                }
+            })();
+        };
+
+        const renderCommitDetail = (commit) => {
+            const stats = getSourceControlStats(commit.files);
+            const article = createElement('article', 'scm-detail-content');
+            const header = createElement('header', 'scm-detail-header');
+            const identity = createElement('div', 'scm-detail-identity');
+            const hash = createElement('code', 'scm-detail-hash', `commit ${commit.hash}`);
+            const title = createElement('h1', '', commit.message);
+            const metadata = createElement('dl', 'scm-detail-metadata');
+            const summary = createElement('p', 'scm-detail-summary', commit.summary);
+            const statsLine = createElement('div', 'scm-detail-stats');
+            const filesSection = createElement('section', 'scm-detail-files');
+            const filesTitle = createElement('h2', '', 'Changed files');
+
+            const addMetadata = (term, value) => {
+                metadata.append(
+                    createElement('dt', '', term),
+                    createElement('dd', '', value)
+                );
+            };
+
+            identity.append(hash);
+            if (commit.branch) {
+                const branch = createElement('span', 'scm-detail-branch');
+                branch.append(createIcon('git-branch'), createElement('span', '', commit.branch));
+                identity.appendChild(branch);
+            }
+            header.append(identity, title);
+            addMetadata('Author', commit.author);
+            addMetadata('Date', commit.date);
+            statsLine.append(
+                createElement('span', '', `${stats.files} ${stats.files === 1 ? 'file' : 'files'} changed`),
+                createElement('span', 'insertions', `${stats.insertions} insertion${stats.insertions === 1 ? '' : 's'}(+)`),
+                createElement('span', 'deletions', `${stats.deletions} deletion${stats.deletions === 1 ? '' : 's'}(-)`)
+            );
+            filesSection.appendChild(filesTitle);
+
+            commit.files.forEach((file) => {
+                const row = createElement('button', 'scm-detail-file');
+                const status = createElement(
+                    'span',
+                    `scm-status status-${file.status.toLowerCase()}`,
+                    file.status
+                );
+                row.type = 'button';
+                row.title = file.openMode === 'file'
+                    ? `Open ${file.path}`
+                    : `Open changes in ${file.path}`;
+                row.append(status, createElement('span', '', file.path), createIcon('chevron-right'));
+                row.addEventListener('click', () => {
+                    if (file.openMode === 'file'
+                        && openFileByPath(
+                            file.path,
+                            'push',
+                            null,
+                            `commit:${commit.hash}`
+                        )) {
+                        return;
+                    }
+                    openSourceControlChange(file, { commit });
+                });
+                filesSection.appendChild(row);
+            });
+
+            article.append(header, metadata, summary, statsLine, filesSection);
+            sourceControlDetailViewer.replaceChildren(article);
+            showSourceControlDetail();
+        };
+
+        const openSourceControlCommit = (commit) => {
+            const node = {
+                path: `source-control/commit/${commit.hash}`,
+                name: commit.hash,
+                tabLabel: commit.message,
+                tabIcon: 'git-commit',
+                virtualKind: 'commit',
+                sourceControlItem: commit,
+                selectionKey: `commit:${commit.hash}`,
+            };
+            activateSourceControlNode(node);
+            renderCommitDetail(commit);
+        };
+
+        const openSourceControlTabNode = (node) => {
+            if (node.virtualKind === 'commit') {
+                openSourceControlCommit(node.sourceControlItem);
+                return true;
+            }
+            if (node.virtualKind === 'change') {
+                openSourceControlChange(node.sourceControlItem, node.sourceControlContext);
+                return true;
+            }
+            return false;
+        };
+
         const setActiveTab = (tabKey) => {
             let activeTabElement = null;
 
@@ -925,7 +1277,7 @@
                 const selectButton = tabElement.querySelector('.tab-select');
                 const isActive = openTabKey === tabKey;
                 tabElement.classList.toggle('active', isActive);
-                selectButton.setAttribute('aria-pressed', String(isActive));
+                selectButton.setAttribute('aria-selected', String(isActive));
                 selectButton.tabIndex = isActive ? 0 : -1;
                 if (isActive) activeTabElement = tabElement;
             });
@@ -1009,6 +1361,33 @@
             return tabElement;
         };
 
+        const createSourceControlTabElement = (node) => {
+            const tabElement = tabTemplate.content.firstElementChild.cloneNode(true);
+            const tabIcon = tabElement.querySelector('.tab-icon');
+            const tabLabel = tabElement.querySelector('.tab-label');
+            const selectButton = tabElement.querySelector('.tab-select');
+            const closeButton = tabElement.querySelector('.tab-close');
+            const closeLabel = tabElement.querySelector('.tab-close-label');
+            const accessibleLabel = node.tabLabel || node.path;
+
+            tabElement.dataset.tabKey = node.path;
+            selectButton.setAttribute('aria-controls', 'source-panel');
+            selectButton.setAttribute('aria-label', accessibleLabel);
+            closeButton.setAttribute('aria-label', `Close ${accessibleLabel}`);
+            closeLabel.textContent = `Close ${accessibleLabel}`;
+            setCodiconForTab(node.tabIcon || 'git-commit', tabIcon);
+            tabLabel.textContent = accessibleLabel;
+
+            selectButton.addEventListener('click', () => openSourceControlTabNode(node));
+            addTabKeyboardNavigation(selectButton);
+            closeButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                closeTab(node.path);
+            });
+
+            return tabElement;
+        };
+
         const ensureTabForFile = (node) => {
             if (openTabs.has(node.path)) {
                 return openTabs.get(node.path);
@@ -1028,6 +1407,17 @@
             const tabElement = createExtensionTabElement(extension);
             tabBar.appendChild(tabElement);
             openTabs.set(tabKey, tabElement);
+
+            return tabElement;
+        };
+
+        const ensureTabForSourceControlNode = (node) => {
+            if (openTabs.has(node.path)) return openTabs.get(node.path);
+
+            const tabElement = createSourceControlTabElement(node);
+            tabBar.appendChild(tabElement);
+            openTabs.set(node.path, tabElement);
+            sourceControlTabNodes.set(node.path, node);
 
             return tabElement;
         };
@@ -1211,9 +1601,12 @@
             fileElement,
             historyMode = 'push',
             location = null,
+            sourceControlSelectionKey = null,
         ) => {
             revealFilePath(node.path);
             setSelectedFileElement(fileElement);
+            setSelectedExtensionElement(null);
+            sourceControlController?.select(sourceControlSelectionKey);
             ensureTabForFile(node);
             setActiveTab(node.path);
             activeTabKey = node.path;
@@ -1248,12 +1641,23 @@
             }
         };
 
-        const openFileByPath = (filePath, historyMode = 'push') => {
+        const openFileByPath = (
+            filePath,
+            historyMode = 'push',
+            location = null,
+            sourceControlSelectionKey = null,
+        ) => {
             const node = fileNodesByPath.get(filePath);
             const fileElement = fileElementsByPath.get(filePath);
 
             if (node && fileElement) {
-                void openFileInEditor(node, fileElement, historyMode);
+                void openFileInEditor(
+                    node,
+                    fileElement,
+                    historyMode,
+                    location,
+                    sourceControlSelectionKey
+                );
                 return true;
             }
 
@@ -1711,7 +2115,9 @@
             if (!extension) return false;
 
             const tabKey = getExtensionTabKey(extension.id);
+            setSelectedFileElement(null);
             setSelectedExtensionElement(extensionElementsById.get(extension.id) || null);
+            sourceControlController?.select(null);
             ensureTabForExtension(extension);
             setActiveTab(tabKey);
             activeTabKey = tabKey;
@@ -1730,6 +2136,9 @@
         };
 
         const openTabByKey = (tabKey) => {
+            const sourceControlNode = sourceControlTabNodes.get(tabKey);
+            if (sourceControlNode) return openSourceControlTabNode(sourceControlNode);
+
             const extensionPrefix = 'extension:';
             if (tabKey.startsWith(extensionPrefix)) {
                 return openExtensionById(tabKey.slice(extensionPrefix.length));
@@ -1754,9 +2163,14 @@
             selectedFileElement?.setAttribute('aria-selected', 'false');
             selectedFileElement = null;
             setSelectedExtensionElement(null);
+            sourceControlController?.select(null);
             setActiveTab(null);
             document.title = 'EmilioAK';
-            showState('empty', 'No tab open', 'Select a file from Explorer or a skill from Extensions.');
+            showState(
+                'empty',
+                'No tab open',
+                'Select a file, a Source Control entry, or a skill.'
+            );
             clearRoute(historyMode);
         };
 
@@ -1769,6 +2183,7 @@
 
             tabElement.remove();
             openTabs.delete(tabKey);
+            sourceControlTabNodes.delete(tabKey);
 
             if (activeTabKey === tabKey) {
                 const remainingTabs = Array.from(tabBar.children);
@@ -2001,11 +2416,50 @@
             }
         };
 
+        const buildSourceControlView = async () => {
+            try {
+                if (!window.SourceControlView) {
+                    throw new Error('The Source Control interface did not load.');
+                }
+
+                sourceControlController?.destroy();
+                sourceControlController = await window.SourceControlView.create({
+                    container: sourceControlView,
+                    dataUrl: sourceControlDataPath,
+                    onOpenChange: openSourceControlChange,
+                    onOpenCommit: openSourceControlCommit,
+                    onCountChange: (count) => {
+                        sourceControlBadge.textContent = String(count);
+                        sourceControlBadge.hidden = count === 0;
+                        sourceControlToggle.setAttribute(
+                            'aria-label',
+                            `Open Source Control, ${count} current changes`
+                        );
+                    },
+                });
+            } catch (error) {
+                const message = createElement(
+                    'div',
+                    'tree-error',
+                    error instanceof Error
+                        ? error.message
+                        : 'The Source Control data did not load.'
+                );
+                message.setAttribute('role', 'alert');
+                sourceControlView.replaceChildren(message);
+                sourceControlBadge.hidden = true;
+                console.error('Failed to build Source Control:', error);
+            }
+        };
+
         const initializeSite = async () => {
             const fileTreeReady = await buildFileTree();
             if (!fileTreeReady) return;
 
-            await buildExtensionList();
+            await Promise.all([
+                buildExtensionList(),
+                buildSourceControlView(),
+            ]);
             selectInitialContent();
         };
 

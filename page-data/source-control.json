@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "repository": "emilio/life",
+  "branch": "main",
+  "lanes": [
+    {
+      "id": "main",
+      "column": 0,
+      "color": "#3794ff"
+    },
+    {
+      "id": "projects",
+      "column": 1,
+      "color": "#f2c811"
+    },
+    {
+      "id": "microsoft",
+      "column": 2,
+      "color": "#d64b8c"
+    },
+    {
+      "id": "teaching",
+      "column": 1,
+      "color": "#c26712"
+    },
+    {
+      "id": "education",
+      "column": 2,
+      "color": "#4ec9b0"
+    }
+  ],
+  "staged": [
+    {
+      "id": "teaching-rename",
+      "path": "life/teaching/computer-science.md",
+      "status": "R",
+      "summary": "The teaching chapter replaces the generic community chapter.",
+      "language": "markdown",
+      "before": "# Community\n\nI helped other students learn technical material.\n",
+      "after": "# Teaching Computer Science\n\nI taught operating systems, web technology, and systems programming.\n"
+    },
+    {
+      "id": "next-chapter-staged",
+      "path": "life/next.md",
+      "status": "A",
+      "summary": "The next chapter records near-term direction without claiming a fixed outcome.",
+      "language": "markdown",
+      "before": "",
+      "after": "# Next Chapter\n\nThe next chapter remains intentionally unfinished.\n"
+    },
+    {
+      "id": "about-staged",
+      "path": "CV/about.md",
+      "status": "M",
+      "summary": "The short profile now points to the complete life repository.",
+      "language": "markdown",
+      "before": "# My Story\n",
+      "after": "# My Story\n\nI started programming during the COVID-19 pandemic.\n\nRead the complete story in the life repository.\n"
+    },
+    {
+      "id": "old-direction",
+      "path": "life/old-direction.md",
+      "status": "D",
+      "summary": "A broad plan without evidence or priorities is removed.",
+      "language": "markdown",
+      "before": "# Old Direction\n\nCollect more tools, titles, and possible paths.\n",
+      "after": ""
+    }
+  ],
+  "changes": [
+    {
+      "id": "macsights-working",
+      "path": "life/projects/macsights.md",
+      "status": "M",
+      "summary": "The project chapter adds recording reliability and recovery work.",
+      "language": "markdown",
+      "before": "# Building a Native Capture System\n\nMacsights records gameplay on macOS.\n",
+      "after": "# Building a Native Capture System\n\nMacsights records gameplay and game events on macOS.\n\nThe project uses lifecycle states, reconnect handling, validation, and storage safeguards.\n"
+    },
+    {
+      "id": "next-chapter-working",
+      "path": "life/next.md",
+      "status": "U",
+      "summary": "An untracked note explores the next chapter.",
+      "language": "markdown",
+      "before": "",
+      "after": "# Next Chapter\n\nComplete the degree, deepen systems knowledge, and develop projects through real use.\n"
+    },
+    {
+      "id": "now-working",
+      "path": "life/now.md",
+      "status": "M",
+      "summary": "The current chapter connects delivered work with independent knowledge.",
+      "language": "markdown",
+      "before": "# Current Focus\n\nBuild useful systems and continue the degree.\n",
+      "after": "# Current Focus\n\nBuild useful systems, continue the degree, and convert delivered work into independent knowledge.\n"
+    }
+  ],
+  "commits": [
+    {
+      "hash": "3b07401",
+      "message": "docs(story): connect the current chapters",
+      "author": "Emilio Alvarez",
+      "date": "August 2026",
+      "lane": "main",
+      "branch": "main",
+      "kind": "commit",
+      "graphColumns": 1,
+      "summary": "The life repository connects education, teaching, professional work, and independent projects.",
+      "files": [
+        {
+          "path": "life/README.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Life Repository\n",
+          "after": "# Life Repository\n\nEach commit marks a decision, role, or project that changed the direction of my work.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "a103354",
+      "message": "feat(work): build production software at Capisoft",
+      "author": "Emilio Alvarez",
+      "date": "March 2026 - present",
+      "lane": "main",
+      "kind": "commit",
+      "graphColumns": 1,
+      "summary": "Production ownership brings accounting integrations, reliable email delivery, rollout, and recovery into the main story.",
+      "files": [
+        {
+          "path": "life/work/capisoft-software-engineering.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Production Software at Capisoft\n\nI work on accounting integrations and outbound email for LegalPal.\n"
+        },
+        {
+          "path": "life/work/accounting-integrations.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Replacing an Unsuitable Accounting Vendor\n\nThe real requirement was a reliable accounting workflow.\n"
+        },
+        {
+          "path": "life/work/durable-email-outbox.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Building a Durable Email Outbox\n\nThe system stores delivery state before it contacts the external provider.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "7a41756",
+      "message": "merge: connect independent projects with the main story",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 2,
+      "summary": "Independent product work becomes part of the same systems and interface story.",
+      "files": [
+        {
+          "path": "life/projects/README.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Independent Projects\n",
+          "after": "# Independent Projects\n\nMacsights and the repository-shaped CV make hidden state easier to inspect.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "b5a5a1e",
+      "message": "feat(projects): build a native capture system",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "projects",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "Macsights combines native macOS recording with searchable game events and recovery-oriented storage.",
+      "files": [
+        {
+          "path": "life/projects/macsights.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Building a Native Capture System\n\nMacsights records gameplay together with structured game events.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "6f7dfaa",
+      "message": "feat(projects): make the portfolio its own workspace",
+      "author": "Emilio Alvarez",
+      "date": "2026",
+      "lane": "projects",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "The portfolio exposes its real repository through a VS Code-shaped interface.",
+      "files": [
+        {
+          "path": "life/projects/cv-site.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Making the Portfolio Its Own Workspace\n\nThe repository structure becomes part of the experience.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "44243aa",
+      "message": "merge: connect cloud architecture with the main story",
+      "author": "Emilio Alvarez",
+      "date": "February 2026",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 3,
+      "summary": "Customer discovery, architecture, and reusable delivery become part of the main professional story.",
+      "files": [
+        {
+          "path": "life/work/microsoft-cloud-architecture.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Cloud Architecture at Microsoft\n",
+          "after": "# Cloud Architecture at Microsoft\n\nThe internship connected technical design with customer communication.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "microsoft"
+        },
+        {
+          "from": "projects",
+          "to": "projects"
+        }
+      ]
+    },
+    {
+      "hash": "8c8ba16",
+      "message": "feat(work): ship a reusable cloud agent integration",
+      "author": "Emilio Alvarez",
+      "date": "September 2025 - February 2026",
+      "lane": "microsoft",
+      "kind": "commit",
+      "graphColumns": 3,
+      "summary": "A customer integration for external AI agents becomes a reusable architecture across three engagements.",
+      "files": [
+        {
+          "path": "life/work/microsoft-cloud-architecture.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Cloud Architecture at Microsoft\n\nI designed and shipped a reusable proxy-agent integration.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "projects",
+          "to": "main"
+        },
+        {
+          "from": "microsoft",
+          "to": "main"
+        }
+      ]
+    },
+    {
+      "hash": "26b652e",
+      "message": "merge: connect teaching with the main story",
+      "author": "Emilio Alvarez",
+      "date": "2025",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 3,
+      "summary": "Teaching becomes part of the technical communication and tool-building story.",
+      "files": [
+        {
+          "path": "life/teaching/computer-science.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Teaching Computer Science\n",
+          "after": "# Teaching Computer Science\n\nThe explanation and the tool solved different parts of the same problem.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "teaching"
+        }
+      ]
+    },
+    {
+      "hash": "8628238",
+      "message": "feat(teaching): improve systems explanations and setup",
+      "author": "Emilio Alvarez",
+      "date": "2025",
+      "lane": "teaching",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "Course manual revisions and a Docker environment reduce conceptual and setup friction.",
+      "files": [
+        {
+          "path": "life/teaching/computer-science.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Teaching Computer Science\n\nI supported several courses.\n",
+          "after": "# Teaching Computer Science\n\nI improved the course manual and built a consistent Docker environment.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "teaching",
+          "to": "teaching"
+        }
+      ]
+    },
+    {
+      "hash": "8f41b00",
+      "message": "feat(teaching): begin teaching computer science",
+      "author": "Emilio Alvarez",
+      "date": "2024",
+      "lane": "teaching",
+      "kind": "commit",
+      "graphColumns": 2,
+      "summary": "Teaching operating systems and web technology turns technical knowledge into concrete explanations.",
+      "files": [
+        {
+          "path": "life/teaching/computer-science.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Teaching Computer Science\n\nI led web technology classes and supported a large operating systems course.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "teaching",
+          "to": "teaching"
+        }
+      ]
+    },
+    {
+      "hash": "6eefbfa",
+      "message": "merge: connect education with the main story",
+      "author": "Emilio Alvarez",
+      "date": "2022",
+      "lane": "main",
+      "kind": "merge",
+      "graphColumns": 3,
+      "summary": "Computer science study provides the systems foundation for later teaching and professional work.",
+      "files": [
+        {
+          "path": "life/education/vu-computer-science.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Computer Science at Vrije Universiteit Amsterdam\n",
+          "after": "# Computer Science at Vrije Universiteit Amsterdam\n\nThe degree connected practical programming with systems and theory.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "main",
+          "to": "education"
+        },
+        {
+          "from": "teaching",
+          "to": "teaching"
+        }
+      ]
+    },
+    {
+      "hash": "ab2b48e",
+      "message": "feat(education): focus on systems and infrastructure",
+      "author": "Emilio Alvarez",
+      "date": "2022 - present",
+      "lane": "education",
+      "kind": "commit",
+      "graphColumns": 3,
+      "summary": "Operating systems, infrastructure, and component boundaries become central technical interests.",
+      "files": [
+        {
+          "path": "life/education/vu-computer-science.md",
+          "status": "M",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "# Computer Science at Vrije Universiteit Amsterdam\n\nI study computer science.\n",
+          "after": "# Computer Science at Vrije Universiteit Amsterdam\n\nSystems and infrastructure become central interests.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "teaching",
+          "to": "teaching"
+        },
+        {
+          "from": "education",
+          "to": "education"
+        }
+      ]
+    },
+    {
+      "hash": "9d46f41",
+      "message": "feat(education): study computer science in Amsterdam",
+      "author": "Emilio Alvarez",
+      "date": "2022",
+      "lane": "education",
+      "kind": "commit",
+      "graphColumns": 3,
+      "summary": "A move from Sweden to Amsterdam turns programming interest into a formal Computer Science path.",
+      "files": [
+        {
+          "path": "life/education/vu-computer-science.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Computer Science at Vrije Universiteit Amsterdam\n\nThe degree gives structure to the interest that began during the pandemic.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        },
+        {
+          "from": "teaching",
+          "to": "teaching"
+        },
+        {
+          "from": "education",
+          "to": "education"
+        }
+      ]
+    },
+    {
+      "hash": "5c2e1a0",
+      "message": "chore(story): begin learning to program",
+      "author": "Emilio Alvarez",
+      "date": "2020",
+      "lane": "main",
+      "kind": "commit",
+      "graphColumns": 1,
+      "summary": "Programming changes from pandemic curiosity into a serious long-term direction.",
+      "files": [
+        {
+          "path": "life/origin.md",
+          "status": "A",
+          "language": "markdown",
+          "openMode": "file",
+          "before": "",
+          "after": "# Begin Learning to Program\n\nProgramming became the work that held my attention most consistently.\n"
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "main"
+        }
+      ]
+    }
+  ]
+}

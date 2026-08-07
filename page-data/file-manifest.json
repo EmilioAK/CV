@@ -20,8 +20,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 11,
-      "sha256": "015b5f5e861ae36f2270f9a6481da501d7ad06316c8b676ef5fbff376d931f1a"
+      "size": 996,
+      "sha256": "709aae407d9a0723663f7d31a21d4ef58a1d3fdce6bdf5648c8833f476395dbb"
     },
     {
       "path": "CV/Emilio_Alvarez_Resume.pdf",
@@ -40,8 +40,138 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 84538,
-      "sha256": "c0863a8b3c27878ae42af788cb0c7d8f3ee1f798c6f2ab7344a901d6d25f15a4"
+      "size": 104992,
+      "sha256": "d79f69cb4b8db6de4e7b67dcb9884fe5710fa15cc149b9f4982b3b628301bb5e"
+    },
+    {
+      "path": "life/education/vu-computer-science.md",
+      "sourceUrl": "life/education/vu-computer-science.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/education/vu-computer-science.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1180,
+      "sha256": "4acb09e4c73bf74c23446e3a19c51483498913df331c327b2a2befc1477374d9"
+    },
+    {
+      "path": "life/next.md",
+      "sourceUrl": "life/next.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/next.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 550,
+      "sha256": "0dfb4a78f1e9c2215fb60c143fd18b4c91f5acf114231aebb14d3d6b65a193fe"
+    },
+    {
+      "path": "life/now.md",
+      "sourceUrl": "life/now.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/now.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1008,
+      "sha256": "d4aefb7685c8acbb82dff41630393ade0a9d475c00138491c6ee73aa2090767f"
+    },
+    {
+      "path": "life/origin.md",
+      "sourceUrl": "life/origin.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/origin.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 947,
+      "sha256": "f2671e59acfe58d4268b6a71a31d39ad368b31a8a4afaf91e44580a934d7c204"
+    },
+    {
+      "path": "life/projects/cv-site.md",
+      "sourceUrl": "life/projects/cv-site.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/cv-site.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1063,
+      "sha256": "15f55a115e9735588071167bba318ec5bc768feb1fa6bc14699470de6d7905b2"
+    },
+    {
+      "path": "life/projects/macsights.md",
+      "sourceUrl": "life/projects/macsights.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/macsights.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1203,
+      "sha256": "57c0ac1ca47350f85f17f65fba17dd1bb052d9be10a64908357e1189bc5b2f9d"
+    },
+    {
+      "path": "life/projects/README.md",
+      "sourceUrl": "life/projects/README.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/README.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 898,
+      "sha256": "ae3c5ced9563d7fb9a919be1770fe47a9eb1c474f7a6ed544eb8224e979c9ed5"
+    },
+    {
+      "path": "life/README.md",
+      "sourceUrl": "life/README.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/README.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1574,
+      "sha256": "370e48a8c470e77afe738f2438dae37448999646145d460d87d24658a84d9bfd"
+    },
+    {
+      "path": "life/teaching/computer-science.md",
+      "sourceUrl": "life/teaching/computer-science.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/teaching/computer-science.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1119,
+      "sha256": "4eadb2ce1b6a460affbf637023d795d09479f0fc62330fa8ff16a3ec083ed4b8"
+    },
+    {
+      "path": "life/work/accounting-integrations.md",
+      "sourceUrl": "life/work/accounting-integrations.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/accounting-integrations.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1219,
+      "sha256": "11814716c8682e5489d2b13ae8465b05f0c82d00394897ac80d74eb8f68a2906"
+    },
+    {
+      "path": "life/work/capisoft-software-engineering.md",
+      "sourceUrl": "life/work/capisoft-software-engineering.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/capisoft-software-engineering.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1197,
+      "sha256": "584ac2117cb92c46bd0bdc6827aea24faaa895025bb81292bd69333686f73b22"
+    },
+    {
+      "path": "life/work/durable-email-outbox.md",
+      "sourceUrl": "life/work/durable-email-outbox.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/durable-email-outbox.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1212,
+      "sha256": "6ac7b4ecff7daa0fbba003b9e9103bbfcde9f427f221169e3d8f27c1a6d061cf"
+    },
+    {
+      "path": "life/work/microsoft-cloud-architecture.md",
+      "sourceUrl": "life/work/microsoft-cloud-architecture.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/microsoft-cloud-architecture.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 1004,
+      "sha256": "fa0508c3481cdaa6b6af7349e055b09654ae2da50eec22c703c15dcad90eb12d"
     },
     {
       "path": "page-data/extensions.json",
@@ -133,14 +263,34 @@
       "sha256": "3c86d5ef6cd71e27f07961e07a398b1df8aee76619a17dc1600758cbf5b854f5"
     },
     {
+      "path": "page-data/source-control.js",
+      "sourceUrl": "page-data/source-control.js",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/source-control.js",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 26988,
+      "sha256": "1f2f0036cbac53a5cf230ee914d111203bddcf675cc29f4bd00cfa81b3122fee"
+    },
+    {
+      "path": "page-data/source-control.json",
+      "sourceUrl": "page-data/source-control.json",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/source-control.json",
+      "kind": "text",
+      "mediaType": "application/json",
+      "language": "json",
+      "size": 16573,
+      "sha256": "a1b010f3b1d5fb61bbd0ba04219bf59ef80f1c059d32e440951133908003f315"
+    },
+    {
       "path": "page-data/style.css",
       "sourceUrl": "page-data/style.css",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/style.css",
       "kind": "text",
       "mediaType": "text/css",
       "language": "css",
-      "size": 29844,
-      "sha256": "48cb58f82d4dd81fb89d11697aa50a5c9feef365a85ff80711ec6a0e8a2d1553"
+      "size": 44076,
+      "sha256": "cb0aa19392015fb2353cbb9af1f8cbddff12d1c676276a7a56a4fe65ded65d01"
     },
     {
       "path": "README.md",
@@ -149,8 +299,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1273,
-      "sha256": "490a8c57f3f92e0f7742d50ebf9a6b755cccd0bd498cdbd3c5303145af57d773"
+      "size": 1200,
+      "sha256": "418f5fa23ad78ae0e149fc65443fa9cea8d083d65fb8c4f66f87561035dac83e"
     },
     {
       "path": "scripts/generate-manifest.mjs",
@@ -179,8 +329,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 12602,
-      "sha256": "fdaa00f429d9e6abbc4c24c7db48311736d31f6f5a0f75fe912ed4c0478201f3"
+      "size": 17772,
+      "sha256": "ec06f74b3cb54275ed5acd206f2f96274e1d60996e33c47a07567462629d94b0"
     }
   ]
 }
