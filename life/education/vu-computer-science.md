@@ -4,7 +4,7 @@
 
 ## What changed
 
-The degree gave structure to the interest that began during the pandemic. It connected practical programming with systems, theory, and collaborative engineering.
+The degree gave structure to the programming projects that I began in 2019. It connected practical programming with systems, theory, and collaborative engineering.
 
 I became especially interested in operating systems, infrastructure, programming languages, and the boundaries between software components.
 

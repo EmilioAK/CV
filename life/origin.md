@@ -1,21 +1,21 @@
-# Begin Learning to Program
+# From First Program to Computer Science
 
-> Personal chapter | 2020
+> Personal chapter | 2019 - 2022
 
-## What changed
+## The first program
 
-I started programming during the COVID-19 pandemic. What began as curiosity quickly became the work that held my attention most consistently.
+In November 2019, I wrote [mentalcalcpractise](https://github.com/EmilioAK/mentalcalcpractise), a small Python program that helped me practice mental arithmetic.
 
-Programming combined several things that I wanted from a career. It rewarded careful reasoning, gave immediate feedback, and turned abstract ideas into useful systems.
+The program shuffled questions, timed correct answers, and restarted after a mistake. It solved a problem that I had and made programming feel concrete.
 
-## The decision
+## Learning through The Odin Project
 
-I chose to treat that interest as a serious direction. I moved from Sweden to Amsterdam and later started a Computer Science degree.
+The next day, I created my [first Odin Project repository](https://github.com/EmilioAK/google-homepage). It recreated the Google homepage with HTML and CSS.
 
-That decision created the first long-running branch in this story. Education, teaching, professional work, and independent projects all grew from it.
+I continued through its projects and algorithms. Each repository turned an unfamiliar concept into a program that I could inspect, test, and improve.
 
-## What remained constant
+## The next branch
 
-I learn best when I can inspect the complete system. I want to understand why a design works, where it fails, and what evidence supports the result.
+By 2022, I knew that I wanted to study computing in more depth. I moved from Sweden to Amsterdam for a Computer Science degree.
 
-That preference still shapes how I build software and how I use development tools.
+University became the next branch. It added systems, theory, collaboration, and teaching to the practical foundation that I built through projects.

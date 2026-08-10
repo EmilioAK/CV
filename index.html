@@ -362,6 +362,10 @@
             parseSearchQuery,
             searchDocuments,
         } from './page-data/search.mjs?v=20260810-1';
+        import {
+            findMarkdownLinks,
+            resolveMarkdownTarget,
+        } from './page-data/markdown-links.mjs?v=20260810-1';
 
         const manifestPath = 'page-data/file-manifest.json';
         const extensionsManifestPath = 'page-data/extensions.json';
@@ -539,6 +543,67 @@
             },
         ];
 
+        const registerMarkdownNavigation = (editor) => {
+            monaco.languages.registerLinkProvider('markdown', {
+                provideLinks(model) {
+                    if (model !== editor.getModel() || !activeFilePath?.endsWith('.md')) {
+                        return { links: [] };
+                    }
+
+                    const links = findMarkdownLinks(model.getValue()).flatMap((link) => {
+                        const target = resolveMarkdownTarget(activeFilePath, link.target);
+
+                        if (!target) return [];
+
+                        let url;
+
+                        if (target.kind === 'internal') {
+                            if (!fileNodesByPath.has(target.path)) return [];
+                            url = monaco.Uri.from({
+                                scheme: 'cv-file',
+                                path: `/${target.path}`,
+                            });
+                        } else {
+                            url = monaco.Uri.parse(target.href);
+                        }
+
+                        return [{
+                            range: new monaco.Range(
+                                link.lineNumber,
+                                link.startColumn,
+                                link.lineNumber,
+                                link.endColumn,
+                            ),
+                            url,
+                        }];
+                    });
+
+                    return { links };
+                },
+            });
+
+            monaco.editor.registerLinkOpener({
+                open(resource) {
+                    if (resource.scheme === 'cv-file') {
+                        const path = decodeURIComponent(resource.path.replace(/^\/+/, ''));
+                        return openFileByPath(path);
+                    }
+
+                    if (resource.scheme === 'https') {
+                        window.open(resource.toString(true), '_blank', 'noopener,noreferrer');
+                        return true;
+                    }
+
+                    if (resource.scheme === 'mailto') {
+                        window.location.href = resource.toString(true);
+                        return true;
+                    }
+
+                    return false;
+                },
+            });
+        };
+
         const monacoReady = new Promise((resolve, reject) => {
             if (typeof window.require !== 'function') {
                 reject(new Error('The source editor did not load.'));
@@ -570,6 +635,8 @@
                         },
                         accessibilitySupport: 'auto',
                     });
+
+                    registerMarkdownNavigation(monacoEditor);
 
                     resolve(monacoEditor);
                 },

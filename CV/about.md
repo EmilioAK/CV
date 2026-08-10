@@ -1,6 +1,6 @@
 # My Story
 
-I started programming during the COVID-19 pandemic. That interest became a computer science degree, teaching work, cloud architecture, and production software engineering.
+I wrote my first Python program in 2019, then continued through The Odin Project. That path led to university, teaching, Microsoft, and production software at Capisoft.
 
 I now work as a Software Engineer at Capisoft. I also study Computer Science at Vrije Universiteit Amsterdam.
 

@@ -30,8 +30,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 996,
-      "sha256": "709aae407d9a0723663f7d31a21d4ef58a1d3fdce6bdf5648c8833f476395dbb"
+      "size": 993,
+      "sha256": "e3b813fb82583441f361bf6438800fb35ee233bac687a184dac9636342d133e0"
     },
     {
       "path": "CV/Emilio_Alvarez_Resume.pdf",
@@ -50,8 +50,8 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 105505,
-      "sha256": "7974496587b8fb17607ed22612f71e9ed6299088eba193cb3b408fdc457684b5"
+      "size": 108008,
+      "sha256": "55a4f5e8d4087596fc80895b5730bf14b392b93b58fa0d5c79f47281375e8f42"
     },
     {
       "path": "life/education/vu-computer-science.md",
@@ -60,8 +60,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1180,
-      "sha256": "4acb09e4c73bf74c23446e3a19c51483498913df331c327b2a2befc1477374d9"
+      "size": 1182,
+      "sha256": "4db67447ce40c89c0f74f9bb6b45478a644adb5be87f6a3b2ad7161596d42b0a"
     },
     {
       "path": "life/next.md",
@@ -90,8 +90,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 947,
-      "sha256": "f2671e59acfe58d4268b6a71a31d39ad368b31a8a4afaf91e44580a934d7c204"
+      "size": 1059,
+      "sha256": "fb6ec66ba271efa4a159da79018cfb4b4e941ca51142c847158d822c3e2e2414"
     },
     {
       "path": "life/projects/cv-site.md",
@@ -130,8 +130,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1574,
-      "sha256": "370e48a8c470e77afe738f2438dae37448999646145d460d87d24658a84d9bfd"
+      "size": 1576,
+      "sha256": "689629a4df2d93cd8c5000e87af88a5b46c3138c82284052a6d129ea97e4fb91"
     },
     {
       "path": "life/teaching/computer-science.md",
@@ -180,8 +180,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1004,
-      "sha256": "fa0508c3481cdaa6b6af7349e055b09654ae2da50eec22c703c15dcad90eb12d"
+      "size": 1154,
+      "sha256": "599db69e07ec3cb2a9892e41678f0aa33be5583f4193ebe19766d58138181771"
     },
     {
       "path": "page-data/extensions.json",
@@ -263,6 +263,16 @@
       "sha256": "bf58a2ab0ea0b48010ce979958ac4dbdfd917dd0cf28008d840f6708e8a20b01"
     },
     {
+      "path": "page-data/markdown-links.mjs",
+      "sourceUrl": "page-data/markdown-links.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/markdown-links.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 3109,
+      "sha256": "f92e7b4e81aa871270e75baa915a38f67998736854b7008640f38435a75a4092"
+    },
+    {
       "path": "page-data/search.mjs",
       "sourceUrl": "page-data/search.mjs",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/page-data/search.mjs",
@@ -289,8 +299,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 16573,
-      "sha256": "a1b010f3b1d5fb61bbd0ba04219bf59ef80f1c059d32e440951133908003f315"
+      "size": 12167,
+      "sha256": "77981dca5ce68a0f365d75ffe951775086cecc2c82e9ae1d22b5c7b1bd149095"
     },
     {
       "path": "page-data/style.css",
@@ -323,6 +333,16 @@
       "sha256": "5ee7a83d51e26bd24abf5aa796794b4454db247f7e46ee0631f62d221ef875b9"
     },
     {
+      "path": "scripts/test-markdown-links.mjs",
+      "sourceUrl": "scripts/test-markdown-links.mjs",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/test-markdown-links.mjs",
+      "kind": "text",
+      "mediaType": "text/javascript",
+      "language": "javascript",
+      "size": 3119,
+      "sha256": "5085f25d3aab9f99402e29d1a1d26b851f5bd9da5b63847dbbae5aa38e4f21c7"
+    },
+    {
       "path": "scripts/test-search.mjs",
       "sourceUrl": "scripts/test-search.mjs",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/scripts/test-search.mjs",
@@ -339,8 +359,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 18629,
-      "sha256": "a9e3ce0e4dad183999b8e2516e7672c01f848599be8509d90c3a3eb568eeb492"
+      "size": 20569,
+      "sha256": "c3068bd65185fd27b7a6cfe1c51570fc462794d7bc51f4069d5ea0197b9398d3"
     }
   ]
 }

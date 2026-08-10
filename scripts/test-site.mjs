@@ -62,11 +62,13 @@ for (const requiredPath of [
     'index.html',
     extensionsRelativePath,
     'page-data/file-manifest.json',
+    'page-data/markdown-links.mjs',
     'page-data/search.mjs',
     'page-data/source-control.js',
     'page-data/source-control.json',
     'page-data/style.css',
     'scripts/generate-manifest.mjs',
+    'scripts/test-markdown-links.mjs',
     'scripts/test-search.mjs',
     'scripts/test-site.mjs',
 ]) {
@@ -126,6 +128,12 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
+const aboutProfile = await readFile(path.join(repositoryRoot, 'CV', 'about.md'), 'utf8');
+const originStory = await readFile(path.join(repositoryRoot, 'life', 'origin.md'), 'utf8');
+const educationStory = await readFile(
+    path.join(repositoryRoot, 'life', 'education', 'vu-computer-science.md'),
+    'utf8',
+);
 const styleCss = await readFile(path.join(repositoryRoot, 'page-data', 'style.css'), 'utf8');
 const extensionsManifest = JSON.parse(await readFile(extensionsPath, 'utf8'));
 const sourceControlScript = await readFile(
@@ -136,6 +144,24 @@ const sourceControlData = JSON.parse(await readFile(
     path.join(repositoryRoot, 'page-data', 'source-control.json'),
     'utf8'
 ));
+
+for (const repositoryUrl of [
+    'https://github.com/EmilioAK/mentalcalcpractise',
+    'https://github.com/EmilioAK/google-homepage',
+]) {
+    if (!originStory.includes(repositoryUrl)) {
+        fail(`The origin story must link to ${repositoryUrl}.`);
+    }
+}
+
+if (/covid|pandemic/i.test([
+    aboutProfile,
+    originStory,
+    educationStory,
+    JSON.stringify(sourceControlData),
+].join('\n'))) {
+    fail('The career story must not connect the programming origin to COVID-19.');
+}
 
 for (const requiredText of [
     'name="viewport"',
@@ -148,6 +174,10 @@ for (const requiredText of [
     'id="search-input"',
     'id="search-results"',
     "from './page-data/search.mjs?v=20260810-1'",
+    "from './page-data/markdown-links.mjs?v=20260810-1'",
+    'registerLinkProvider',
+    'registerLinkOpener',
+    "scheme: 'cv-file'",
     'isMarkdownPath(entry.path)',
     'buildSearchDocuments',
     'openSearchMatch',
@@ -303,21 +333,27 @@ const expectedWorkingChanges = [
     ['life/now.md', 'M'],
 ];
 const expectedCommitMessages = [
-    'docs(story): connect the current chapters',
+    'merge: connect work with the main story',
     'feat(work): build production software at Capisoft',
-    'merge: connect independent projects with the main story',
     'feat(projects): build a native capture system',
     'feat(projects): make the portfolio its own workspace',
-    'merge: connect cloud architecture with the main story',
     'feat(work): ship a reusable cloud agent integration',
-    'merge: connect teaching with the main story',
-    'feat(teaching): improve systems explanations and setup',
-    'feat(teaching): begin teaching computer science',
-    'merge: connect education with the main story',
-    'feat(education): focus on systems and infrastructure',
-    'feat(education): study computer science in Amsterdam',
-    'chore(story): begin learning to program',
+    'feat(work): start at Microsoft',
+    'feat(uni): teach computer science',
+    'feat(uni): study computer science in Amsterdam',
+    'feat(origin): build my first program',
 ];
+
+const expectedLanes = [
+    ['main', 0],
+    ['uni', 1],
+    ['work', 2],
+];
+
+if (JSON.stringify(sourceControlData.lanes.map((lane) => [lane.id, lane.column]))
+    !== JSON.stringify(expectedLanes)) {
+    fail('The Source Control graph must use the main, uni, and work lanes.');
+}
 
 for (const [items, expected, label] of [
     [sourceControlData.staged, expectedStagedChanges, 'staged'],
@@ -332,6 +368,33 @@ for (const [items, expected, label] of [
 if (JSON.stringify(sourceControlData.commits.map((commit) => commit.message))
     !== JSON.stringify(expectedCommitMessages)) {
     fail('The Source Control graph must match the inspected VS Code history.');
+}
+
+if (sourceControlData.commits[0].kind !== 'merge'
+    || sourceControlData.commits[0].lane !== 'main'
+    || sourceControlData.commits[1].lane !== 'work') {
+    fail('The current history must merge the work branch back into main.');
+}
+
+const microsoftMessages = sourceControlData.commits
+    .filter((commit) => commit.files.some((file) => {
+        return file.path === 'life/work/microsoft-cloud-architecture.md';
+    }))
+    .map((commit) => commit.message);
+
+if (JSON.stringify(microsoftMessages) !== JSON.stringify([
+    'feat(work): ship a reusable cloud agent integration',
+    'feat(work): start at Microsoft',
+])) {
+    fail('The Microsoft history must include the role start and reusable integration.');
+}
+
+const visibleBranches = sourceControlData.commits
+    .map((commit) => commit.branch)
+    .filter(Boolean);
+
+if (JSON.stringify(visibleBranches) !== JSON.stringify(['main', 'work', 'uni'])) {
+    fail('The graph must label the main, work, and uni branches.');
 }
 
 const laneIds = new Set(sourceControlData.lanes.map((lane) => lane.id));

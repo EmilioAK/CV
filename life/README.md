@@ -16,7 +16,7 @@ I also build independent software. My current projects include this repository-s
 
 ## Chapters
 
-- [How programming became the main path](origin.md)
+- [From first program to Computer Science](origin.md)
 - [Computer Science at Vrije Universiteit Amsterdam](education/vu-computer-science.md)
 - [Teaching Computer Science](teaching/computer-science.md)
 - [Cloud architecture at Microsoft](work/microsoft-cloud-architecture.md)
