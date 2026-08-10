@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "repository": "emilio/life",
+  "repository": "EmilioAK/CV",
   "branch": "main",
   "lanes": [
     {
@@ -21,69 +21,60 @@
   ],
   "staged": [
     {
-      "id": "teaching-rename",
-      "path": "life/teaching/computer-science.md",
-      "status": "R",
-      "summary": "The teaching chapter replaces the generic community chapter.",
-      "language": "markdown",
-      "before": "# Community\n\nI helped other students learn technical material.\n",
-      "after": "# Teaching Computer Science\n\nI taught operating systems, web technology, and systems programming.\n"
-    },
-    {
-      "id": "next-chapter-staged",
-      "path": "life/next.md",
-      "status": "A",
-      "summary": "The next chapter records near-term direction without claiming a fixed outcome.",
-      "language": "markdown",
-      "before": "",
-      "after": "# Next Chapter\n\nThe next chapter remains intentionally unfinished.\n"
-    },
-    {
-      "id": "about-staged",
-      "path": "CV/about.md",
+      "id": "cv-thread",
+      "path": "CV/README.md",
       "status": "M",
-      "summary": "The short profile now points to the complete life repository.",
+      "summary": "The CV now starts with one short chronological thread.",
       "language": "markdown",
-      "before": "# My Story\n",
-      "after": "# My Story\n\nI wrote my first Python program in 2019 and continued through The Odin Project.\n\nRead the complete story in the life repository.\n"
+      "before": "# My Story\n\nRead the complete story in the separate index.\n",
+      "after": "# Emilio Alvarez\n\nThe thread runs from my first program to production software.\n"
     },
     {
-      "id": "old-direction",
-      "path": "life/old-direction.md",
-      "status": "D",
-      "summary": "A broad plan without evidence or priorities is removed.",
+      "id": "origin-evidence",
+      "path": "CV/origin/first-program.md",
+      "status": "M",
+      "summary": "The origin links the first public program and Odin Project repository.",
       "language": "markdown",
-      "before": "# Old Direction\n\nCollect more tools, titles, and possible paths.\n",
-      "after": ""
+      "before": "# First Program\n\nI started learning to program in 2019.\n",
+      "after": "# First Program and The Odin Project\n\nI built mentalcalcpractise, then continued through The Odin Project.\n"
+    },
+    {
+      "id": "microsoft-story",
+      "path": "CV/work/microsoft.md",
+      "status": "M",
+      "summary": "The Microsoft chapter connects the role start to a reusable architecture.",
+      "language": "markdown",
+      "before": "# Starting at Microsoft\n\nI joined as a Cloud Solution Architect Intern.\n",
+      "after": "# Cloud Architecture at Microsoft\n\nOne customer solution became a reusable delivery pattern.\n"
     }
   ],
   "changes": [
     {
       "id": "macsights-working",
-      "path": "life/projects/macsights.md",
+      "path": "CV/projects/macsights.md",
       "status": "M",
-      "summary": "The project chapter adds recording reliability and recovery work.",
+      "summary": "Macsights remains active product and recording-systems work.",
       "language": "markdown",
-      "before": "# Building a Native Capture System\n\nMacsights records gameplay on macOS.\n",
-      "after": "# Building a Native Capture System\n\nMacsights records gameplay and game events on macOS.\n\nThe project uses lifecycle states, reconnect handling, validation, and storage safeguards.\n"
+      "before": "# Macsights\n\nMacsights records gameplay on macOS.\n",
+      "after": "# Macsights\n\nMacsights records gameplay with searchable game events.\n"
     },
     {
-      "id": "next-chapter-working",
-      "path": "life/next.md",
-      "status": "U",
-      "summary": "An untracked note explores the next chapter.",
+      "id": "capisoft-working",
+      "path": "CV/work/capisoft.md",
+      "status": "M",
+      "summary": "Capisoft is the current production-software chapter.",
       "language": "markdown",
-      "before": "",
-      "after": "# Next Chapter\n\nComplete the degree, deepen systems knowledge, and develop projects through real use.\n"
+      "before": "# Production Software at Capisoft\n\nI work on LegalPal.\n",
+      "after": "# Production Software at Capisoft\n\nI own accounting and outbound-email work.\n"
     },
     {
-      "id": "now-working",
-      "path": "life/now.md",
+      "id": "degree-working",
+      "path": "CV/university/computer-science.md",
       "status": "M",
-      "summary": "The current chapter connects delivered work with independent knowledge.",
+      "summary": "The Computer Science degree remains in progress.",
       "language": "markdown",
-      "before": "# Current Focus\n\nBuild useful systems and continue the degree.\n",
-      "after": "# Current Focus\n\nBuild useful systems, continue the degree, and convert delivered work into independent knowledge.\n"
+      "before": "# Computer Science in Amsterdam\n\nI began the degree in 2022.\n",
+      "after": "# Computer Science in Amsterdam\n\nThe degree connects projects with systems and theory.\n"
     }
   ],
   "commits": [
@@ -99,12 +90,12 @@
       "summary": "Professional work, university, teaching, and independent projects now form one connected story.",
       "files": [
         {
-          "path": "life/README.md",
+          "path": "CV/README.md",
           "status": "M",
           "language": "markdown",
           "openMode": "file",
-          "before": "# Life Repository\n",
-          "after": "# Life Repository\n\nEach commit marks a decision, role, or project that changed the direction of my work.\n"
+          "before": "# My Story\n",
+          "after": "# Emilio Alvarez\n\nThe CV follows one chronological thread.\n"
         }
       ],
       "edges": [
@@ -133,7 +124,7 @@
       "summary": "Production ownership brings accounting integrations, reliable email delivery, rollout, and recovery into the main story.",
       "files": [
         {
-          "path": "life/work/capisoft-software-engineering.md",
+          "path": "CV/work/capisoft.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -141,7 +132,7 @@
           "after": "# Production Software at Capisoft\n\nI work on accounting integrations and outbound email for LegalPal.\n"
         },
         {
-          "path": "life/work/accounting-integrations.md",
+          "path": "CV/work/accounting-integrations.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -149,7 +140,7 @@
           "after": "# Replacing an Unsuitable Accounting Vendor\n\nThe real requirement was a reliable accounting workflow.\n"
         },
         {
-          "path": "life/work/durable-email-outbox.md",
+          "path": "CV/work/durable-email-outbox.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -184,7 +175,7 @@
       "summary": "Macsights combines native macOS recording with searchable game events and recovery-oriented storage.",
       "files": [
         {
-          "path": "life/projects/macsights.md",
+          "path": "CV/projects/macsights.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -218,7 +209,7 @@
       "summary": "The portfolio exposes its real repository through a VS Code-shaped interface.",
       "files": [
         {
-          "path": "life/projects/cv-site.md",
+          "path": "CV/projects/cv-site.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -252,7 +243,7 @@
       "summary": "A customer integration for external AI agents becomes a reusable architecture across three engagements.",
       "files": [
         {
-          "path": "life/work/microsoft-cloud-architecture.md",
+          "path": "CV/work/microsoft.md",
           "status": "M",
           "language": "markdown",
           "openMode": "file",
@@ -286,7 +277,7 @@
       "summary": "I joined Microsoft in a customer-facing architecture role that combined discovery, technical design, and implementation.",
       "files": [
         {
-          "path": "life/work/microsoft-cloud-architecture.md",
+          "path": "CV/work/microsoft.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -320,7 +311,7 @@
       "summary": "Course manual revisions and a Docker environment reduce conceptual and setup friction.",
       "files": [
         {
-          "path": "life/teaching/computer-science.md",
+          "path": "CV/university/teaching.md",
           "status": "M",
           "language": "markdown",
           "openMode": "file",
@@ -351,7 +342,7 @@
       "summary": "A move from Sweden to Amsterdam turns programming interest into a formal Computer Science path.",
       "files": [
         {
-          "path": "life/education/vu-computer-science.md",
+          "path": "CV/university/computer-science.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",
@@ -381,7 +372,7 @@
       "summary": "A small Python tool for mental arithmetic turns programming from an idea into a practical path.",
       "files": [
         {
-          "path": "life/origin.md",
+          "path": "CV/origin/first-program.md",
           "status": "A",
           "language": "markdown",
           "openMode": "file",

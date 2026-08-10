@@ -58,6 +58,7 @@ if (JSON.stringify(manifestPaths) !== JSON.stringify(sourceFiles)) {
 for (const requiredPath of [
     '.github/workflows/validate-site.yml',
     'CV/Emilio_Alvarez_Resume.pdf',
+    'CV/README.md',
     'README.md',
     'index.html',
     extensionsRelativePath,
@@ -128,10 +129,13 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
-const aboutProfile = await readFile(path.join(repositoryRoot, 'CV', 'about.md'), 'utf8');
-const originStory = await readFile(path.join(repositoryRoot, 'life', 'origin.md'), 'utf8');
+const cvThread = await readFile(path.join(repositoryRoot, 'CV', 'README.md'), 'utf8');
+const originStory = await readFile(
+    path.join(repositoryRoot, 'CV', 'origin', 'first-program.md'),
+    'utf8',
+);
 const educationStory = await readFile(
-    path.join(repositoryRoot, 'life', 'education', 'vu-computer-science.md'),
+    path.join(repositoryRoot, 'CV', 'university', 'computer-science.md'),
     'utf8',
 );
 const styleCss = await readFile(path.join(repositoryRoot, 'page-data', 'style.css'), 'utf8');
@@ -145,6 +149,24 @@ const sourceControlData = JSON.parse(await readFile(
     'utf8'
 ));
 
+if (manifest.files.some((entry) => entry.path.startsWith('life/'))) {
+    fail('The Explorer must not contain a separate life folder.');
+}
+
+const cvMarkdownPaths = manifest.files
+    .map((entry) => entry.path)
+    .filter((sourcePath) => sourcePath.startsWith('CV/') && sourcePath.endsWith('.md'))
+    .sort((left, right) => left.localeCompare(right));
+const graphMarkdownPaths = [...new Set(sourceControlData.commits.flatMap((commit) => {
+    return commit.files
+        .map((file) => file.path)
+        .filter((sourcePath) => sourcePath.startsWith('CV/') && sourcePath.endsWith('.md'));
+}))].sort((left, right) => left.localeCompare(right));
+
+if (JSON.stringify(cvMarkdownPaths) !== JSON.stringify(graphMarkdownPaths)) {
+    fail('Every CV chapter must be backed by the Source Control graph.');
+}
+
 for (const repositoryUrl of [
     'https://github.com/EmilioAK/mentalcalcpractise',
     'https://github.com/EmilioAK/google-homepage',
@@ -155,7 +177,7 @@ for (const repositoryUrl of [
 }
 
 if (/covid|pandemic/i.test([
-    aboutProfile,
+    cvThread,
     originStory,
     educationStory,
     JSON.stringify(sourceControlData),
@@ -192,7 +214,7 @@ for (const requiredText of [
     '<dt>Linked stories</dt>',
     'renderPdfFile',
     'openExtensionById',
-    'data-file-path="README.md"',
+    'data-file-path="CV/README.md"',
     'data-file-path="CV/Emilio_Alvarez_Resume.pdf"',
     "node.mediaType === 'application/pdf'",
     'node.rawUrl',
@@ -317,20 +339,19 @@ if (sourceControlData.branch !== 'main') {
     fail('The Source Control story must identify the main branch.');
 }
 
-if (sourceControlData.staged.length !== 4 || sourceControlData.changes.length !== 3) {
-    fail('The Source Control view must keep the VS Code 4 staged and 3 changed file composition.');
+if (sourceControlData.staged.length !== 3 || sourceControlData.changes.length !== 3) {
+    fail('The Source Control view must keep three staged and three active story files.');
 }
 
 const expectedStagedChanges = [
-    ['life/teaching/computer-science.md', 'R'],
-    ['life/next.md', 'A'],
-    ['CV/about.md', 'M'],
-    ['life/old-direction.md', 'D'],
+    ['CV/README.md', 'M'],
+    ['CV/origin/first-program.md', 'M'],
+    ['CV/work/microsoft.md', 'M'],
 ];
 const expectedWorkingChanges = [
-    ['life/projects/macsights.md', 'M'],
-    ['life/next.md', 'U'],
-    ['life/now.md', 'M'],
+    ['CV/projects/macsights.md', 'M'],
+    ['CV/work/capisoft.md', 'M'],
+    ['CV/university/computer-science.md', 'M'],
 ];
 const expectedCommitMessages = [
     'merge: connect work with the main story',
@@ -378,7 +399,7 @@ if (sourceControlData.commits[0].kind !== 'merge'
 
 const microsoftMessages = sourceControlData.commits
     .filter((commit) => commit.files.some((file) => {
-        return file.path === 'life/work/microsoft-cloud-architecture.md';
+        return file.path === 'CV/work/microsoft.md';
     }))
     .map((commit) => commit.message);
 
@@ -492,9 +513,10 @@ if (!readme.includes('[Download my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
     fail('README.md must keep the direct resume download link.');
 }
 
-if (!readme.includes('Software Engineer at Capisoft')
-    || !readme.includes('[Explore the life repository](life/README.md)')) {
-    fail('README.md must identify the current role and link to the life repository.');
+if (!readme.includes('[Start with the CV](CV/README.md)')
+    || !cvThread.includes('Software Engineer at Capisoft')
+    || !cvThread.includes('[First program and The Odin Project](origin/first-program.md)')) {
+    fail('The repository README and CV thread must lead into one chronological story.');
 }
 
 const resumeEntry = manifest.files.find((entry) => {

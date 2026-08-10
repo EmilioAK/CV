@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,8 +13,8 @@ import {
 const markdown = [
     '# Links',
     '',
-    '- [Profile](CV/about.md)',
-    '- [Current chapter](<life/now.md> "Now")',
+    '- [Profile](CV/README.md)',
+    '- [Current role](<CV/work/capisoft.md> "Capisoft")',
     '- ![Preview](preview.png)',
     '```md',
     '[Example only](ignored.md)',
@@ -22,29 +23,29 @@ const markdown = [
 
 assert.deepEqual(findMarkdownLinks(markdown), [
     {
-        target: 'CV/about.md',
+        target: 'CV/README.md',
         lineNumber: 3,
         startColumn: 13,
-        endColumn: 24,
+        endColumn: 25,
     },
     {
-        target: 'life/now.md',
+        target: 'CV/work/capisoft.md',
         lineNumber: 4,
-        startColumn: 22,
-        endColumn: 33,
+        startColumn: 19,
+        endColumn: 38,
     },
 ]);
 
 assert.deepEqual(
-    resolveMarkdownTarget('CV/about.md', '../life/README.md'),
-    { kind: 'internal', path: 'life/README.md' },
+    resolveMarkdownTarget('CV/README.md', 'origin/first-program.md'),
+    { kind: 'internal', path: 'CV/origin/first-program.md' },
 );
 assert.deepEqual(
     resolveMarkdownTarget(
-        'life/work/capisoft-software-engineering.md',
+        'CV/work/capisoft.md',
         'accounting-integrations.md',
     ),
-    { kind: 'internal', path: 'life/work/accounting-integrations.md' },
+    { kind: 'internal', path: 'CV/work/accounting-integrations.md' },
 );
 assert.deepEqual(
     resolveMarkdownTarget('README.md', '/CV/Emilio_Alvarez_Resume.pdf'),
@@ -59,8 +60,8 @@ assert.deepEqual(
     { kind: 'external', href: 'mailto:me@example.com' },
 );
 assert.deepEqual(
-    resolveMarkdownTarget('life/README.md', '#current-focus'),
-    { kind: 'internal', path: 'life/README.md' },
+    resolveMarkdownTarget('CV/README.md', '#the-thread'),
+    { kind: 'internal', path: 'CV/README.md' },
 );
 assert.equal(resolveMarkdownTarget('README.md', '../outside.md'), null);
 assert.equal(resolveMarkdownTarget('README.md', 'javascript:alert(1)'), null);
@@ -74,7 +75,8 @@ const sourcePaths = execFileSync(
     { cwd: repositoryRoot, encoding: 'utf8' },
 )
     .split('\0')
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((sourcePath) => existsSync(path.join(repositoryRoot, sourcePath)));
 const availablePaths = new Set(sourcePaths);
 const markdownPaths = sourcePaths.filter((sourcePath) => sourcePath.endsWith('.md'));
 

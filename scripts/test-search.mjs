@@ -20,15 +20,15 @@ const documents = [
         '# Emilio Alvarez\nCloud Solution Architect Intern at Microsoft.\nTeaching systems and web technology.'
     ),
     createSearchDocument(
-        textEntry('CV/about.md'),
+        textEntry('CV/README.md'),
         '# Résumé\nSecurity-minded engineering and cloud architecture.'
     ),
     createSearchDocument(
-        textEntry('life/work/microsoft-cloud-architecture.md'),
+        textEntry('CV/work/microsoft.md'),
         '# Cloud Architecture at Microsoft\nProduction delivery for Microsoft 365.'
     ),
     createSearchDocument(
-        textEntry('life/teaching/computer-science.md'),
+        textEntry('CV/university/teaching.md'),
         '# Teaching Computer Science\nTeaching systems and web technology.'
     ),
     createSearchDocument(
@@ -38,8 +38,8 @@ const documents = [
 ];
 
 assert.equal(isMarkdownPath('README.md'), true);
-assert.equal(isMarkdownPath('CV/about.md'), true);
-assert.equal(isMarkdownPath('life/work/microsoft-cloud-architecture.md'), true);
+assert.equal(isMarkdownPath('CV/README.md'), true);
+assert.equal(isMarkdownPath('CV/work/microsoft.md'), true);
 assert.equal(isMarkdownPath('NOTES.MD'), true);
 assert.equal(isMarkdownPath('page-data/style.css'), false);
 assert.equal(isSearchableEntry(textEntry('README.md')), true);
@@ -52,28 +52,28 @@ const cvResult = searchDocuments(documents, 'cloud');
 assert.equal(cvResult.totalFiles, 3);
 assert.equal(cvResult.totalMatches, 3);
 assert.deepEqual(cvResult.groups.map((group) => group.path), [
-    'life/work/microsoft-cloud-architecture.md',
+    'CV/work/microsoft.md',
     'README.md',
-    'CV/about.md',
+    'CV/README.md',
 ]);
 assert.equal(cvResult.groups[0].matches[0].lineNumber, 1);
 
 const markdownResult = searchDocuments(documents, 'teaching');
 assert.equal(markdownResult.totalFiles, 2);
 assert.deepEqual(markdownResult.groups.map((group) => group.path), [
-    'life/teaching/computer-science.md',
+    'CV/university/teaching.md',
     'README.md',
 ]);
 
 const accentResult = searchDocuments(documents, 'resume');
-assert.equal(accentResult.groups[0].path, 'CV/about.md');
+assert.equal(accentResult.groups[0].path, 'CV/README.md');
 assert.equal(accentResult.groups[0].matches[0].lineNumber, 1);
 
 const phraseResult = searchDocuments(documents, 'cloud architecture');
 assert.equal(phraseResult.totalFiles, 2);
 assert.deepEqual(phraseResult.groups.map((group) => group.path), [
-    'life/work/microsoft-cloud-architecture.md',
-    'CV/about.md',
+    'CV/work/microsoft.md',
+    'CV/README.md',
 ]);
 
 const emptyResult = searchDocuments(documents, 'database');

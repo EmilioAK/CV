@@ -439,7 +439,7 @@
         );
         graphHeader.append(graphTitleWrap, graphToolbar);
         graphList.setAttribute('role', 'listbox');
-        graphList.setAttribute('aria-label', 'Life story commit graph');
+        graphList.setAttribute('aria-label', 'CV story commit graph');
         graphList.append(renderGraphSvg(data.commits, data.lanes), graphRows);
 
         const hideTooltip = () => {

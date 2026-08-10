@@ -24,16 +24,6 @@
       "sha256": "3b308dd749a4b4690fe32e06ae59afd1711d3098a34afaf194f5c976dbcbd137"
     },
     {
-      "path": "CV/about.md",
-      "sourceUrl": "CV/about.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/about.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 993,
-      "sha256": "e3b813fb82583441f361bf6438800fb35ee233bac687a184dac9636342d133e0"
-    },
-    {
       "path": "CV/Emilio_Alvarez_Resume.pdf",
       "sourceUrl": "CV/Emilio_Alvarez_Resume.pdf",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/Emilio_Alvarez_Resume.pdf",
@@ -44,144 +34,114 @@
       "sha256": "9070bbd3ba3b7b6f252d31a70344470b121d307c42997654b503efb7db0e06cd"
     },
     {
+      "path": "CV/origin/first-program.md",
+      "sourceUrl": "CV/origin/first-program.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/origin/first-program.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 646,
+      "sha256": "4207952ae583cdbcd43f301422d0dbbaeb249b3cc02bbd733642c11713593685"
+    },
+    {
+      "path": "CV/projects/cv-site.md",
+      "sourceUrl": "CV/projects/cv-site.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/projects/cv-site.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 511,
+      "sha256": "61716a04d342da88a36cb7e5bf97eea6b45baccbb02523be9f4b5eb0d2dfb297"
+    },
+    {
+      "path": "CV/projects/macsights.md",
+      "sourceUrl": "CV/projects/macsights.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/projects/macsights.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 615,
+      "sha256": "69dc20de1e3f2788a83eae7265106bd276d5638be8cb5f7fdba3493bf39526c5"
+    },
+    {
+      "path": "CV/README.md",
+      "sourceUrl": "CV/README.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/README.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 890,
+      "sha256": "ebdf53bebc116b5b06a40c343ceb2b94f63d852514e40f636ca27764dbfd3b8a"
+    },
+    {
+      "path": "CV/university/computer-science.md",
+      "sourceUrl": "CV/university/computer-science.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/university/computer-science.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 596,
+      "sha256": "5fd01bba604dbaa7603db417b9638a9abe06bc199cc0f357c36164649ceeff56"
+    },
+    {
+      "path": "CV/university/teaching.md",
+      "sourceUrl": "CV/university/teaching.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/university/teaching.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 637,
+      "sha256": "ca78df10fecf0c5c40770d4957c659b0efcba1822c8fadaf9fde0f39ebbfc439"
+    },
+    {
+      "path": "CV/work/accounting-integrations.md",
+      "sourceUrl": "CV/work/accounting-integrations.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/work/accounting-integrations.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 683,
+      "sha256": "2681be14fac0a632b02ebbfcf4a766fa60554d146d260b51b4c1f934d975634c"
+    },
+    {
+      "path": "CV/work/capisoft.md",
+      "sourceUrl": "CV/work/capisoft.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/work/capisoft.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 594,
+      "sha256": "f38d925bc9bdc96ddb0764197d2a287316eb2b3b371410c6d5cc916872f943b9"
+    },
+    {
+      "path": "CV/work/durable-email-outbox.md",
+      "sourceUrl": "CV/work/durable-email-outbox.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/work/durable-email-outbox.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 630,
+      "sha256": "9606ea262ccd086bf095fedc9af2707480204ad338e34eaac2e5bc303bb6e0cc"
+    },
+    {
+      "path": "CV/work/microsoft.md",
+      "sourceUrl": "CV/work/microsoft.md",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/work/microsoft.md",
+      "kind": "text",
+      "mediaType": "text/markdown",
+      "language": "markdown",
+      "size": 652,
+      "sha256": "ff83b00d0a58d5105276cfd9a8b9d7c813fdcba972081bb0ef81ebc181091bc0"
+    },
+    {
       "path": "index.html",
       "sourceUrl": "index.html",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/index.html",
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 108008,
-      "sha256": "55a4f5e8d4087596fc80895b5730bf14b392b93b58fa0d5c79f47281375e8f42"
-    },
-    {
-      "path": "life/education/vu-computer-science.md",
-      "sourceUrl": "life/education/vu-computer-science.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/education/vu-computer-science.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1182,
-      "sha256": "4db67447ce40c89c0f74f9bb6b45478a644adb5be87f6a3b2ad7161596d42b0a"
-    },
-    {
-      "path": "life/next.md",
-      "sourceUrl": "life/next.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/next.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 550,
-      "sha256": "0dfb4a78f1e9c2215fb60c143fd18b4c91f5acf114231aebb14d3d6b65a193fe"
-    },
-    {
-      "path": "life/now.md",
-      "sourceUrl": "life/now.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/now.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1008,
-      "sha256": "d4aefb7685c8acbb82dff41630393ade0a9d475c00138491c6ee73aa2090767f"
-    },
-    {
-      "path": "life/origin.md",
-      "sourceUrl": "life/origin.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/origin.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1059,
-      "sha256": "fb6ec66ba271efa4a159da79018cfb4b4e941ca51142c847158d822c3e2e2414"
-    },
-    {
-      "path": "life/projects/cv-site.md",
-      "sourceUrl": "life/projects/cv-site.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/cv-site.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1063,
-      "sha256": "15f55a115e9735588071167bba318ec5bc768feb1fa6bc14699470de6d7905b2"
-    },
-    {
-      "path": "life/projects/macsights.md",
-      "sourceUrl": "life/projects/macsights.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/macsights.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1203,
-      "sha256": "57c0ac1ca47350f85f17f65fba17dd1bb052d9be10a64908357e1189bc5b2f9d"
-    },
-    {
-      "path": "life/projects/README.md",
-      "sourceUrl": "life/projects/README.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/projects/README.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 898,
-      "sha256": "ae3c5ced9563d7fb9a919be1770fe47a9eb1c474f7a6ed544eb8224e979c9ed5"
-    },
-    {
-      "path": "life/README.md",
-      "sourceUrl": "life/README.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/README.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1576,
-      "sha256": "689629a4df2d93cd8c5000e87af88a5b46c3138c82284052a6d129ea97e4fb91"
-    },
-    {
-      "path": "life/teaching/computer-science.md",
-      "sourceUrl": "life/teaching/computer-science.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/teaching/computer-science.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1119,
-      "sha256": "4eadb2ce1b6a460affbf637023d795d09479f0fc62330fa8ff16a3ec083ed4b8"
-    },
-    {
-      "path": "life/work/accounting-integrations.md",
-      "sourceUrl": "life/work/accounting-integrations.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/accounting-integrations.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1219,
-      "sha256": "11814716c8682e5489d2b13ae8465b05f0c82d00394897ac80d74eb8f68a2906"
-    },
-    {
-      "path": "life/work/capisoft-software-engineering.md",
-      "sourceUrl": "life/work/capisoft-software-engineering.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/capisoft-software-engineering.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1197,
-      "sha256": "584ac2117cb92c46bd0bdc6827aea24faaa895025bb81292bd69333686f73b22"
-    },
-    {
-      "path": "life/work/durable-email-outbox.md",
-      "sourceUrl": "life/work/durable-email-outbox.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/durable-email-outbox.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1212,
-      "sha256": "6ac7b4ecff7daa0fbba003b9e9103bbfcde9f427f221169e3d8f27c1a6d061cf"
-    },
-    {
-      "path": "life/work/microsoft-cloud-architecture.md",
-      "sourceUrl": "life/work/microsoft-cloud-architecture.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/life/work/microsoft-cloud-architecture.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 1154,
-      "sha256": "599db69e07ec3cb2a9892e41678f0aa33be5583f4193ebe19766d58138181771"
+      "size": 108010,
+      "sha256": "277699e7c388b5869983c78c4071694b375fba2ba3d2aa75e75226ec9420aa7d"
     },
     {
       "path": "page-data/extensions.json",
@@ -190,8 +150,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 10034,
-      "sha256": "8ef3a3f891f6ffc2e311b069916301b9bce19ace40eb371cad7ba3645d594307"
+      "size": 10003,
+      "sha256": "3294315950097600e716125c6d4735d9f2c386b73f1aa87bcdd5bcacdfe37517"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -289,8 +249,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 26988,
-      "sha256": "1f2f0036cbac53a5cf230ee914d111203bddcf675cc29f4bd00cfa81b3122fee"
+      "size": 26986,
+      "sha256": "f5c9d0debe85867c2b32e97508c63ba95a585360174c7fd8b7f21781b55cc433"
     },
     {
       "path": "page-data/source-control.json",
@@ -299,8 +259,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 12167,
-      "sha256": "77981dca5ce68a0f365d75ffe951775086cecc2c82e9ae1d22b5c7b1bd149095"
+      "size": 11680,
+      "sha256": "db0bc05ed1a690d3308a4cec3f81fe77d148f4e839026a26f06cb6cf68c3f291"
     },
     {
       "path": "page-data/style.css",
@@ -319,8 +279,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 1200,
-      "sha256": "418f5fa23ad78ae0e149fc65443fa9cea8d083d65fb8c4f66f87561035dac83e"
+      "size": 304,
+      "sha256": "02f338432fc173a8ca32b2d01ec502e6e218590439cbb127d16c92624b47a72f"
     },
     {
       "path": "scripts/generate-manifest.mjs",
@@ -339,8 +299,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 3119,
-      "sha256": "5085f25d3aab9f99402e29d1a1d26b851f5bd9da5b63847dbbae5aa38e4f21c7"
+      "size": 3243,
+      "sha256": "4c7aaf84826638fa4fcc3f487baaac2a386b22bb73b2ddeea599676326bb6a09"
     },
     {
       "path": "scripts/test-search.mjs",
@@ -349,8 +309,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 2969,
-      "sha256": "973ec16c196e070c350f454065539fed58f966a3c6ad73c6dfd67f6edb94fa8a"
+      "size": 2874,
+      "sha256": "d1391177e254d5df0f2eba0832c116c2b825e43e07c5d7ad8b46a4756b8bcd40"
     },
     {
       "path": "scripts/test-site.mjs",
@@ -359,8 +319,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 20569,
-      "sha256": "c3068bd65185fd27b7a6cfe1c51570fc462794d7bc51f4069d5ea0197b9398d3"
+      "size": 21455,
+      "sha256": "368146a2bae7d06915ae7ec397c81a1cad2abeeb50fb041cb5fb04468fecafbf"
     }
   ]
 }

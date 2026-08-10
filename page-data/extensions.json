@@ -15,14 +15,14 @@
       "categories": ["Programming Languages"],
       "documents": [
         {
-          "path": "CV/about.md",
-          "label": "My story",
-          "description": "The repository file for the longer story behind my experience."
+          "path": "CV/origin/first-program.md",
+          "label": "First program",
+          "description": "The Python project that started the career thread."
         },
         {
-          "path": "README.md",
-          "label": "Portfolio overview",
-          "description": "The README for this portfolio and its repository-based design."
+          "path": "CV/README.md",
+          "label": "Career thread",
+          "description": "The short chronological index for this CV."
         }
       ]
     },
@@ -54,9 +54,9 @@
       "categories": ["Programming Languages"],
       "documents": [
         {
-          "path": "README.md",
-          "label": "Interactive portfolio",
-          "description": "The README for the JavaScript-powered portfolio in this repository."
+          "path": "CV/projects/cv-site.md",
+          "label": "Interactive CV",
+          "description": "The project note for this JavaScript-powered portfolio."
         }
       ]
     },
@@ -252,9 +252,9 @@
       "categories": ["Developer Tools"],
       "documents": [
         {
-          "path": "README.md",
+          "path": "CV/projects/cv-site.md",
           "label": "Portfolio repository",
-          "description": "The README that explains this repository and its self-exploring design."
+          "description": "The project note for this repository-shaped CV."
         }
       ]
     }
