@@ -13,8 +13,8 @@ export const parseSearchQuery = (value) => {
     };
 };
 
-export const isCareerPath = (filePath) => {
-    return filePath === 'README.md' || filePath.startsWith('CV/');
+export const isMarkdownPath = (filePath) => {
+    return String(filePath ?? '').toLocaleLowerCase().endsWith('.md');
 };
 
 export const isSearchableEntry = (entry) => {
@@ -115,7 +115,7 @@ export const searchDocuments = (
     const groups = [];
 
     documents.forEach((document) => {
-        if (!isCareerPath(document.path)) {
+        if (!isMarkdownPath(document.path)) {
             return;
         }
 

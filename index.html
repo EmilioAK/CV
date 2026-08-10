@@ -357,11 +357,11 @@
     <script type="module">
         import {
             createSearchDocument,
-            isCareerPath,
+            isMarkdownPath,
             isSearchableEntry,
             parseSearchQuery,
             searchDocuments,
-        } from './page-data/search.mjs';
+        } from './page-data/search.mjs?v=20260810-1';
 
         const manifestPath = 'page-data/file-manifest.json';
         const extensionsManifestPath = 'page-data/extensions.json';
@@ -1245,6 +1245,21 @@
         };
 
         const openSourceControlCommit = (commit) => {
+            const storyFile = commit.hash === 'preview'
+                ? null
+                : commit.files.find((file) => {
+                    return file.openMode === 'file' && file.path.endsWith('.md');
+                });
+
+            if (storyFile && openFileByPath(
+                storyFile.path,
+                'push',
+                null,
+                `commit:${commit.hash}`
+            )) {
+                return;
+            }
+
             const node = {
                 path: `source-control/commit/${commit.hash}`,
                 name: commit.hash,
@@ -1732,7 +1747,7 @@
                 await manifestReady;
 
                 const searchableEntries = manifestEntries.filter((entry) => {
-                    return isSearchableEntry(entry) && isCareerPath(entry.path);
+                    return isSearchableEntry(entry) && isMarkdownPath(entry.path);
                 });
                 const settledDocuments = await Promise.allSettled(
                     searchableEntries.map(async (entry) => {
@@ -2114,6 +2129,7 @@
             const extension = extensionsById.get(extensionId);
             if (!extension) return false;
 
+            activateSidebarView('extensions');
             const tabKey = getExtensionTabKey(extension.id);
             setSelectedFileElement(null);
             setSelectedExtensionElement(extensionElementsById.get(extension.id) || null);

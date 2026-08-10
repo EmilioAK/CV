@@ -14,6 +14,16 @@
       "sha256": "dbe15465ef11732cafb51803a9ba3ded30bb37f43cb1c08b7e94b4796907f6b7"
     },
     {
+      "path": ".gitignore",
+      "sourceUrl": ".gitignore",
+      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/.gitignore",
+      "kind": "text",
+      "mediaType": "text/plain",
+      "language": "plaintext",
+      "size": 35,
+      "sha256": "3b308dd749a4b4690fe32e06ae59afd1711d3098a34afaf194f5c976dbcbd137"
+    },
+    {
       "path": "CV/about.md",
       "sourceUrl": "CV/about.md",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/about.md",
@@ -40,8 +50,8 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 104992,
-      "sha256": "d79f69cb4b8db6de4e7b67dcb9884fe5710fa15cc149b9f4982b3b628301bb5e"
+      "size": 105505,
+      "sha256": "7974496587b8fb17607ed22612f71e9ed6299088eba193cb3b408fdc457684b5"
     },
     {
       "path": "life/education/vu-computer-science.md",
@@ -259,8 +269,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 5087,
-      "sha256": "3c86d5ef6cd71e27f07961e07a398b1df8aee76619a17dc1600758cbf5b854f5"
+      "size": 5095,
+      "sha256": "839d9ef2cface08cd03de365442c83d2ab7ac6427bea259b60fe19b4d1bc6e09"
     },
     {
       "path": "page-data/source-control.js",
@@ -319,8 +329,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 2308,
-      "sha256": "65a1752afb913e0394e7492c9538cfda57ae78ccd78970a9f2287df7f2214210"
+      "size": 2969,
+      "sha256": "973ec16c196e070c350f454065539fed58f966a3c6ad73c6dfd67f6edb94fa8a"
     },
     {
       "path": "scripts/test-site.mjs",
@@ -329,8 +339,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 17772,
-      "sha256": "ec06f74b3cb54275ed5acd206f2f96274e1d60996e33c47a07567462629d94b0"
+      "size": 18629,
+      "sha256": "a9e3ce0e4dad183999b8e2516e7672c01f848599be8509d90c3a3eb568eeb492"
     }
   ]
 }

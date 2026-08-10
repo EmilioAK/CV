@@ -147,8 +147,8 @@ for (const requiredText of [
     'id="search-toggle"',
     'id="search-input"',
     'id="search-results"',
-    "from './page-data/search.mjs'",
-    'isCareerPath(entry.path)',
+    "from './page-data/search.mjs?v=20260810-1'",
+    'isMarkdownPath(entry.path)',
     'buildSearchDocuments',
     'openSearchMatch',
     'Shift+Command+F',
@@ -178,6 +178,23 @@ for (const requiredText of [
     if (!indexHtml.includes(requiredText)) {
         fail(`index.html is missing ${requiredText}.`);
     }
+}
+
+const openExtensionStart = indexHtml.indexOf('const openExtensionById =');
+const openExtensionEnd = indexHtml.indexOf('const openTabByKey =', openExtensionStart);
+const openExtensionSource = indexHtml.slice(openExtensionStart, openExtensionEnd);
+
+if (!openExtensionSource.includes("activateSidebarView('extensions');")) {
+    fail('Opening an extension tab must activate the Extensions sidebar.');
+}
+
+const openCommitStart = indexHtml.indexOf('const openSourceControlCommit =');
+const openCommitEnd = indexHtml.indexOf('const openSourceControlTabNode =', openCommitStart);
+const openCommitSource = indexHtml.slice(openCommitStart, openCommitEnd);
+
+if (!openCommitSource.includes("file.path.endsWith('.md')")
+    || !openCommitSource.includes('openFileByPath(')) {
+    fail('Opening a history commit must open its linked Markdown story.');
 }
 
 for (const removedControl of [
