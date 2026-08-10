@@ -13,8 +13,9 @@ import {
 const markdown = [
     '# Links',
     '',
-    '- [Profile](CV/README.md)',
+    '- [Profile](README.md)',
     '- [Current role](<CV/work/capisoft.md> "Capisoft")',
+    '- [Skills](#/extensions/python)',
     '- ![Preview](preview.png)',
     '```md',
     '[Example only](ignored.md)',
@@ -23,10 +24,10 @@ const markdown = [
 
 assert.deepEqual(findMarkdownLinks(markdown), [
     {
-        target: 'CV/README.md',
+        target: 'README.md',
         lineNumber: 3,
         startColumn: 13,
-        endColumn: 25,
+        endColumn: 22,
     },
     {
         target: 'CV/work/capisoft.md',
@@ -34,10 +35,16 @@ assert.deepEqual(findMarkdownLinks(markdown), [
         startColumn: 19,
         endColumn: 38,
     },
+    {
+        target: '#/extensions/python',
+        lineNumber: 5,
+        startColumn: 12,
+        endColumn: 31,
+    },
 ]);
 
 assert.deepEqual(
-    resolveMarkdownTarget('CV/README.md', 'origin/first-program.md'),
+    resolveMarkdownTarget('README.md', 'CV/origin/first-program.md'),
     { kind: 'internal', path: 'CV/origin/first-program.md' },
 );
 assert.deepEqual(
@@ -60,8 +67,12 @@ assert.deepEqual(
     { kind: 'external', href: 'mailto:me@example.com' },
 );
 assert.deepEqual(
-    resolveMarkdownTarget('CV/README.md', '#the-thread'),
-    { kind: 'internal', path: 'CV/README.md' },
+    resolveMarkdownTarget('README.md', '#the-thread'),
+    { kind: 'internal', path: 'README.md' },
+);
+assert.deepEqual(
+    resolveMarkdownTarget('README.md', '#/extensions/python'),
+    { kind: 'extension', id: 'python' },
 );
 assert.equal(resolveMarkdownTarget('README.md', '../outside.md'), null);
 assert.equal(resolveMarkdownTarget('README.md', 'javascript:alert(1)'), null);

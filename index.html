@@ -35,7 +35,7 @@
             <span id="source-control-badge" class="activity-badge" aria-hidden="true" hidden></span>
         </button>
         <button id="extensions-toggle" class="activity-button" type="button"
-            title="Extensions" aria-label="Extensions" aria-controls="extensions-sidebar-view"
+            title="Skills" aria-label="Skills" aria-controls="extensions-sidebar-view"
             aria-expanded="false">
             <i class="codicon codicon-extensions" aria-hidden="true"></i>
         </button>
@@ -171,9 +171,9 @@
         <section id="extensions-sidebar-view" class="sidebar-view extensions-sidebar-view"
             aria-labelledby="extensions-view-title" hidden>
             <div class="sidebar-header">
-                <span id="extensions-view-title">EXTENSIONS</span>
+                <span id="extensions-view-title">SKILLS</span>
                 <button class="sidebar-close" type="button"
-                    title="Close Extensions" aria-label="Close Extensions">
+                    title="Close Skills" aria-label="Close Skills">
                     <i class="codicon codicon-close" aria-hidden="true"></i>
                 </button>
             </div>
@@ -200,12 +200,12 @@
                 <div class="extensions-group-header">
                     <span class="extensions-group-label">
                         <i class="codicon codicon-chevron-down" aria-hidden="true"></i>
-                        <span>INSTALLED</span>
+                        <span>INSTALLED (IN MY BRAIN)</span>
                     </span>
                     <span id="extension-count" class="extensions-count"></span>
                 </div>
                 <div id="extension-list" class="extension-list"
-                    aria-label="Installed skills" aria-busy="true"></div>
+                    aria-label="Skills installed in my brain" aria-busy="true"></div>
                 <p id="extension-empty" class="extension-empty" role="status" hidden>
                     No skills match this search.
                 </p>
@@ -282,7 +282,7 @@
                     </div>
                 </header>
 
-                <div class="extension-detail-tabs" aria-label="Extension sections">
+                <div class="extension-detail-tabs" aria-label="Skill sections">
                     <span class="extension-detail-tab selected">DETAILS</span>
                 </div>
 
@@ -304,7 +304,7 @@
                         </section>
                     </article>
 
-                    <aside class="extension-metadata" aria-label="Extension information">
+                    <aside class="extension-metadata" aria-label="Skill information">
                         <section>
                             <h2>Evidence</h2>
                             <dl>
@@ -333,9 +333,9 @@
                                 <i class="codicon codicon-file-pdf" aria-hidden="true"></i>
                                 Resume
                             </a>
-                            <a href="#/CV/README.md" data-file-path="CV/README.md">
+                            <a href="#/README.md" data-file-path="README.md">
                                 <i class="codicon codicon-book" aria-hidden="true"></i>
-                                CV README
+                                CV overview
                             </a>
                         </section>
                     </aside>
@@ -370,7 +370,7 @@
         const manifestPath = 'page-data/file-manifest.json';
         const extensionsManifestPath = 'page-data/extensions.json';
         const sourceControlDataPath = 'page-data/source-control.json';
-        const defaultFilePath = 'CV/README.md';
+        const defaultFilePath = 'README.md';
         const mobileQuery = window.matchMedia('(max-width: 767px)');
 
         const body = document.body;
@@ -455,7 +455,7 @@
         let activeExtensionId = null;
         let activeTabKey = null;
         let activeObjectUrl = null;
-        let activeSidebarView = 'explorer';
+        let activeSidebarView = 'source-control';
         let desktopSidebarOpen = true;
         let mobileSidebarOpen = false;
         let manifestEntries = [];
@@ -502,7 +502,7 @@
             ['extensions', {
                 button: extensionsToggle,
                 view: extensionsSidebarView,
-                label: 'Extensions',
+                label: 'Skills',
             }],
         ]);
 
@@ -563,6 +563,12 @@
                                 scheme: 'cv-file',
                                 path: `/${target.path}`,
                             });
+                        } else if (target.kind === 'extension') {
+                            if (!extensionsById.has(target.id)) return [];
+                            url = monaco.Uri.from({
+                                scheme: 'cv-extension',
+                                path: `/${target.id}`,
+                            });
                         } else {
                             url = monaco.Uri.parse(target.href);
                         }
@@ -587,6 +593,11 @@
                     if (resource.scheme === 'cv-file') {
                         const path = decodeURIComponent(resource.path.replace(/^\/+/, ''));
                         return openFileByPath(path);
+                    }
+
+                    if (resource.scheme === 'cv-extension') {
+                        const extensionId = decodeURIComponent(resource.path.replace(/^\/+/, ''));
+                        return openExtensionById(extensionId);
                     }
 
                     if (resource.scheme === 'https') {
@@ -1423,7 +1434,7 @@
             const selectButton = tabElement.querySelector('.tab-select');
             const closeButton = tabElement.querySelector('.tab-close');
             const closeLabel = tabElement.querySelector('.tab-close-label');
-            const tabName = `Extension: ${extension.name}`;
+            const tabName = `Skill: ${extension.name}`;
 
             tabElement.dataset.tabKey = tabKey;
             selectButton.setAttribute('aria-controls', 'source-panel');
@@ -2206,7 +2217,7 @@
             activeTabKey = tabKey;
             activeFilePath = null;
             activeExtensionId = extension.id;
-            document.title = `${extension.name} - Extensions - EmilioAK`;
+            document.title = `${extension.name} - Skills - EmilioAK`;
             renderExtension(extension);
             updateExtensionRoute(extension.id, historyMode);
 

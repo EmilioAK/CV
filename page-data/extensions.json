@@ -5,7 +5,7 @@
       "id": "python",
       "name": "Python",
       "description": "Backend services, automation, and systems integration.",
-      "overview": "I use Python across backend services, automation, and systems integration. The linked stories provide broader context from this repository.",
+      "overview": "I use Python across backend services, automation, and systems integration. The linked stories show where that work began and where it continues.",
       "icon": {
         "label": "Py",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
@@ -20,9 +20,9 @@
           "description": "The Python project that started the career thread."
         },
         {
-          "path": "CV/README.md",
-          "label": "Career thread",
-          "description": "The short chronological index for this CV."
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The current backend and integration context for my Python work."
         }
       ]
     },
@@ -30,7 +30,7 @@
       "id": "typescript",
       "name": "TypeScript",
       "description": "Typed application development for web and backend systems.",
-      "overview": "TypeScript is part of my application-development toolkit. Public project stories can link from this page while remaining normal Explorer files.",
+      "overview": "I use TypeScript for typed application development. The linked chapter gives the production context for this work.",
       "icon": {
         "label": "TS",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
@@ -38,13 +38,19 @@
         "color": "#ffffff"
       },
       "categories": ["Programming Languages"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The application context for my TypeScript work."
+        }
+      ]
     },
     {
       "id": "javascript",
       "name": "JavaScript",
       "description": "Web systems, Node.js, and asynchronous programming.",
-      "overview": "I use JavaScript for web systems and have taught asynchronous programming with Node.js. The portfolio README describes this site.",
+      "overview": "I use JavaScript for web systems and taught asynchronous programming with Node.js. The linked chapters show the teaching and project contexts.",
       "icon": {
         "label": "JS",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
@@ -57,6 +63,11 @@
           "path": "CV/projects/cv-site.md",
           "label": "Interactive CV",
           "description": "The project note for this JavaScript-powered portfolio."
+        },
+        {
+          "path": "CV/university/teaching.md",
+          "label": "Teaching Web Technology",
+          "description": "The university context for my JavaScript and Node.js teaching."
         }
       ]
     },
@@ -64,20 +75,31 @@
       "id": "sql",
       "name": "SQL",
       "description": "Relational data, application persistence, and integrations.",
-      "overview": "I use SQL with relational application data and production integrations. Related public stories can connect here without moving from Explorer.",
+      "overview": "I use SQL with relational application data and production integrations. The linked chapters cover persistence and accounting workflows.",
       "icon": {
         "label": "SQL",
         "background": "#336791",
         "color": "#ffffff"
       },
       "categories": ["Programming Languages", "Databases"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/accounting-integrations.md",
+          "label": "Accounting integrations",
+          "description": "Relational data across direct provider integrations."
+        },
+        {
+          "path": "CV/work/durable-email-outbox.md",
+          "label": "Durable email outbox",
+          "description": "Persistent delivery states and recovery behavior."
+        }
+      ]
     },
     {
       "id": "c",
       "name": "C",
       "description": "Systems programming, UNIX, and operating-system concepts.",
-      "overview": "I taught C and UNIX concepts in systems courses at Vrije Universiteit Amsterdam. Public course or project stories can connect here.",
+      "overview": "I taught C and UNIX concepts in systems courses at Vrije Universiteit Amsterdam. The linked chapters give the academic and teaching contexts.",
       "icon": {
         "label": "C",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
@@ -85,13 +107,24 @@
         "color": "#ffffff"
       },
       "categories": ["Programming Languages", "Systems"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/university/teaching.md",
+          "label": "Teaching systems",
+          "description": "The teaching context for C, UNIX, and operating-system concepts."
+        },
+        {
+          "path": "CV/university/computer-science.md",
+          "label": "Computer Science degree",
+          "description": "The academic context for systems programming."
+        }
+      ]
     },
     {
       "id": "scala",
       "name": "Scala",
       "description": "Functional and object-oriented programming.",
-      "overview": "Scala forms part of my programming-language experience. This page can collect related project stories as they become public.",
+      "overview": "Scala forms part of my programming-language experience. The linked chapter gives the academic context for this work.",
       "icon": {
         "label": "Sc",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scala/scala-original.svg",
@@ -99,13 +132,19 @@
         "color": "#ffffff"
       },
       "categories": ["Programming Languages"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/university/computer-science.md",
+          "label": "Programming languages",
+          "description": "The degree context for my programming-language experience."
+        }
+      ]
     },
     {
       "id": "react",
       "name": "React",
       "description": "Component-based web interface development.",
-      "overview": "I use React for component-based web interfaces. Supporting project stories remain regular repository files and can link from this page.",
+      "overview": "I use React for component-based web interfaces. The linked chapter gives the product context for this work.",
       "icon": {
         "label": "Re",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
@@ -113,13 +152,19 @@
         "color": "#61dafb"
       },
       "categories": ["Frameworks"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The product context for my React interface work."
+        }
+      ]
     },
     {
       "id": "nodejs",
       "name": "Node.js",
       "description": "Server-side JavaScript and asynchronous web systems.",
-      "overview": "I use Node.js for server-side JavaScript and have taught its asynchronous programming model. Related stories can connect here.",
+      "overview": "I use Node.js for server-side JavaScript and taught its asynchronous programming model. The linked chapter gives the teaching context.",
       "icon": {
         "label": "N",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
@@ -127,26 +172,43 @@
         "color": "#ffffff"
       },
       "categories": ["Frameworks", "Runtime Environments"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/university/teaching.md",
+          "label": "Teaching Web Technology",
+          "description": "The course context for Node.js and asynchronous programming."
+        }
+      ]
     },
     {
       "id": "django",
       "name": "Django",
       "description": "Python web applications and backend systems.",
-      "overview": "I use Django for Python web applications and backend systems. Public implementation stories can link from this page.",
+      "overview": "I use Django for Python web applications and backend systems. The linked chapters show the product and reliability contexts.",
       "icon": {
         "label": "Dj",
         "background": "#0c4b33",
         "color": "#ffffff"
       },
       "categories": ["Frameworks"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The product context for my Django backend work."
+        },
+        {
+          "path": "CV/work/durable-email-outbox.md",
+          "label": "Durable email outbox",
+          "description": "A backend reliability case study from the same role."
+        }
+      ]
     },
     {
       "id": "postgresql",
       "name": "PostgreSQL",
       "description": "Relational storage for application and integration data.",
-      "overview": "I use PostgreSQL for relational application data. Repository stories can provide the detailed design and delivery context.",
+      "overview": "I use PostgreSQL for relational application data. The linked chapters cover persistent state and integration data.",
       "icon": {
         "label": "Pg",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
@@ -154,39 +216,67 @@
         "color": "#ffffff"
       },
       "categories": ["Databases"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/durable-email-outbox.md",
+          "label": "Durable email outbox",
+          "description": "The story behind persistent delivery states."
+        },
+        {
+          "path": "CV/work/accounting-integrations.md",
+          "label": "Accounting integrations",
+          "description": "The integration context for relational data."
+        }
+      ]
     },
     {
       "id": "celery",
       "name": "Celery",
       "description": "Background jobs and asynchronous Python services.",
-      "overview": "I use Celery for background work in Python services. Public project stories can link here while staying visible in Explorer.",
+      "overview": "I use Celery for background work in Python services. The linked chapter gives the asynchronous delivery context.",
       "icon": {
         "label": "Ce",
         "background": "#37814a",
         "color": "#ffffff"
       },
       "categories": ["Frameworks"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/durable-email-outbox.md",
+          "label": "Durable email outbox",
+          "description": "The asynchronous delivery flow behind this work."
+        }
+      ]
     },
     {
       "id": "microsoft-graph",
       "name": "Microsoft Graph",
       "description": "Microsoft 365 application and agent integrations.",
-      "overview": "I used Microsoft Graph in Microsoft 365 integration work. Supporting stories can connect here as normal Markdown files.",
+      "overview": "I used Microsoft Graph in Microsoft 365 integrations. The linked chapters show the customer architecture and delivery contexts.",
       "icon": {
         "label": "G",
         "background": "#6264a7",
         "color": "#ffffff"
       },
       "categories": ["Cloud", "APIs"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/microsoft.md",
+          "label": "Microsoft architecture",
+          "description": "The Microsoft 365 agent-integration context."
+        },
+        {
+          "path": "CV/work/durable-email-outbox.md",
+          "label": "Durable email outbox",
+          "description": "The provider-delivery and recovery context."
+        }
+      ]
     },
     {
       "id": "docker",
       "name": "Docker",
       "description": "Application containers and consistent development environments.",
-      "overview": "I built a Docker development environment for systems-programming students on macOS. Related stories can connect here.",
+      "overview": "I built a Docker development environment for systems-programming students on macOS. The linked chapter describes that teaching work.",
       "icon": {
         "label": "Do",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
@@ -194,13 +284,19 @@
         "color": "#082f49"
       },
       "categories": ["Containers", "Developer Tools"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/university/teaching.md",
+          "label": "Student environment",
+          "description": "The Docker environment that removed setup differences for students."
+        }
+      ]
     },
     {
       "id": "kubernetes",
       "name": "Kubernetes",
       "description": "Container orchestration and cloud workloads.",
-      "overview": "Kubernetes is part of my cloud and container platform toolkit. Public project stories can connect here from Explorer.",
+      "overview": "I use Kubernetes for container workloads and production delivery. The linked chapter gives the operational context.",
       "icon": {
         "label": "K8s",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
@@ -208,13 +304,19 @@
         "color": "#ffffff"
       },
       "categories": ["Containers", "Cloud"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The operational context for my Kubernetes work."
+        }
+      ]
     },
     {
       "id": "azure",
       "name": "Azure",
       "description": "Cloud architecture and Microsoft platform delivery.",
-      "overview": "Azure formed part of my cloud architecture work at Microsoft. Public customer-safe project stories can connect here from Explorer.",
+      "overview": "Azure formed part of my cloud architecture work at Microsoft. The linked chapter gives the customer-safe context.",
       "icon": {
         "label": "Az",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg",
@@ -222,13 +324,19 @@
         "color": "#ffffff"
       },
       "categories": ["Cloud"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/microsoft.md",
+          "label": "Microsoft architecture",
+          "description": "The customer architecture context for my Azure work."
+        }
+      ]
     },
     {
       "id": "aws",
       "name": "AWS",
       "description": "Cloud infrastructure and hosted application systems.",
-      "overview": "AWS is part of my cloud infrastructure toolkit. Detailed public stories can link from this page without leaving the repository model.",
+      "overview": "I use AWS for cloud infrastructure and hosted applications. The linked chapter gives the production context.",
       "icon": {
         "label": "AWS",
         "asset": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
@@ -236,7 +344,13 @@
         "color": "#ff9900"
       },
       "categories": ["Cloud"],
-      "documents": []
+      "documents": [
+        {
+          "path": "CV/work/capisoft.md",
+          "label": "Production software",
+          "description": "The hosted-application context for my AWS work."
+        }
+      ]
     },
     {
       "id": "git",
@@ -255,6 +369,11 @@
           "path": "CV/projects/cv-site.md",
           "label": "Portfolio repository",
           "description": "The project note for this repository-shaped CV."
+        },
+        {
+          "path": "CV/origin/first-program.md",
+          "label": "First repositories",
+          "description": "The public repositories that began the career thread."
         }
       ]
     }

@@ -22,12 +22,12 @@
   "staged": [
     {
       "id": "cv-thread",
-      "path": "CV/README.md",
+      "path": "README.md",
       "status": "M",
       "summary": "The CV now starts with one short chronological thread.",
       "language": "markdown",
       "before": "# My Story\n\nRead the complete story in the separate index.\n",
-      "after": "# Emilio Alvarez\n\nThe thread runs from my first program to production software.\n"
+      "after": "# Emilio Alvarez - Interactive CV\n\nThe thread runs from my first program to production software.\n"
     },
     {
       "id": "origin-evidence",
@@ -90,12 +90,12 @@
       "summary": "Professional work, university, teaching, and independent projects now form one connected story.",
       "files": [
         {
-          "path": "CV/README.md",
+          "path": "README.md",
           "status": "M",
           "language": "markdown",
           "openMode": "file",
           "before": "# My Story\n",
-          "after": "# Emilio Alvarez\n\nThe CV follows one chronological thread.\n"
+          "after": "# Emilio Alvarez - Interactive CV\n\nThe CV follows one chronological thread.\n"
         }
       ],
       "edges": [

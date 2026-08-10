@@ -58,7 +58,6 @@ if (JSON.stringify(manifestPaths) !== JSON.stringify(sourceFiles)) {
 for (const requiredPath of [
     '.github/workflows/validate-site.yml',
     'CV/Emilio_Alvarez_Resume.pdf',
-    'CV/README.md',
     'README.md',
     'index.html',
     extensionsRelativePath,
@@ -129,7 +128,6 @@ if (manifestPaths.some((sourcePath) => sourcePath.startsWith('page-data/source/'
 
 const indexHtml = await readFile(path.join(repositoryRoot, 'index.html'), 'utf8');
 const readme = await readFile(path.join(repositoryRoot, 'README.md'), 'utf8');
-const cvThread = await readFile(path.join(repositoryRoot, 'CV', 'README.md'), 'utf8');
 const originStory = await readFile(
     path.join(repositoryRoot, 'CV', 'origin', 'first-program.md'),
     'utf8',
@@ -151,6 +149,14 @@ const sourceControlData = JSON.parse(await readFile(
 
 if (manifest.files.some((entry) => entry.path.startsWith('life/'))) {
     fail('The Explorer must not contain a separate life folder.');
+}
+
+const readmePaths = manifestPaths.filter((sourcePath) => {
+    return path.basename(sourcePath).toLowerCase() === 'readme.md';
+});
+
+if (JSON.stringify(readmePaths) !== JSON.stringify(['README.md'])) {
+    fail('The repository must contain one README.md at the root.');
 }
 
 const cvMarkdownPaths = manifest.files
@@ -177,7 +183,7 @@ for (const repositoryUrl of [
 }
 
 if (/covid|pandemic/i.test([
-    cvThread,
+    readme,
     originStory,
     educationStory,
     JSON.stringify(sourceControlData),
@@ -200,6 +206,7 @@ for (const requiredText of [
     'registerLinkProvider',
     'registerLinkOpener',
     "scheme: 'cv-file'",
+    "scheme: 'cv-extension'",
     'isMarkdownPath(entry.path)',
     'buildSearchDocuments',
     'openSearchMatch',
@@ -209,12 +216,15 @@ for (const requiredText of [
     'id="extension-viewer"',
     'id="extension-documents"',
     'Search skills',
+    '>SKILLS</span>',
+    '>INSTALLED (IN MY BRAIN)</span>',
+    'Skill: ${extension.name}',
     'Project stories',
     '<h2>Evidence</h2>',
     '<dt>Linked stories</dt>',
     'renderPdfFile',
     'openExtensionById',
-    'data-file-path="CV/README.md"',
+    'data-file-path="README.md"',
     'data-file-path="CV/Emilio_Alvarez_Resume.pdf"',
     "node.mediaType === 'application/pdf'",
     'node.rawUrl',
@@ -223,6 +233,7 @@ for (const requiredText of [
     'id="scm-detail-viewer"',
     'id="scm-diff-editor"',
     'buildSourceControlView',
+    "let activeSidebarView = 'source-control';",
     'openSourceControlCommit',
     'openSourceControlChange',
     "file.openMode === 'file'",
@@ -237,7 +248,7 @@ const openExtensionEnd = indexHtml.indexOf('const openTabByKey =', openExtension
 const openExtensionSource = indexHtml.slice(openExtensionStart, openExtensionEnd);
 
 if (!openExtensionSource.includes("activateSidebarView('extensions');")) {
-    fail('Opening an extension tab must activate the Extensions sidebar.');
+    fail('Opening a skill tab must activate the Skills sidebar.');
 }
 
 const openCommitStart = indexHtml.indexOf('const openSourceControlCommit =');
@@ -299,6 +310,12 @@ for (const extension of extensionsManifest.extensions) {
         fail(`The extension ${extension.id} must include a documents list.`);
     }
 
+    if (extension.documents.length === 0) {
+        fail(`The extension ${extension.id} must link to a CV chapter.`);
+    }
+
+    const extensionDocumentPaths = new Set();
+
     for (const documentLink of extension.documents) {
         if (!documentLink.path.endsWith('.md')) {
             fail(`${documentLink.path} is not a Markdown file.`);
@@ -312,6 +329,11 @@ for (const extension of extensionsManifest.extensions) {
         if (!documentLink.label || !documentLink.description) {
             fail(`${documentLink.path} is missing link text.`);
         }
+
+        if (extensionDocumentPaths.has(documentLink.path)) {
+            fail(`${extension.id} links to ${documentLink.path} more than once.`);
+        }
+        extensionDocumentPaths.add(documentLink.path);
 
         linkedMarkdownCount += 1;
     }
@@ -344,7 +366,7 @@ if (sourceControlData.staged.length !== 3 || sourceControlData.changes.length !=
 }
 
 const expectedStagedChanges = [
-    ['CV/README.md', 'M'],
+    ['README.md', 'M'],
     ['CV/origin/first-program.md', 'M'],
     ['CV/work/microsoft.md', 'M'],
 ];
@@ -509,14 +531,17 @@ for (const actionLabel of [
     }
 }
 
-if (!readme.includes('[Download my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
+if (!readme.includes('[Open my resume](CV/Emilio_Alvarez_Resume.pdf)')) {
     fail('README.md must keep the direct resume download link.');
 }
 
-if (!readme.includes('[Start with the CV](CV/README.md)')
-    || !cvThread.includes('Software Engineer at Capisoft')
-    || !cvThread.includes('[First program and The Odin Project](origin/first-program.md)')) {
-    fail('The repository README and CV thread must lead into one chronological story.');
+if (!readme.includes('Software Engineer at Capisoft')
+    || !readme.includes('interactive CV that looks like VS Code')
+    || !readme.includes('custom website, not the VS Code application')
+    || !readme.includes('Source Control graph shows my story most clearly')
+    || !readme.includes('[First program and The Odin Project](CV/origin/first-program.md)')
+    || !readme.includes('[Browse my skills](#/extensions/python)')) {
+    fail('README.md must contain the CV overview and one chronological story.');
 }
 
 const resumeEntry = manifest.files.find((entry) => {

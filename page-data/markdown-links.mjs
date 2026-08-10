@@ -79,6 +79,11 @@ export const resolveMarkdownTarget = (sourcePath, rawTarget) => {
     const target = rawTarget.trim();
     if (!target) return null;
 
+    const extensionRoute = target.match(/^#\/extensions\/([a-z\d-]+)$/i);
+    if (extensionRoute) {
+        return { kind: 'extension', id: extensionRoute[1].toLowerCase() };
+    }
+
     const scheme = target.match(/^([a-z][a-z\d+.-]*:)/i)?.[1]?.toLowerCase();
 
     if (scheme) {

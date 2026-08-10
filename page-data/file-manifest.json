@@ -64,16 +64,6 @@
       "sha256": "69dc20de1e3f2788a83eae7265106bd276d5638be8cb5f7fdba3493bf39526c5"
     },
     {
-      "path": "CV/README.md",
-      "sourceUrl": "CV/README.md",
-      "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/README.md",
-      "kind": "text",
-      "mediaType": "text/markdown",
-      "language": "markdown",
-      "size": 890,
-      "sha256": "ebdf53bebc116b5b06a40c343ceb2b94f63d852514e40f636ca27764dbfd3b8a"
-    },
-    {
       "path": "CV/university/computer-science.md",
       "sourceUrl": "CV/university/computer-science.md",
       "rawUrl": "https://raw.githubusercontent.com/EmilioAK/CV/main/CV/university/computer-science.md",
@@ -140,8 +130,8 @@
       "kind": "text",
       "mediaType": "text/html",
       "language": "html",
-      "size": 108010,
-      "sha256": "277699e7c388b5869983c78c4071694b375fba2ba3d2aa75e75226ec9420aa7d"
+      "size": 108578,
+      "sha256": "8916924fbacd004ecf67e75705d9ce7194d4fc41339a6f6a048af4fdfe267374"
     },
     {
       "path": "page-data/extensions.json",
@@ -150,8 +140,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 10003,
-      "sha256": "3294315950097600e716125c6d4735d9f2c386b73f1aa87bcdd5bcacdfe37517"
+      "size": 14078,
+      "sha256": "0718b246fc5493a70495cd4b626731f0be7a475a5710425b0dde6577ef4f455a"
     },
     {
       "path": "page-data/file-manifest.json",
@@ -229,8 +219,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 3109,
-      "sha256": "f92e7b4e81aa871270e75baa915a38f67998736854b7008640f38435a75a4092"
+      "size": 3291,
+      "sha256": "36c183436e2a15405a9da8bb8de10d794b3ef8a79ec9a570a8b5f1af0dcea00f"
     },
     {
       "path": "page-data/search.mjs",
@@ -259,8 +249,8 @@
       "kind": "text",
       "mediaType": "application/json",
       "language": "json",
-      "size": 11680,
-      "sha256": "db0bc05ed1a690d3308a4cec3f81fe77d148f4e839026a26f06cb6cf68c3f291"
+      "size": 11708,
+      "sha256": "65da1e7b51e3cd619e72b2f5f0aaa0be26bf2c43b59640afd3ab934a38ad6d3f"
     },
     {
       "path": "page-data/style.css",
@@ -279,8 +269,8 @@
       "kind": "text",
       "mediaType": "text/markdown",
       "language": "markdown",
-      "size": 304,
-      "sha256": "02f338432fc173a8ca32b2d01ec502e6e218590439cbb127d16c92624b47a72f"
+      "size": 1322,
+      "sha256": "0c21d0a81bbb1e7953d045512b72c238f6cc4637dd26170e4429c4c6dfc8f3ab"
     },
     {
       "path": "scripts/generate-manifest.mjs",
@@ -299,8 +289,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 3243,
-      "sha256": "4c7aaf84826638fa4fcc3f487baaac2a386b22bb73b2ddeea599676326bb6a09"
+      "size": 3518,
+      "sha256": "c38a3e3d5f14c697b02387700399c01fcc7135b9dda50d7851d9c93f2506f273"
     },
     {
       "path": "scripts/test-search.mjs",
@@ -309,8 +299,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 2874,
-      "sha256": "d1391177e254d5df0f2eba0832c116c2b825e43e07c5d7ad8b46a4756b8bcd40"
+      "size": 2730,
+      "sha256": "fe1e5255878f95eb984edf5241e80f96afcbd4622c8ecd8d90255a23d98516db"
     },
     {
       "path": "scripts/test-site.mjs",
@@ -319,8 +309,8 @@
       "kind": "text",
       "mediaType": "text/javascript",
       "language": "javascript",
-      "size": 21455,
-      "sha256": "368146a2bae7d06915ae7ec397c81a1cad2abeeb50fb041cb5fb04468fecafbf"
+      "size": 22363,
+      "sha256": "d2a7cf8f6dc6010763cf189edaffc213b8c9e3163353d89ba243b54c4a043ec1"
     }
   ]
 }
